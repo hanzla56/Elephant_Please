@@ -1,0 +1,209 @@
+{% extends "camera/Base.html" %} {% load static %} {% block css %}
+
+<style>
+  .custom-card {
+    border: none;
+    box-shadow: 20px;
+  }
+
+  .title {
+    font-family: "Montserrat" sans-serif;
+    font-size: 20px;
+    font-weight: 600;
+    line-height: 38px;
+    text-align: left;
+  }
+  .address {
+    font-family: Poppins;
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 24px;
+    text-align: left;
+    color: #969696;
+  }
+  .pr-price {
+    font-family: Montserrat;
+    font-size: 24px;
+    font-weight: 600;
+    line-height: 38px;
+    text-align: left;
+  }
+  .rating {
+    font-family: Poppins;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 32px;
+    text-align: left;
+  }
+  p {
+    font-family: "Montserrat" sans-serif;
+  }
+  .image {
+    width: 361px;
+    object-fit: cover;
+  }
+  .map-img {
+    object-fit: cover;
+  }
+  .inner-div {
+    padding: 10px;
+  }
+</style>
+{% endblock css %} {% block content %}
+
+<div class="container mt-4">
+ 
+
+
+
+
+  <div class="row">
+    <div class="col-md-6 col-lg-3">
+      <div class="custom-card" style="height: 450px; max-width: 270px">
+        <div class="inner-div">
+          <img src="{% static "image/nav/download.jpeg" %}" class="card-img-top
+          image rounded"alt="...">
+          <div class="card-body">
+            <h6 class="address mt-2">John Dae</h6>
+            <h5 class="card-title title">SONY PXW-X200 Full Camera</h5>
+            <p class="map-img address">
+              <img src="{% static "image/nav/map-pin.png" %}" class="pe-1" alt="">Ohio
+              St. 16 H. 435 South Gate, California
+            </p>
+            <div class="price d-flex">
+              <p class="pr-price">$350</p>
+              <p class="ms-auto rating">
+                <img src="{% static "image/nav/star_rate.png" %}" alt="">4.8
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <div class="col-md-6 col-lg-3">
+      <div class="custom-card" style="height: 450px; max-width: 270px">
+        <div class="inner-div">
+          <img src="{% static "image/nav/download.jpeg" %}" class="card-img-top
+          image rounded"alt="...">
+          <div class="card-body">
+            <h6 class="address mt-2">John Dae</h6>
+            <h5 class="card-title title">SONY PXW-X200 Full Camera</h5>
+            <p class="map-img address">
+              <img src="{% static "image/nav/map-pin.png" %}" class="pe-1" alt="">Ohio
+              St. 16 H. 435 South Gate, California
+            </p>
+            <div class="price d-flex">
+              <p class="pr-price">$350</p>
+              <p class="ms-auto rating">
+                <img src="{% static "image/nav/star_rate.png" %}" alt="">4.8
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <div class="col-md-6 col-lg-3">
+      <div class="custom-card" style="height: 450px; max-width: 270px">
+        <div class="inner-div">
+          <img src="{% static "image/nav/download.jpeg" %}" class="card-img-top
+          image rounded"alt="...">
+          <div class="card-body">
+            <h6 class="address mt-2">John Dae</h6>
+            <h5 class="card-title title">SONY PXW-X200 Full Camera</h5>
+            <p class="map-img address">
+              <img src="{% static "image/nav/map-pin.png" %}" class="pe-1" alt="">Ohio
+              St. 16 H. 435 South Gate, California
+            </p>
+            <div class="price d-flex">
+              <p class="pr-price">$350</p>
+              <p class="ms-auto rating">
+                <img src="{% static "image/nav/star_rate.png" %}" alt="">4.8
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <div class="col-md-6 col-lg-3">
+      <div class="custom-card" style="height: 450px; max-width: 270px">
+        <div class="inner-div">
+          <img src="{% static "image/nav/download.jpeg" %}" class="card-img-top
+          image rounded"alt="...">
+          <div class="card-body">
+            <h6 class="address mt-2">John Dae</h6>
+            <h5 class="card-title title">SONY PXW-X200 Full Camera</h5>
+            <p class="map-img address">
+              <img src="{% static "image/nav/map-pin.png" %}" class="pe-1" alt="">Ohio
+              St. 16 H. 435 South Gate, California
+            </p>
+            <div class="price d-flex">
+              <p class="pr-price">$350</p>
+              <p class="ms-auto rating">
+                <img src="{% static "image/nav/star_rate.png" %}" alt="">4.8
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <div class="col-md-6 col-lg-3">
+      <div class="custom-card" style="height: 450px; max-width: 270px">
+        <div class="inner-div">
+          <img src="{% static "image/nav/download.jpeg" %}" class="card-img-top
+          image rounded"alt="...">
+          <div class="card-body">
+            <h6 class="address mt-2">John Dae</h6>
+            <h5 class="card-title title">SONY PXW-X200 Full Camera</h5>
+            <p class="map-img address">
+              <img src="{% static "image/nav/map-pin.png" %}" class="pe-1" alt="">Ohio
+              St. 16 H. 435 South Gate, California
+            </p>
+            <div class="price d-flex">
+              <p class="pr-price">$350</p>
+              <p class="ms-auto rating">
+                <img src="{% static "image/nav/star_rate.png" %}" alt="">4.8
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <div class="col-md-6 col-lg-3">
+      <div class="custom-card" style="height: 450px; max-width: 270px">
+        <div class="inner-div">
+          <img src="{% static "image/nav/download.jpeg" %}" class="card-img-top
+          image rounded"alt="...">
+          <div class="card-body">
+            <h6 class="address mt-2">John Dae</h6>
+            <h5 class="card-title title">SONY PXW-X200 Full Camera</h5>
+            <p class="map-img address">
+              <img src="{% static "image/nav/map-pin.png" %}" class="pe-1" alt="">Ohio
+              St. 16 H. 435 South Gate, California
+            </p>
+            <div class="price d-flex">
+              <p class="pr-price">$350</p>
+              <p class="ms-auto rating">
+                <img src="{% static "image/nav/star_rate.png" %}" alt="">4.8
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+
+
+
+
+    </div>
+  </div>
+</div>
+
+
+
+{% endblock content %}

@@ -1,0 +1,307 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <title>Swiper demo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1" />
+  <!-- Link Swiper's CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+
+     <!-- Bootstrap cdn -->
+     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+   
+
+  <!-- Demo styles -->
+  <style>
+    html,
+    body {
+      position: relative;
+      height: 100%;
+    }
+
+    body {
+      background: #eee;
+      font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+      font-size: 14px;
+      color: #000;
+      margin: 0;
+      padding: 0;
+    }
+
+    .swiper {
+      width: 100%;
+      height: 100%;
+    }
+
+    .swiper-slide {
+      text-align: center;
+      font-size: 18px;
+      background: #fff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .swiper-slide img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .swiper {
+      width: 100%;
+      height: 200px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .swiper-slide {
+      background-size: cover;
+      background-position: center;
+    }
+
+    .mySwiper2 {
+      height: 80%;
+      width: 100%;
+    }
+
+    .mySwiper {
+      height: 20%;
+      box-sizing: border-box;
+      padding: 10px 0;
+    }
+
+    .mySwiper .swiper-slide {
+      width: 20%;
+      height: 100%;
+      opacity: 0.4;
+    }
+
+    .mySwiper .swiper-slide-thumb-active {
+      opacity: 1;
+    }
+
+    .swiper-slide img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .title {
+      font-family: "Montserrat" sans-serif;
+      font-size: 24px;
+      font-weight: 600;
+      line-height: 38px;
+      text-align: left;
+    }
+    .address {
+      font-family: 'Poppins' sans-serif;
+      font-size: 12px;
+      font-weight: 500;
+      line-height: 24px;
+      text-align: left;
+      color: #969696;
+    }
+    .name{
+      font-family: Montserrat;
+font-size: 24px;
+font-weight: 500;
+line-height: 32px;
+text-align: left;
+
+    }
+    .review{
+      font-family: 'Poppins' sans-serif;
+font-size: 24px;
+font-weight: 400;
+line-height: 36px;
+text-align: left;
+color: #969696;
+
+    }
+    .price{
+font-weight: 600;
+font-size: 22px;
+font-style: bold;
+color: #005494;
+    }
+    .map_div iframe{
+      width: 100%;
+      height: 450px;
+    }
+  </style>
+</head>
+
+<body>
+      {% include "camera/header.html" %}
+  <!-- Swiper -->
+  <div class="container mt-5">
+      <div class="row">
+            <div class="col-md-7">
+                  <div style="--swiper-navigation-color: #fff; --swiper-pagination-color: #fff" class="swiper mySwiper2">
+                        <div class="swiper-wrapper">
+                          <div class="swiper-slide">
+                            <img src="https://swiperjs.com/demos/images/nature-1.jpg" />
+                          </div>
+                          <div class="swiper-slide">
+                            <img src="https://swiperjs.com/demos/images/nature-2.jpg" />
+                          </div>
+                          <div class="swiper-slide">
+                            <img src="https://swiperjs.com/demos/images/nature-3.jpg" />
+                          </div>
+                          <div class="swiper-slide">
+                            <img src="https://swiperjs.com/demos/images/nature-4.jpg" />
+                          </div>
+                          <div class="swiper-slide">
+                            <img src="https://swiperjs.com/demos/images/nature-5.jpg" />
+                          </div>
+                          <div class="swiper-slide">
+                            <img src="https://swiperjs.com/demos/images/nature-6.jpg" />
+                          </div>
+                          <div class="swiper-slide">
+                            <img src="https://swiperjs.com/demos/images/nature-7.jpg" />
+                          </div>
+                          <div class="swiper-slide">
+                            <img src="https://swiperjs.com/demos/images/nature-8.jpg" />
+                          </div>
+                          <div class="swiper-slide">
+                            <img src="https://swiperjs.com/demos/images/nature-9.jpg" />
+                          </div>
+                          <div class="swiper-slide">
+                            <img src="https://swiperjs.com/demos/images/nature-10.jpg" />
+                          </div>
+                        </div>
+                        
+                      </div>
+                      <div thumbsSlider="" class="swiper mySwiper">
+                        <div class="swiper-wrapper">
+                          <div class="swiper-slide">
+                            <img src="https://swiperjs.com/demos/images/nature-1.jpg" />
+                          </div>
+                          <div class="swiper-slide">
+                            <img src="https://swiperjs.com/demos/images/nature-2.jpg" />
+                          </div>
+                          <div class="swiper-slide">
+                            <img src="https://swiperjs.com/demos/images/nature-3.jpg" />
+                          </div>
+                          <div class="swiper-slide">
+                            <img src="https://swiperjs.com/demos/images/nature-4.jpg" />
+                          </div>
+                          <div class="swiper-slide">
+                            <img src="https://swiperjs.com/demos/images/nature-5.jpg" />
+                          </div>
+                        </div>
+                      </div>
+                    
+
+            </div>
+            <div class="col-md-5">
+                  <div class="card" style="max-width: 32rem; height: 37rem;">
+                    <div class="card-body">
+                      <h5 class="card-title title">SONY PXW-X200 Full Camera Kit</h5>
+                      <p class="map-img address">
+                        <img src="{% static "image/nav/map-pin.png" %}" class="pe-1" alt="">Ohio
+                        St. 16 H. 435 South Gate, California
+                      </p>
+                      <p class="name">
+                        <img src="{% static "image/nav/Group1961.png" %}" class="pe-1" alt="">Ben in shek O <img src="{% static "image/nav/Side Nav icons.png" %}" alt="">
+                      </p>
+                      <p class="">
+                        <img src="{% static "image/nav/star_rate.png" %}" class="pe-1" alt="">4.8 <span class="">(20 reviews)</span><span class="ms-2"><a href="">Write a Review</a></span>
+                      </p>
+                      <div class="d-flex gap-3">
+                        <div style="width: 33%; border: 1px solid #CCCCCC; display: flex; flex-direction: column; align-items: center; justify-content: center;" class="py-2">
+                          <p class="review">Daily</p>
+                          <p class="price">$60.00 <span class="review">/day</span></p>
+                        </div>
+                        <div style="width: 33%;border: 1px solid #CCCCCC; display: flex; flex-direction: column; align-items: center; justify-content: center;" class="py-2">
+                          <p class="review">Weekly</p>
+                          <p class="price">$60.00 <span class="review">/day</span></p>
+                        </div>
+                        <div style="width: 33%;border: 1px solid #CCCCCC; display: flex; flex-direction: column; align-items: center; justify-content: center;" class="py-2">
+                          <p class="review">Monthly</p>
+                          <p class="price">$60.00 <span class="review">/day</span></p>
+                        </div>
+                      </div>
+                      <br>
+                      <button type="button" style="background-color:#005494 ; color: #FFFFFF;" class="btn-lg btn-block w-100">Check Price and Availabillity</button>
+                
+                    </div>
+                  </div>
+                </div>
+                
+      </div>
+      <div class="mt-5">
+      <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+          <li class="nav-item" role="presentation">
+            <button class="nav-link active" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true">Description</button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="false">Reviews</button>
+          </li>
+        </ul>
+        <div class="tab-content" id="pills-tabContent">
+          <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">Description herere</div>
+          <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">ddd</div>
+        </div>
+      </div>
+
+
+
+     <div class="mt-4 mb-5 map_div">
+      <h3>Address</h3>
+      <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d27221.428710350294!2d74.24158215522772!3d31.478026574563344!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39190233a83c0335%3A0xa646aee86216e404!2sCentre%20for%20Excellence%20in%20Molecular%20Biology!5e0!3m2!1sen!2s!4v1716821146210!5m2!1sen!2s" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+
+     </div>
+
+
+      <div class="d-flex">
+            <div class="">
+              Other Items From Ben
+            </div>
+            <div class="ms-auto">
+                <button type="button" class="btn btn-primary">Primary</button>
+            </div>
+          </div>
+
+
+     <div class="other-items">
+
+     </div>
+
+
+  </div>
+
+  {% include "camera/footer.html" %}
+
+
+  <!-- Swiper JS -->
+  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+  <!-- Initialize Swiper -->
+  <script>
+    var swiper = new Swiper(".mySwiper", {
+      spaceBetween: 10,
+      slidesPerView: 5,
+      freeMode: true,
+      watchSlidesProgress: true,
+    });
+    var swiper2 = new Swiper(".mySwiper2", {
+      spaceBetween: 10,
+      navigation: {
+        nextEl: ".swiper-button-next",
+        prevEl: ".swiper-button-prev",
+      },
+      thumbs: {
+        swiper: swiper,
+      },
+    });
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,251 @@
+{% extends "camera/Base.html" %}
+{% load static %}
+
+{% block css %}
+<style>
+    .upload-icon {
+        cursor: pointer;
+        margin-bottom: 20px;
+    }
+
+    .image-display {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+    }
+
+    .large-image-container {
+        width: 100%;
+        height: 260px;
+        max-width: 300px;
+        border: 2px solid #ddd;
+        border-style: dashed;
+        margin-bottom: 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        object-fit: cover;
+    }
+
+    .large-image-container img {
+        max-width: 100%;
+        max-height: 100%;
+    }
+
+    .small-images-container {
+        display: flex;
+        gap: 18px;
+    }
+
+    .small-image {
+        width: 70px;
+        height: 80px;
+        border: 2px solid #ddd;
+        border-style: dashed;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        object-fit: cover;
+    }
+
+    .small-image img {
+        max-width: 100%;
+        max-height: 100%;
+    }
+    .fc{
+        box-shadow: 0px 8px 24px 0px #0000000A;
+    }
+    .lab{
+        font-family: 'Poppins' sans-serif;
+font-size: 16px;
+font-weight: 500;
+line-height: 38px;
+text-align: left;
+
+        
+
+    }
+</style>
+{% endblock css %}
+
+
+{% block content %}
+<div class="container px-2 mt-3">
+    <h3>
+        List An Item
+    </h3>
+    <hr>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col-md-8 order-2 order-md-1 px-5 py-3 fc mb-5">
+            <!-- Left side: Form fields -->
+            <form id="myForm" method="post" action="{% url 'camera:submit' %}" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="row mb-3">
+                    <div class="col-md-6 mb-3">
+                        <label for="field1" class="p-2 lab">Title</label>
+                        <input type="text" id="Title" name="title" class="form-control">
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="field2" class="p-2 lab">Category</label>
+                        <select name="category" id="cars" class="form-control">
+                            {% for category in categories %}
+            <option value="{{ category.id }}">{{ category.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+    
+                <!-- Hidden file inputs -->
+                <input type="file" id="imageUpload1" name="images" accept="image/*" style="display:none;">
+                <input type="file" id="imageUpload2" name="images" accept="image/*" style="display:none;">
+                <input type="file" id="imageUpload3" name="images" accept="image/*" style="display:none;">
+                <input type="file" id="imageUpload4" name="images" accept="image/*" style="display:none;">
+    
+                <div class="row mb-3">
+                    <div class="col-md-12">
+                        <h5>Rental Price (HKD)</h5>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-md-3 col-lg-2 col-sm-3 mb-3">
+                        <label for="field3_daily" class="p-2 lab">Daily</label>
+                        <input type="text" id="field3_daily" name="Daily" value={{pd.title}} class="form-control">
+                    </div>
+                    <div class="col-md-3 col-lg-2 col-sm-3 mb-3">
+                        <label for="field3_weekly" class="p-2 lab">Weekly</label>
+                        <input type="text" id="field3_weekly" name="Weekly" class="form-control">
+                    </div>
+                    <div class="col-md-3 col-lg-2 col-sm-3 mb-3">
+                        <label for="field3_monthly" class="p-2 lab">Monthly</label>
+                        <input type="text" id="field3_monthly" name="Monthly" class="form-control">
+                    </div>
+                    <div class="col-md-4 col-lg-4 mb-3">
+                        <label for="field3_market_value" class="p-2 lab">Market Value (HKD)</label>
+                        <input type="text" id="field3_market_value" name="MarketValue" class="form-control">
+                    </div>
+                    <div class="col-md-2 col-lg-2 mb-3">
+                        <label for="field3_quantity" class="p-2 lab">Quantity</label>
+                        <input type="text" id="field3_quantity" name="Quantity" class="form-control">
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-md-6 mb-3">
+                        <label for="field3_min_rental_period" class="p-2 lab">Minimum Rental Period (Days)</label>
+                        <input type="text" id="field3_min_rental_period" name="period" class="form-control">
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="field3_location" class="p-2 lab">Location:</label>
+                        <input type="text" id="field3_location" name="Location" class="form-control">
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-md-12 mb-3">
+                        <label for="description" class="p-2 lab">Description:</label>
+                        <textarea id="description" name="description" class="form-control" rows="4"></textarea>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary mt-3">Submit</button>
+            </form>
+        </div>
+
+        <div class="col-md-4 order-1 order-md-2">
+            <!-- Right side: Image container -->
+            <div class="image-display">
+                <div id="largeImageContainer" class="large-image-container"
+                    onclick="document.getElementById('imageUpload1').click();">
+                    <div class="upload-icon">
+                        {% comment %} <img src="{% static 'image/nav/upload-icon.png' %}" alt="Upload Icon" width="50">
+                        Upload Image {% endcomment %}
+                        {% for image in pd.image.all %}
+                        {% if pd.image.all %}
+                        <img src="{{ image.url.url }}" alt="">
+                    {% endif %}
+{% endfor %}
+                        
+                    </div>
+                </div>
+                <div class="small-images-container">
+                    <div id="smallImage1" class="small-image"
+                        onclick="document.getElementById('imageUpload2').click();">
+                        <img src="{% static "image/nav/camera.png" %}" height="25px" width="25px" alt="">
+                    </div>
+                    <div id="smallImage2" class="small-image"
+                        onclick="document.getElementById('imageUpload3').click();">
+                        <img src="{% static "image/nav/camera.png" %}" height="25px" width="25px" alt="">
+                    </div>
+                    <div id="smallImage3" class="small-image"
+                        onclick="document.getElementById('imageUpload4').click();">
+                        <img src="{% static "image/nav/camera.png" %}" height="25px" width="25px" alt="">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+{% endblock content %}
+
+
+
+{% block js %}
+<script>
+    document.getElementById('imageUpload1').addEventListener('change', function (event) {
+        handleImageChange(event, 'largeImageContainer');
+    });
+    document.getElementById('imageUpload2').addEventListener('change', function (event) {
+        handleImageChange(event, 'smallImage1');
+    });
+    document.getElementById('imageUpload3').addEventListener('change', function (event) {
+        handleImageChange(event, 'smallImage2');
+    });
+    document.getElementById('imageUpload4').addEventListener('change', function (event) {
+        handleImageChange(event, 'smallImage3');
+    });
+
+
+    function handleImageChange(event, containerId) {
+        const files = event.target.files;
+        if (files.length === 0) return;
+
+        const imageUrl = URL.createObjectURL(files[0]);
+        const container = document.getElementById(containerId);
+
+        container.innerHTML = `<img src="${imageUrl}" alt="Image">`;
+    }
+
+    document.getElementById('myForm').addEventListener('submit', function (event) {
+        event.preventDefault();
+        const form = event.target;
+        const formData = new FormData(form);
+
+        const imageUpload1 = document.getElementById('imageUpload1').files[0];
+        const imageUpload2 = document.getElementById('imageUpload2').files[0];
+        const imageUpload3 = document.getElementById('imageUpload3').files[0];
+
+        if (imageUpload1) formData.append('images', imageUpload1);
+        if (imageUpload2) formData.append('images', imageUpload2);
+        if (imageUpload3) formData.append('images', imageUpload3);
+
+        fetch(form.action, {
+            method: form.method,
+            body: formData,
+            headers: {
+                'X-CSRFToken': form.querySelector('[name=csrfmiddlewaretoken]').value
+            }
+        }).then(response => {
+            if (response.ok) {
+                return response.text();
+            } else {
+                throw new Error('Form submission failed');
+            }
+        }).then(data => {
+            alert(data);
+        }).catch(error => {
+            alert(error.message);
+        });
+    });
+</script>
+{% endblock js %}

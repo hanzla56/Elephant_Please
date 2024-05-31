@@ -1,0 +1,147 @@
+{% extends "camera/Base.html" %} {% load static %} {% block css %}
+<style>
+  .heading h2 {
+    font-family: "Montserrat" sans-serif;
+    font-size: 60px;
+    font-weight: 700;
+    line-height: 70.67px;
+  }
+  .heading p {
+    font-family: "Montserrat" sans-serif;
+    font-size: 20.04px;
+    font-weight: 330;
+    line-height: 24.28px;
+  }
+  .heading h2 span {
+    color: #005494cc;
+  }
+  .second_div {
+    background-color: #005494cc;
+    border-radius: 32px;
+    height: 350px;
+    width: 100%;
+  }
+  .search_bar_section {
+    margin-top: 60px;
+  }
+  .searchBar_main_div {
+    width: 100%;
+    max-width: 650px;
+    margin: auto;
+  }
+  .searchBar_main_div h3 {
+    font-family: "Montserrat" sans-serif;
+    font-size: 45px;
+    font-weight: 700;
+    line-height: 81.67px;
+    margin-bottom: 12px;
+  }
+  .searchBar_inner_div {
+    display: flex;
+    align-items: center;
+    box-shadow: 0px 19px 29px 0px #3e357824;
+    border-radius: 12px 0px 0px 12px;
+  }
+  .searchBar_inner_div input {
+    width: 100%;
+    border: none;
+    padding: 15px;
+    border-radius: 12px 0px 0px 12px;
+    outline: none;
+  }
+  .searchBar_inner_div button {
+    width: 160px;
+    border: none;
+    padding: 15px 0px;
+    background: #005494;
+    border-radius: 12px;
+    color: white;
+  }
+  .row-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .item {
+    width: 100%;
+    max-width: 250px;
+    /* margin: auto; */
+  }
+  .item img {
+    width: 100%;
+    height: 230px;
+  }
+  .seach_heading {
+    font-family: "Montserrat" sans-serif;
+    font-size: 40px;
+    font-weight: 600;
+    line-height: 60.67px;
+  }
+  @media (max-width: 576px) {
+    .heading h2 {
+      font-size: 45px;
+    }
+    .heading br {
+      display: none;
+    }
+    .item {
+      width: 100%;
+      max-width: 500px;
+      margin: auto;
+    }
+    .item img {
+      width: 100%;
+      height: 330px;
+    }
+  }
+</style>
+{% endblock css %} {% block content %}
+<div class="container mt-5">
+  <div class="row">
+    <div class="col-lg-7 col-md-7 col-sm-12">
+      <div class="heading">
+        <h2>
+          Rent <span>camera</span> <br />
+          From <span>People</span> in<br />
+          Your Community
+        </h2>
+      </div>
+      <div class="text mt-2 mb-sm-2">
+        Enjoy the item without the burden to own <br />
+        and at a fraction of the price
+      </div>
+    </div>
+    <div class="col-lg-5 col-md-5 col-sm-12 mt-sm-2">
+      <div class="second_div"></div>
+    </div>
+  </div>
+</div>
+
+<section class="search_bar_section mb-5">
+  <div class="container">
+    <div class="searchBar_main_div">
+      <h3>Search By Term</h3>
+      <form class="searchBar_inner_div">
+        <input type="search" placeholder="Search Here..." required />
+        <button type="submit">Search</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<div class="container mt-3 mb-5">
+  <h3 class="seach_heading m-3">Search By Category</h3>
+
+  <div class="main-container">
+    <div class="row-container">
+      {% for item in data %}
+      <div class="item">
+        <img src="{{item.image.url}}" alt="" />
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+{% endblock content %}
