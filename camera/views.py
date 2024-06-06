@@ -1,5 +1,6 @@
 from django.shortcuts import render,HttpResponse,get_object_or_404
 from .models import category,item,Image
+from accounts.models import MyUser
 
 # Create your views here.
 def Home(request):
@@ -7,6 +8,10 @@ def Home(request):
 
 def detail(request):
       return render(request,'camera/detail_page.html')
+
+def profile(request,user_id):
+    user_profile = MyUser.objects.get(id=user_id)
+    return render(request,'camera/user_profile.html',{'user_profile':user_profile})
 
 
 def category_page(request):

@@ -1,0 +1,132 @@
+{% extends "base.html" %}
+{% load socialaccount %}
+{% block css %}
+<style>
+/* Add your custom CSS here */
+.login-page {
+    margin-top: 80px;
+    width: 100%;
+    max-width: 500px;
+    border-radius: 32px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    box-shadow: 0px 10px 40px 0px rgba(0, 0, 0, 0.1);
+    background-color: white;
+}
+
+.login_h1 {
+    font-family: Montserrat;
+    font-size: 32px;
+    font-weight: 600;
+}
+
+.input_field {
+    width: 100%;
+    border: none;
+    background-color: white;
+}
+
+.email_label {
+    font-family: Poppins;
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 24px;
+    text-align: left;
+    color: rgba(109, 109, 109, 1);
+}
+
+.reset-button {
+    width: 198px;
+    height: 60px;
+    border-radius: 16px;
+    background: rgba(0, 84, 148, 1);
+}
+
+.reset-button h1 {
+    font-family: Poppins;
+    color: white;
+    font-size: 18px;
+    font-weight: 600;
+    margin: 0;
+}
+
+.custom-sign-in-btn {
+    font-family: 'Poppins', sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 32px;
+    text-align: center;
+    background-color: #005494;
+    color: white;
+}
+
+#id_login, #id_password {
+    border: none;
+    border-bottom: 1px solid rgba(204, 204, 204, 1);
+    outline: none;
+    width: 100%;
+}
+
+.not_account_heading {
+    font-family: Poppins;
+    font-size: 14px;
+    font-weight: 500;
+    text-align: center;
+}
+</style>
+{% endblock css %}
+
+{% block content %}
+<div class="mb-5" style="position: relative; height: auto; min-height: 100vh;">
+    <div class="text-center" style="width: 100%; height: 40vh; gap: 0px; opacity: 0px; background: rgba(0, 84, 148, 1);">
+        <!-- Optional header image -->
+    </div>
+    <div class="container pt-5 login-page">
+        <div class="headingjj">
+            <div class="text-center login_h1">
+                <h1>Sign In</h1>
+            </div>
+            <div class="forms_login">
+                <div class="form-group p-5" style="font-family: Poppins; font-size: 14px; font-weight: 400; color: #6D6D6D;">
+                    <form action="{% url 'account_login' %}" method="POST">
+                        {% csrf_token %}
+                        {% for field in form %}
+                            <div class="form-group">
+                                {{ field.label_tag }} {{ field }} {{ field.errors|striptags }}
+                            </div>
+                            <br>
+                        {% endfor %}
+                        <div class="text-center">
+                            <button type="submit" style="width: 100%; height: 60px; border-radius: 16px; background: rgba(0, 84, 148, 1);" class="btn inbox-button">
+                                <h1 style="font-family: Poppins; color: white; font-size: 18px; font-weight: 600; margin: 0;">Sign In</h1>
+                            </button>
+                        </div>
+                    </form>
+                    <div class="or mt-2 text-center">
+                        <h6>Or</h6>
+                    </div>
+                    <div class="text-center">
+                        <a href="{% provider_login_url 'google' action='reauthenticate' %}" class="alert-link">
+                            <button class="btn btn-primary mb-2 mr-2"><i class="fab fa-google"></i></button>
+                        </a>
+                        <a href="{% provider_login_url 'facebook' action='reauthenticate' %}" class="alert-link">
+                            <button class="btn btn-primary mb-2 mr-2"><i class="fab fa-facebook"></i></button>
+                        </a>
+                        <a href="{% provider_login_url 'github' action='reauthenticate' %}" class="alert-link">
+                            <button class="btn btn-primary mb-2 mr-2"><i class="fab fa-github"></i></button>
+                        </a>
+                    </div>
+                    <br>
+                    <div>
+                        <h4 class="not_account_heading">
+                            <a href="{% url 'account_signup' %}" style="color: rgba(0, 84, 148, 1);">Sign Up.</a>
+                        </h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

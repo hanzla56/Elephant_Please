@@ -1,0 +1,337 @@
+{% extends "camera/Base.html" %}
+ {% load static %} 
+
+ {% block css %}
+ <style>
+      .profile-heading {
+    font-family: Poppins;
+    font-size: 24px;
+    font-weight: 600;
+}
+
+.profile-subheading {
+    font-family: Poppins;
+    font-size: 16px;
+    font-weight: 400;
+    color: rgba(150, 150, 150, 1);
+}
+
+.profile-name {
+    font-family: Poppins;
+    font-size: 22px;
+    font-weight: 600;
+}
+
+.profile-email {
+    font-family: Poppins;
+    font-size: 16px;
+    font-weight: 400;
+    color: rgba(150, 150, 150, 1);
+}
+
+.profile-statistics {
+    font-family: Poppins;
+    font-size: 16px;
+    font-weight: 400;
+    color: rgba(150, 150, 150, 1);
+}
+
+.profile-statistics-value {
+    font-family: Poppins;
+    font-size: 40px;
+    font-weight: 500;
+}
+
+
+
+.profile-statistics-info {
+    font-family: Poppins;
+    font-size: 16px;
+    font-weight: 400;
+    color: rgba(150, 150, 150, 1);
+}
+
+.profile-statistics-number {
+    font-family: Poppins;
+    font-size: 12px;
+    font-weight: 400;
+    color: rgba(150, 150, 150, 1);
+}
+
+.profile-box {
+    padding: 3px;
+    border: 1px solid rgba(234, 234, 234, 1);
+    border-radius: 10px;
+    padding: 10px;
+}
+
+.profile-row {
+    display: flex;
+    align-items: center;
+}
+
+.profile-img {
+    margin-top: 5px;
+}
+
+.profile-image {
+    margin-top: 5px;
+}
+
+.profile-preview-image {
+    width: 100px;
+    border-radius: 50%;
+    height: 100px;
+    object-fit: cover;
+    border: 1px solid black;
+}
+
+.profile-column {
+    padding: 3px;
+    border: 1px solid rgba(234, 234, 234, 1);
+    border-radius: 10px;
+}
+
+.profile-number {
+    margin-top: 2px;
+}
+
+
+.profile-link {
+    text-decoration: none;
+    color: white;
+}
+
+
+.profile-button {
+    width: 198px;
+    height: 60px;
+    border-radius: 16px;
+    background: rgba(0, 84, 148, 1);
+    border: none;
+}
+
+.profile-button-text {
+    font-family: Poppins;
+    color: white;
+    font-size: 18px;
+    font-weight: 600;
+    margin: 0;
+}
+
+.inbox_heading h1 {
+    font-family: Ubuntu;
+    font-size: 28.18px;
+    font-weight: 700;
+    line-height: 32.38px;
+    text-align: left;
+
+}
+
+.profile-form {
+    border: 1px solid rgba(234, 234, 234, 1);
+    border-radius: 10px;
+    padding: 30px;
+}
+
+.profile-label {
+    font-family: Poppins;
+    font-size: 12px;
+    font-weight: 500;
+
+}
+
+.carrd_img {
+    border-radius: 12px;
+    height: 180px;
+    width: 300px;
+}
+
+.profile-input {
+    border-radius: 10px;
+    padding-left: 10px;
+}
+.img1 {
+    width: 100%;
+    /* Ensures the image fills the circle */
+    height: 100%;
+    /* Ensures the image fills the circle */
+}
+
+
+.profile_image {
+    width: 136px;
+    /* Adjust the width as needed */
+    height: 136px;
+    /* Adjust the height as needed */
+    border: 0px solid black;
+    border-radius: 50%;
+    overflow: hidden;
+    /* Ensures image stays within the circle */
+}
+.profile-img {
+    max-width: 200px;
+    height: auto;
+    border-radius: 50%;
+}
+.profile-form {
+    border: 1px solid rgba(234, 234, 234, 1);
+    border-radius: 10px;
+    padding: 30px;
+}
+
+.profile-label {
+    font-family: Poppins;
+    font-size: 12px;
+    font-weight: 500;
+
+}
+.profile-input {
+    border-radius: 10px;
+    padding-left: 10px;
+}
+.form-1 {
+
+width: 100%;
+font-weight: 400;
+height: 50px;
+border: 1px solid rgba(212, 212, 212, 1)
+}
+ </style>
+ {% endblock css %}a
+
+
+ {% block content %} 
+ <div class="container mb-5">
+    <div class="row">
+        <div class="col-md-3 profile-container">
+            <div>
+                <h1 class="mt-5 profile-heading">Profile Details</h1>
+            </div>
+            <div class="text-center">
+                <div class="container d-flex justify-content-center align-items-center ">
+                    <div class="text-center">
+                        <div class="profile-image mt-5">
+                            
+                            <img class="img1 profile-preview-image" id="preview_image" src="{{ request.user.profile_img.url }}" alt="Profile Image">
+
+                        </div>
+                        <input type="file" id="upload-input" accept="image/*" style="display: none;">
+                    </div>
+                </div>
+                <h1 class="profile-name">{{ user_profile.name }}</h1>
+                <h2 class="profile-email">{{ user_profile.email }}</h2>
+            </div>
+            <div>
+                <h1 class="mt-5 profile-statistics">Your statistics</h1>
+                <a href="#" style="text-decoration: none; color: rgb(0, 0, 0);">
+                <div class="profile-box">
+                    <h2 class="profile-statistics-value">$0.00</h2>
+                    <div class="profile-row">
+                     
+                            <div>
+                                <h1 class="profile-statistics-info">Lifetime earnings</h1>
+                            </div>
+                            <div>
+                                <img class="profile-coin" src="{% static 'image/nav/coin.png' %}" alt>
+                            </div>
+                        
+                    </div></a>
+                </div></a>
+                <div class="row mt-2">
+                    <div class="col-6">
+                        <div class="profile-column">
+                            <h1 class="profile-number">0</h1>
+                            <h2 class="profile-statistics-number">Rental</h2>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="profile-column">
+                            <h1 id="#" class="profile-number">{{ user.days_since_creation }}</h1>
+                            <h2 class="profile-statistics-number">Day with us</h2>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mt-2">
+                    <div class="col-6">
+                        <a style="text-decoration: none;color: black;" href="">
+                        <div class="profile-column">
+                            <h1 class="profile-number">0</h1>
+                            <h2 class="profile-statistics-number">Lend</h2>
+                        </div></a>
+                    </div>
+                    <div class="col-6">
+                        <div class="profile-column">
+                            <h1 class="profile-number">0</h1>
+                            <h2 class="profile-statistics-number">Unread message</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="profileContent" class="col-md-9 mt-5 profile-content">
+            <div class="top_button">
+                <div class="inbox d-flex justify-content-between ">
+                    <div>
+                        <a class="profile-link" href="{% url 'camera:create' %}">
+                            <button class="  earn-button profile-button">
+                                <h1 class="profile-button-text">List and earn</h1>
+                            </button>
+                        </a>
+                    </div>
+                    <div>
+                        <a class="profile-link" href="">
+                            <button class=" inbox-button profile-button">
+                                <h1 class="profile-button-text">Edit Profile</h1>
+                            </button>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="formss mt-5 profile-form"
+                style="border:1px solid rgba(234, 234, 234, 1);border-radius:10px;padding:30px;">
+                <div class="row">
+                    <div class="col-lg-6 col-md-12">
+                        <div class="mb-3">
+                            <label for="firstName" class="form-label profile-label">First Name</label>
+                            <br>
+                            <input value="{{ user_profile.name }}" type="text" class="form-1 profile-input" readonly id="firstName">
+                        </div>
+                        <div class="mb-3">
+                            <label for="emailAddress" class="form-label profile-label">Email Address</label>
+                            <input value="{{ user_profile.email }}" type="text" class="form-1 profile-input" readonly id="emailAddress">
+                        </div>
+                        <div class="mb-3">
+                            <label for="location" class="form-label profile-label">Location</label>
+                            <input type="text" value="{% if user.location %}{{ user.location }}{% else %}  {% endif %}" class="form-1 profile-input" readonly id="location">
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-12">
+                        <div class="mb-3">
+                            <label for="lastName" class="form-label profile-label">Last Name</label>
+                            <input type="text" class="form-1 profile-input" value="{{ user.last_name }}" readonly id="lastName">
+                        </div>
+                        <div class="mb-3">
+                            <label for="phoneNumber" class="form-label profile-label">Phone Number</label>
+                            <input type="text" class="form-1 profile-input" value="{{ user.mobile_number }}" readonly id="phoneNumber">
+                        </div>
+                    </div>
+                </div>
+                <div class="describation">
+                    <div class="mb-3">
+                        <label for="profileDescription" class="form-label profile-label">Profile Description</label>
+                        <textarea class="form-control profile-textarea" id="profileDescription" rows="7" readonly 
+                            maxlength="200">{{ user.about_me }}</textarea>
+                        <div id="wordCount" class="form-text">0/200 words</div>
+                    </div>
+                </div>
+            </div></div></div></div>
+
+
+
+
+
+
+
+      
+        </div> {% endblock %}
