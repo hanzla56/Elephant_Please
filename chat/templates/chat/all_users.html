@@ -1,0 +1,20 @@
+{% extends "chat/base.html" %}
+
+{% block content %}
+<br>
+<h1>Select the user you want to chat with...</h1>
+<form method="post">
+    {% csrf_token %}
+    <select id="users" name="users">
+        {% for receiver in users %}
+            <option value="{{ receiver.id }}">
+                {{ receiver.email }} ({{ receiver.first_name }} {{ receiver.last_name }})
+            </option>
+        {% endfor %}
+    </select>
+    <br>
+    <button class="btn" type="submit" style="background-color: #162030; color: white;">
+        Chat
+    </button>
+</form>
+{% endblock %}

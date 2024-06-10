@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'camera',
+    'chat',
     'accounts',
     'allauth',   
     'allauth.account',  
@@ -193,3 +194,6 @@ LOGIN_REDIRECT_URL = "/"
 LOGOUT_REDIRECT_URL = '/'
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+
+ANONYMOUS_USER_ID = 1
