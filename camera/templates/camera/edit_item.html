@@ -1,4 +1,4 @@
-{% extends "camera/Base.html" %} {% load static %} {% block css %}
+{% extends "Base.html" %} {% load static %} {% block css %}
 <style>
   .upload-icon {
     cursor: pointer;
@@ -33,6 +33,7 @@
   .small-images-container {
     display: flex;
     gap: 18px;
+    justify-content: center;
   }
 
   .small-image {
@@ -61,9 +62,13 @@
     text-align: left;
   }
 </style>
+
+
 {% endblock css %} {% block content %}
+
+
 <div class="container px-2 mt-3">
-  <h3>List An Item</h3>
+  <h3>Edit An Item</h3>
   <hr />
 </div>
 <div class="container">
@@ -77,19 +82,23 @@
         enctype="multipart/form-data"
       >
         {% csrf_token %}
+        <input type="hidden" name="product_id" value="{{ pd.id }}">
         <div class="row mb-3">
           <div class="col-md-6 mb-3">
             <label for="field1" class="p-2 lab">Title</label>
-            <input type="text" id="Title" name="title" class="form-control" />
+            <input type="text" id="Title" name="title" value="{{pd.title}}" class="form-control" />
           </div>
-          <div class="col-md-6 mb-3">
-            <label for="field2" class="p-2 lab">Category</label>
-            <select name="category" id="cars" class="form-control">
-              {% for category in categories %}
-              <option value="{{ category.id }}">{{ category.name }}</option>
-              {% endfor %}
-            </select>
-          </div>
+
+         <div class="col-md-6 mb-3">
+    <label for="field2" class="p-2 lab">Category</label>
+    <select name="category" id="cars" class="form-control">
+        {% for category in categories %}
+        <option value="{{ category.id }}" {% if category.id == pd.category.id %}selected{% endif %}>
+            {{ category.name }}
+        </option>
+        {% endfor %}
+    </select>
+</div>
         </div>
 
         <!-- Hidden file inputs -->
@@ -134,7 +143,7 @@
               type="text"
               id="field3_daily"
               name="Daily"
-              value="{{pd.title}}"
+              value="{{pd.Daily_price}}"
               class="form-control"
             />
           </div>
@@ -144,6 +153,7 @@
               type="text"
               id="field3_weekly"
               name="Weekly"
+              value="{{pd.Weekly_price}}"
               class="form-control"
             />
           </div>
@@ -153,6 +163,7 @@
               type="text"
               id="field3_monthly"
               name="Monthly"
+              value="{{pd.Monthly_price}}"
               class="form-control"
             />
           </div>
@@ -164,6 +175,7 @@
               type="text"
               id="field3_market_value"
               name="MarketValue"
+              value="{{pd.MarketValue}}"
               class="form-control"
             />
           </div>
@@ -173,6 +185,7 @@
               type="text"
               id="field3_quantity"
               name="Quantity"
+              value="{{pd.quantity}}"
               class="form-control"
             />
           </div>
@@ -186,6 +199,7 @@
               type="text"
               id="field3_min_rental_period"
               name="period"
+              value="{{pd.period}}"
               class="form-control"
             />
           </div>
@@ -195,6 +209,7 @@
               type="text"
               id="field3_location"
               name="Location"
+              value="{{pd.location}}"
               class="form-control"
             />
           </div>
@@ -207,7 +222,7 @@
               name="description"
               class="form-control"
               rows="4"
-            ></textarea>
+            >{{pd.description}}</textarea>
           </div>
         </div>
         <button type="submit" class="btn btn-primary mt-3">Submit</button>
@@ -233,22 +248,22 @@
             <img src="{{ pd.image.all.first.url.url}}" width="100%" alt="" />
             {% endif %}
             <div>
-              <div class="small-images-container">
-                {% for image in pd.image.all %}
-                {% if forloop.counter > 1 %}
-                <div
-                  id="smallImage1"
-                  class="small-image"
-                  onclick="document.getElementById('imageUpload2').click();"
-                >
-                  <img src="{{image.url.url}}" height="25px"
-                  width="25px" alt="">
-                </div>
-                {% endif %}
-                {% endfor %}
-              </div>
             </div>
           </div>
+        </div>
+        <div class="small-images-container">
+          {% for image in pd.image.all %}
+          {% if forloop.counter > 1 %}
+          <div
+            id="smallImage1"
+            class="small-image"
+            onclick="document.getElementById('imageUpload2').click();"
+          >
+            <img src="{{image.url.url}}" height="25px"
+            width="25px" alt="">
+          </div>
+          {% endif %}
+          {% endfor %}
         </div>
       </div>
     </div>

@@ -8,11 +8,11 @@ from django.utils import timezone
 from datetime import timedelta
 
 class MyUser(AbstractBaseUser, PermissionsMixin):
-    mobile_number = models.CharField(max_length=10, blank=True, null=True)
+    mobile_number = models.CharField(max_length=11, blank=True, null=True)
     agree = models.BooleanField(default=False, blank=True)
     forget_password_token = models.CharField(max_length=300, blank=True)
     profile_img = models.ImageField(
-        upload_to='profile_imgs', null=True, blank=True,default="{% static 'image/nav/profile.png' %}")
+        upload_to='profile_imgs', null=True, blank=True)
 
 
     title = models.CharField(max_length=100, null=True, blank=True)
@@ -20,18 +20,19 @@ class MyUser(AbstractBaseUser, PermissionsMixin):
     gender = models.CharField(max_length=100,  null=True, blank=True)
     location = models.CharField(max_length=100,  null=True, blank=True)
     about_me = models.TextField(null=True, blank=True)
+    earnings= models.IntegerField(null=True, blank=True)
     email = models.EmailField(unique=True, blank=True, null=True)
-    name = models.CharField(max_length=255, blank=True, null=True)
+    name = models.CharField(max_length=255, blank=True, null=True,unique=True)
     last_name = models.CharField(max_length=30, default=None, null=True)
-    username = models.CharField(max_length=200, blank=True, null=True)
+    username = models.CharField(max_length=200, unique=True , default='Huzaifa')
 
     created_at = models.DateTimeField(null=True, default=timezone.now)
     is_staff = True
     objects = UserProfileManager()
 
-    USERNAME_FIELD = 'email'
+    USERNAME_FIELD = 'name'
 
-    REQUIRED_FIELDS = ['name']
+    REQUIRED_FIELDS = ['email']
 
 
     def save(self, *args, **kwargs):
@@ -39,9 +40,13 @@ class MyUser(AbstractBaseUser, PermissionsMixin):
                 self.created_at = timezone.now()
             super(MyUser, self).save(*args, **kwargs)
 
-    def _str_(self):
-        return self.name
-
+    def __str__(self):
+        if self.username:
+            return self.username
+        elif self.email:
+            return self.email
+        else:
+            return "User"
 
     def days_since_creation(self):
         return (timezone.now() - self.created_at).days

@@ -1,0 +1,226 @@
+{% extends "Base.html" %}
+{% load static %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static "css/checkout.css" %}">
+{% endblock css %}
+
+{% block content %}
+
+<div class="pagename">
+      <div class="container mt-4" style="display: flex;">
+          <div>
+              <p>
+                  <a href="#" class="home_link">Home</a>
+                  <i class="bi bi-chevron-right" style="color: rgba(109, 109, 109, 1);"></i>
+                  <a href="" class="name_of_category_link">Camera</a>
+              </p>
+          </div>
+          <div>
+              <i class="bi bi-chevron-right" style="color: rgba(109, 109, 109, 1);"></i>
+              <a href="" class="item_link">{{product.title}}</a>
+              </p>
+          </div>
+          <div>
+              <i class="bi bi-chevron-right" style="color: rgba(109, 109, 109, 1);"></i>
+              <a href="#" class="check_link">Check out</a>
+              </p>
+          </div>
+      </div>
+  </div>
+
+
+
+
+  <form action="{% url "camera:create-checkout-session" pd.id %}" method="POST">
+      {% csrf_token %}
+  
+      <div class="container form mb-5">
+          <div class="row too">
+              <div class="col-lg-8 col-md-12">
+                       <h1 class="checkh1">Checkout</h1>
+                  <div class="row  mt-3 "> 
+                                  <div class="col-lg-6 col-md-12 " >
+                                  <label for="id_username">Username:</label>
+                                  <input type="text" name="username" class="input_checkout form-control" style= "padding: 8px; width: 100%;height: 50px;" required>
+                                       </div>
+                                  <div class="col-lg-6 col-md-12 " >
+                                          <label for="id_username">Last Name:</label>
+                                          <input type="text" name="Last_Name" class="form-control" style="width: 100%;height: 50px;padding: 8px;"required>
+                                      </div>
+                  </div>
+                      <div class="row  mt-3 "> 
+                                          <div class="col-lg-6 col-md-12 " >
+                                              <label for="id_username">Email:</label>
+                                              <input type="text" name="Email" class="form-control" style="width: 100%;height: 50px;padding: 8px;"required>
+                                                  </div>
+                                          <div class="col-lg-6 col-md-12 " >
+                                            <label for="id_username">Mobile_Number:</label>
+                                            <input type="text" name="Mobile_NUmber" class="form-control" style="width: 100%;height: 50px;padding: 8px;"required>
+                                          </div>
+    
+                      </div>
+                      
+                      <div class="row  mt-3 "> 
+                                  <div class="col-lg-6 col-md-12 " >
+                                       <label for="id_username">Address:</label>
+                                       <input type="text" name="address" class="form-control" style="width: 100%;height: 50px;padding: 8px;"required>
+                                   </div>        
+                                  <div class="col-lg-6 col-md-12" >
+                                      <label for="id_username">country:</label>
+                                      <input type="text" name="country" class="form-control" style="width: 100%;height: 50px;padding: 8px;"required>
+                                  </div>
+                      </div>
+                              <label for="">Note to lender</label>
+                              <textarea name="note_to_lender" class="form-control" style="width: 100%; height: 150px; border-radius: 12px;border: 1px solid #d4d4d4;"required></textarea>
+
+
+              </div>
+
+
+              
+              
+              <div class="col-lg-4 col-md-12 p-4" style="border: 2px solid #D4D4D4; border-radius: 12px;">
+                <div class="check_oder">
+                    <div class="check_box">
+                        <h4 style="word-break: break-all;" class="title">{{product.title}}</h4>
+                        <h5 class="pt-2 location">{{product.location}}</h5>
+                        <div class="pt-5 d-flex">
+                            <h4 id="dateRange">
+                                <p id="dateRangeDisplay"></p>
+                            </h4>
+                            <h5 id="changeHeader">Change</h5>
+                        </div>
+                        <hr>
+                        <div class="coor" style="padding-top: 20px;">
+                            <div>
+                                <div>
+                                    <div style="display: flex;">
+                                        <h2 id="price" class="card-text">price is very high</h2>
+                                        <h2 id="days" class="card-text ms-2">x 7 days</h2>
+                                        <h3 id="result" class="card-price" style="margin-left: auto;">${{pd.Weekly_price}}</h3>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div style="display: flex; align-items: center;">
+                                        <h2 class="card-text">Service Charges</h2>
+                                        <h3 id="serviceCharges" class="card-price">$0.00</h3>
+                                    </div>
+                                    <div>
+                                        <div style="display: flex; align-items: center;">
+                                            <h2 class="card-text">Extended Rental Discount</h2>
+                                            <h3 id="discount" class="card-price">$0.00</h3>
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div>
+                                    <div style="display: flex; align-items: center;">
+                                        <p id="total">Total</p>
+                                        <h6 id="totalPrice" class="checkout_total_price_h"></h6>
+                                    </div>
+                                    <h3 class="promo" style="float: right;">Have a promo code?</h3>
+                                    <button class="btn py-2" id="place_order" type="submit">Place Order</button>
+                                    <p class="check_box" style="color: #969696;">By pressing "place order" you agree to the Terms of Use and other relevant policies.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        
+          </div>
+          
+      </div>
+    </form>
+
+{% endblock content %}
+
+{% block js %}
+<script>
+    window.onload = function() {
+        // Function to get URL parameters
+        function getParameterByName(name, url = window.location.href) {
+            name = name.replace(/[\[\]]/g, '\\$&');
+            var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+                results = regex.exec(url);
+            if (!results) return null;
+            if (!results[2]) return '';
+            return decodeURIComponent(results[2].replace(/\+/g, ' '));
+        }
+
+        // Get the date range from URL
+        var dateRange = getParameterByName('daterange');
+        if (dateRange) {
+            if (typeof dateRange === 'object') {
+                var displayString = dateRange.days + ' days ' + dateRange.range;
+                document.getElementById('dateRangeDisplay').innerText = displayString;
+            } else {
+                console.log(dateRange);
+                document.getElementById('dateRangeDisplay').innerText = dateRange;
+            }
+        }
+
+        // Get the selected option from URL
+        var option = getParameterByName('option');
+        var priceElement = document.getElementById('price');
+        var days = document.getElementById('days');
+        var resultElement = document.getElementById('result');
+        var totalPriceElement = document.getElementById('totalPrice');
+        var serviceChargesElement = document.getElementById('serviceCharges');
+        var discountElement = document.getElementById('discount');
+
+        console.log(option)
+        console.log(priceElement)
+        console.log(days)
+        console.log(resultElement)
+        console.log(totalPriceElement)
+        console.log(serviceChargesElement)
+        console.log(discountElement)
+
+
+        if (option && priceElement && resultElement && totalPriceElement && serviceChargesElement && discountElement) {
+            var dailyPrice = {{product.Daily_price}}
+            var weeklyPrice = {{product.Weekly_price}};
+            var monthlyPrice = {{product.Monthly_price}};
+            var price, multiplier, totalPrice;
+            console.log(dailyPrice)
+
+            switch (option) {
+                case 'daily':
+                    price = dailyPrice;
+                    multiplier = 1;
+                    break;
+                case 'weekly':
+                    price = weeklyPrice;
+                    multiplier = 7;
+                    break;
+                case 'monthly':
+                    price = monthlyPrice;
+                    multiplier = 30;
+                    break;
+                default:
+                    price = 0;
+                    multiplier = 0;
+            }
+
+            // Display the price and total price
+            priceElement.innerText = '$' + price + ' /day';
+            resultElement.innerText = '$' + (price * multiplier).toFixed(2);
+            
+
+            var serviceCharges = parseFloat(serviceChargesElement.innerText.replace("$", ""));
+            var discount = parseFloat(discountElement.innerText.replace("$", ""));
+
+            // Calculate the final total
+            totalPrice = (price * multiplier) + serviceCharges - discount;
+
+            // Display the final total
+            totalPriceElement.innerText = "$" + totalPrice.toFixed(2);
+            days.innerText = ` x ${multiplier}`
+        }
+    }
+</script>
+{% endblock js %}
+
+

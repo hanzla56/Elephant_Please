@@ -1,102 +1,12 @@
-{% extends "camera/Base.html" %} {% load static %} {% block css %}
-<style>
-  .heading h2 {
-    font-family: "Montserrat" sans-serif;
-    font-size: 60px;
-    font-weight: 700;
-    line-height: 70.67px;
-  }
-  .heading p {
-    font-family: "Montserrat" sans-serif;
-    font-size: 20.04px;
-    font-weight: 330;
-    line-height: 24.28px;
-  }
-  .heading h2 span {
-    color: #005494cc;
-  }
-  .second_div {
-    background-color: #005494cc;
-    border-radius: 32px;
-    height: 350px;
-    width: 100%;
-  }
-  .search_bar_section {
-    margin-top: 60px;
-  }
-  .searchBar_main_div {
-    width: 100%;
-    max-width: 650px;
-    margin: auto;
-  }
-  .searchBar_main_div h3 {
-    font-family: "Montserrat" sans-serif;
-    font-size: 45px;
-    font-weight: 700;
-    line-height: 81.67px;
-    margin-bottom: 12px;
-  }
-  .searchBar_inner_div {
-    display: flex;
-    align-items: center;
-    box-shadow: 0px 19px 29px 0px #3e357824;
-    border-radius: 12px 0px 0px 12px;
-  }
-  .searchBar_inner_div input {
-    width: 100%;
-    border: none;
-    padding: 15px;
-    border-radius: 12px 0px 0px 12px;
-    outline: none;
-  }
-  .searchBar_inner_div button {
-    width: 160px;
-    border: none;
-    padding: 15px 0px;
-    background: #005494;
-    border-radius: 12px;
-    color: white;
-  }
-  .row-container {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-  }
+{% extends "Base.html" %} {% load static %}
 
-  .item {
-    width: 100%;
-    max-width: 250px;
-    /* margin: auto; */
-  }
-  .item img {
-    width: 100%;
-    height: 230px;
-  }
-  .seach_heading {
-    font-family: "Montserrat" sans-serif;
-    font-size: 40px;
-    font-weight: 600;
-    line-height: 60.67px;
-  }
-  @media (max-width: 576px) {
-    .heading h2 {
-      font-size: 45px;
-    }
-    .heading br {
-      display: none;
-    }
-    .item {
-      width: 100%;
-      max-width: 500px;
-      margin: auto;
-    }
-    .item img {
-      width: 100%;
-      height: 330px;
-    }
-  }
-</style>
-{% endblock css %} {% block content %}
+{% block css %}
+<link rel="stylesheet" href="{% static "css/category.css" %}">
+{% endblock css %}
+
+
+
+ {% block content %}
 <div class="d-flex justify-content-end align-items-center button">
   {% if user.is_authenticated %}
       <a href="{% url 'account_logout' %}" type="button">Logout</a>
@@ -104,6 +14,23 @@
       <a href="{% url 'account_login' %}" type="button">Sign in</a>
   {% endif %}
 </div>
+
+
+<div class="container mt-4" style="display: flex;">
+  <div>
+      <p>
+          <a href="#" class="home_link">Home</a>
+          <i class="bi bi-chevron-right" style="color: rgba(109, 109, 109, 1);"></i>      
+      </p>
+  </div>
+  <div>  
+      <a href="#" class="check_link">Search</a>
+      </p>
+  </div>
+</div>
+
+
+
 <div class="container mt-5">
   <div class="row">
     <div class="col-lg-7 col-md-7 col-sm-12">

@@ -1,0 +1,189 @@
+.profile-heading {
+      font-family: "Poppins";
+      font-size: 24px;
+      font-weight: 600;
+  }
+  
+  .profile-subheading {
+      font-family: "Poppins";
+      font-size: 16px;
+      font-weight: 400;
+      color: rgba(150, 150, 150, 1);
+  }
+  
+  .profile-name {
+      font-family: "Poppins";
+      font-size: 22px;
+      font-weight: 600;
+      margin-top: 10px;
+  }
+  
+  .profile-email {
+      font-family: "Poppins";
+      font-size: 16px;
+      font-weight: 400;
+      color: rgba(150, 150, 150, 1);
+  }
+  
+  .profile-statistics {
+      font-family: "Poppins";
+      font-size: 16px;
+      font-weight: 400;
+      color: rgba(150, 150, 150, 1);
+  }
+  
+  .profile-statistics-value {
+      font-family: "Poppins";
+      font-size: 40px;
+      font-weight: 500;
+  }
+  
+  
+  
+  .profile-statistics-info {
+      font-family: "Poppins";
+      font-size: 16px;
+      font-weight: 400;
+      color: rgba(150, 150, 150, 1);
+  }
+  
+  .profile-statistics-number {
+      font-family: "Poppins";
+      font-size: 12px;
+      font-weight: 400;
+      color: rgba(150, 150, 150, 1);
+  }
+  
+  .profile-box {
+      padding: 3px;
+      border: 1px solid rgba(234, 234, 234, 1);
+      border-radius: 10px;
+      padding: 10px;
+  }
+  
+  .profile-row {
+      display: flex;
+      align-items: center;
+  }
+  
+  .profile-img {
+      margin-top: 5px;
+  }
+  
+  .profile-image {
+      margin-top: 5px;
+  }
+  
+  .profile-preview-image {
+      width: 100px;
+      border-radius: 50%;
+      height: 100px;
+      /* object-fit: cover; */
+      border: 3px solid #005494;
+  }
+  
+  .profile-column {
+      padding: 3px;
+      border: 1px solid rgba(234, 234, 234, 1);
+      border-radius: 10px;
+  }
+  
+  .profile-number {
+      margin-top: 2px;
+      font-family: 'poppins';
+  }
+  
+  
+  .profile-link {
+      text-decoration: none;
+      color: white;
+  }
+  
+  
+  .profile-button {
+      width: 198px;
+      height: 60px;
+      border-radius: 16px;
+      background: rgba(0, 84, 148, 1);
+      border: none;
+  }
+  
+  .profile-button-text {
+      font-family: "Poppins";
+      color: white;
+      font-size: 18px;
+      font-weight: 600;
+      margin: 0;
+  }
+  
+  .inbox_heading h1 {
+      font-family: "Ubuntu";
+      font-size: 28.18px;
+      font-weight: 700;
+      line-height: 32.38px;
+      text-align: left;
+  
+  }
+  
+  .profile-form {
+      border: 1px solid rgba(234, 234, 234, 1);
+      border-radius: 10px;
+      padding: 30px;
+  }
+  
+  .profile-label {
+      font-family: "Poppins";
+      font-size: 12px;
+      font-weight: 500;
+  
+  }
+  
+  .carrd_img {
+      border-radius: 12px;
+      height: 180px;
+      width: 300px;
+  }
+  
+  .profile-input {
+      border-radius: 10px;
+      padding-left: 10px;
+  }
+ 
+   .profile_image {
+      width: 136px;
+      /* Adjust the width as needed */
+      height: 136px;
+      /* Adjust the height as needed */
+      border: 0px solid black;
+      border-radius: 100%;
+      overflow: hidden;
+      /* Ensures image stays within the circle */
+  }
+  .profile-img {
+      max-width: 200px;
+      height: auto;
+      border-radius: 100%;
+  }
+  .profile-form {
+      border: 1px solid rgba(234, 234, 234, 1);
+      border-radius: 10px;
+      padding: 30px;
+  }
+  
+  .profile-label {
+      font-family: "Poppins";
+      font-size: 12px;
+      font-weight: 500;
+  
+  }
+  .profile-input {
+      border-radius: 10px;
+      padding-left: 10px;
+  }
+  .form-1 {
+  
+  width: 100%;
+  font-weight: 400;
+  height: 50px;
+  border: 1px solid rgba(212, 212, 212, 1)
+  }

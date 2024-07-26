@@ -1,209 +1,195 @@
-{% extends "camera/Base.html" %} {% load static %} {% block css %}
+{% extends "Base.html" %} {% load static %} 
 
-<style>
-  .custom-card {
-    border: none;
-    box-shadow: 20px;
-  }
+{% block css %}
+<link rel="stylesheet" href="{% static "css/home.css" %}">
 
-  .title {
-    font-family: "Montserrat" sans-serif;
-    font-size: 20px;
-    font-weight: 600;
-    line-height: 38px;
-    text-align: left;
-  }
-  .address {
-    font-family: Poppins;
-    font-size: 12px;
-    font-weight: 500;
-    line-height: 24px;
-    text-align: left;
-    color: #969696;
-  }
-  .pr-price {
-    font-family: Montserrat;
-    font-size: 24px;
-    font-weight: 600;
-    line-height: 38px;
-    text-align: left;
-  }
-  .rating {
-    font-family: Poppins;
-    font-size: 16px;
-    font-weight: 600;
-    line-height: 32px;
-    text-align: left;
-  }
-  p {
-    font-family: "Montserrat" sans-serif;
-  }
-  .image {
-    width: 361px;
-    object-fit: cover;
-  }
-  .map-img {
-    object-fit: cover;
-  }
-  .inner-div {
-    padding: 10px;
-  }
-</style>
 {% endblock css %} {% block content %}
 
-<div class="container mt-4">
- 
 
+<div class="container mt-4" style="display: flex;">
+  <div>
+      <p>
+          <a href="#" class="home_link">Home</a>
+          <i class="bi bi-chevron-right" style="color: rgba(109, 109, 109, 1);"></i>
+          
+      </p>
+  </div>
+  <div>  
+      <a href="#" class="check_link">Camera</a>
+      </p>
+  </div>
+</div>
 
+<div class="container d-flex flex-column gap-3 mt-3">
+  <div class="row search_container p-5">
+  <div class="text-center">
 
+    <h1 class="maindiv_text maindiv_text_first">Rent Camera in Hong kong <br> with 
+       Elephant Please</h1>
+  </div>
+  <div class="text-center">
+     <h6 class="maindiv_text maindiv_text_second">Rent a Camera from a fellow photographer in Hong Kong. Over 50% <br> Cheaper Than Traditional Rental Spend less & Enjoy more</h6>
 
-  <div class="row">
-    <div class="col-md-6 col-lg-3">
-      <div class="custom-card" style="height: 450px; max-width: 270px">
-        <div class="inner-div">
-          <img src="{% static "image/nav/download.jpeg" %}" class="card-img-top
-          image rounded"alt="...">
-          <div class="card-body">
-            <h6 class="address mt-2">John Dae</h6>
-            <h5 class="card-title title">SONY PXW-X200 Full Camera</h5>
-            <p class="map-img address">
-              <img src="{% static "image/nav/map-pin.png" %}" class="pe-1" alt="">Ohio
-              St. 16 H. 435 South Gate, California
-            </p>
-            <div class="price d-flex">
-              <p class="pr-price">$350</p>
-              <p class="ms-auto rating">
-                <img src="{% static "image/nav/star_rate.png" %}" alt="">4.8
-              </p>
-            </div>
-          </div>
-        </div>
+  </div>
+  <div class="search_bar_section mt-3">
+    <div class="container">
+      <div class="searchBar_main_div"> 
+        <form class="searchBar_inner_div">
+          <input type="search" placeholder="Search Here..." required />
+          <button type="submit">Search</button>
+        </form>
       </div>
-
-    </div>
-    <div class="col-md-6 col-lg-3">
-      <div class="custom-card" style="height: 450px; max-width: 270px">
-        <div class="inner-div">
-          <img src="{% static "image/nav/download.jpeg" %}" class="card-img-top
-          image rounded"alt="...">
-          <div class="card-body">
-            <h6 class="address mt-2">John Dae</h6>
-            <h5 class="card-title title">SONY PXW-X200 Full Camera</h5>
-            <p class="map-img address">
-              <img src="{% static "image/nav/map-pin.png" %}" class="pe-1" alt="">Ohio
-              St. 16 H. 435 South Gate, California
-            </p>
-            <div class="price d-flex">
-              <p class="pr-price">$350</p>
-              <p class="ms-auto rating">
-                <img src="{% static "image/nav/star_rate.png" %}" alt="">4.8
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-
-    </div>
-    <div class="col-md-6 col-lg-3">
-      <div class="custom-card" style="height: 450px; max-width: 270px">
-        <div class="inner-div">
-          <img src="{% static "image/nav/download.jpeg" %}" class="card-img-top
-          image rounded"alt="...">
-          <div class="card-body">
-            <h6 class="address mt-2">John Dae</h6>
-            <h5 class="card-title title">SONY PXW-X200 Full Camera</h5>
-            <p class="map-img address">
-              <img src="{% static "image/nav/map-pin.png" %}" class="pe-1" alt="">Ohio
-              St. 16 H. 435 South Gate, California
-            </p>
-            <div class="price d-flex">
-              <p class="pr-price">$350</p>
-              <p class="ms-auto rating">
-                <img src="{% static "image/nav/star_rate.png" %}" alt="">4.8
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-
-    </div>
-    <div class="col-md-6 col-lg-3">
-      <div class="custom-card" style="height: 450px; max-width: 270px">
-        <div class="inner-div">
-          <img src="{% static "image/nav/download.jpeg" %}" class="card-img-top
-          image rounded"alt="...">
-          <div class="card-body">
-            <h6 class="address mt-2">John Dae</h6>
-            <h5 class="card-title title">SONY PXW-X200 Full Camera</h5>
-            <p class="map-img address">
-              <img src="{% static "image/nav/map-pin.png" %}" class="pe-1" alt="">Ohio
-              St. 16 H. 435 South Gate, California
-            </p>
-            <div class="price d-flex">
-              <p class="pr-price">$350</p>
-              <p class="ms-auto rating">
-                <img src="{% static "image/nav/star_rate.png" %}" alt="">4.8
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-
-    </div>
-    <div class="col-md-6 col-lg-3">
-      <div class="custom-card" style="height: 450px; max-width: 270px">
-        <div class="inner-div">
-          <img src="{% static "image/nav/download.jpeg" %}" class="card-img-top
-          image rounded"alt="...">
-          <div class="card-body">
-            <h6 class="address mt-2">John Dae</h6>
-            <h5 class="card-title title">SONY PXW-X200 Full Camera</h5>
-            <p class="map-img address">
-              <img src="{% static "image/nav/map-pin.png" %}" class="pe-1" alt="">Ohio
-              St. 16 H. 435 South Gate, California
-            </p>
-            <div class="price d-flex">
-              <p class="pr-price">$350</p>
-              <p class="ms-auto rating">
-                <img src="{% static "image/nav/star_rate.png" %}" alt="">4.8
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-
-    </div>
-    <div class="col-md-6 col-lg-3">
-      <div class="custom-card" style="height: 450px; max-width: 270px">
-        <div class="inner-div">
-          <img src="{% static "image/nav/download.jpeg" %}" class="card-img-top
-          image rounded"alt="...">
-          <div class="card-body">
-            <h6 class="address mt-2">John Dae</h6>
-            <h5 class="card-title title">SONY PXW-X200 Full Camera</h5>
-            <p class="map-img address">
-              <img src="{% static "image/nav/map-pin.png" %}" class="pe-1" alt="">Ohio
-              St. 16 H. 435 South Gate, California
-            </p>
-            <div class="price d-flex">
-              <p class="pr-price">$350</p>
-              <p class="ms-auto rating">
-                <img src="{% static "image/nav/star_rate.png" %}" alt="">4.8
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-
-
-
-
-
-
     </div>
   </div>
+</div>
 </div>
 
 
 
+<div class="container mt-4 mb-3">
+  <div class="row pd" style="display: flex; align-items: center; justify-content: center; gap: 3px;">
+ 
+
+{% for item in items %}
+
+      <div class="custom-card border border-warning" style="height: 440px; max-width: 390px; border-radius: 16px;">
+        <div class="inner-div">
+          {% if item.image.exists%}
+          <a href="{% url "camera:detail" item.id %}">
+            <img src="{{item.image.first.url.url}}" class="card-img-top image rounded" height="200px" width="100%" alt="...">
+          </a>
+          {% endif %}
+          <div class="card-body">
+            <h6 class="address mt-1">{{item.owner.username}}</h6>
+            <h5 class="card-title title">{{item.title}}</h5>
+            <p class="map-img address">
+              <img src="{% static "image/nav/map-pin.png" %}" class="pe-1" alt="">{{item.location}}
+            </p>
+            <div class="price d-flex">
+              <p class="pr-price">${{item.Daily_price}}</p>
+              <p class="ms-auto rating">
+                <img src="{% static "image/nav/star_rate.png" %}" alt="">4.8
+              </p>
+            </div>
+          </div>
+        </div>
+    </div>
+
+{% endfor %}
+
+  </div>
+</div>
+
+{% if items %}
+    {% if items.has_other_pages %}
+        <nav aria-label="Page navigation example" class="pagination-2">
+            <ul class="pagination justify-content-center">
+
+                {% if items.has_previous %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ items.previous_page_number }}" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+                {% else %}
+                    <li class="page-item disabled">
+                        <span class="page-link" aria-hidden="true">&laquo;</span>
+                    </li>
+                {% endif %}
+
+                {% for num in items.paginator.page_range %}
+                    {% if items.number == num %}
+                        <li class="page-item active" aria-current="page">
+                            <span class="page-link">{{ num }}</span>
+                        </li>
+                    {% else %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ num }}">{{ num }}</a>
+                        </li>
+                    {% endif %}
+                {% endfor %}
+
+                {% if items.has_next %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ items.next_page_number }}" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                {% else %}
+                    <li class="page-item disabled">
+                        <span class="page-link" aria-hidden="true">&raquo;</span>
+                    </li>
+                {% endif %}
+
+            </ul>
+        </nav>
+    {% endif %}
+{% endif %}
+
+
+
+
 {% endblock content %}
+
+{% block js %}
+<script>
+  $(document).ready(function() {
+    $('input[type="search"]').on('input', function() {
+        var query = $(this).val();
+        var container = $('.pd');  // Adjust the selector to target the correct container
+        var pagination = $('.pagination-2');
+        if (query.length > 0) {
+            $.ajax({
+                url: '{% url "camera:search-items" %}',
+                data: {
+                    'q': query
+                },
+                success: function(data) {
+                    container.empty();
+                    if (data.items.length > 0) {
+                        data.items.forEach(function(item) {
+                            var imagesHtml = '';
+                            if (item.images.length > 0) {
+                                imagesHtml = `<a href="/camera/${item.id}/">
+                                                <img src="${item.images[0]}" class="card-img-top image rounded" alt="...">
+                                              </a>`;
+                            }
+                            var itemHtml = `
+                            <div class="col-sm-12 col-md-6 col-lg-3 d-sm-flex justify-content-sm-center">
+                                <div class="custom-card" style="height: 450px; max-width: 280px">
+                                    <div class="inner-div">
+                                        ${imagesHtml}
+                                        <div class="card-body">
+                                            <h6 class="address mt-2">John Dae</h6>
+                                            <h5 class="card-title title">${item.title}</h5>
+                                            <p class="map-img address mt-2">
+                                                <img src="{% static 'image/nav/map-pin.png' %}" class="pe-1" alt="">${item.location}
+                                            </p>
+                                            <div class="price d-flex">
+                                                <p class="pr-price">$${item.Daily_price}</p>
+                                                <p class="ms-auto rating">
+                                                    <img src="{% static 'image/nav/star_rate.png' %}" alt="">4.8
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            `;
+                            container.append(itemHtml);
+                        });
+                    } else {
+                        container.append('<p>No Matching Product</p>');
+                    }
+                }
+            });
+        } else {
+            container.empty();
+            container.append('<p>No Matching Product</p>');
+            pagination.empty();
+        }
+    });
+});
+
+</script>
+{% endblock js %}

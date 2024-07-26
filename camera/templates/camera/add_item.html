@@ -1,8 +1,12 @@
-{% extends "camera/Base.html" %}
+{% extends "Base.html" %}
 {% load static %}
 
 {% block css %}
 <style>
+    .error {
+            color: red;
+            display: none;
+        }
     .upload-icon {
         cursor: pointer;
         margin-bottom: 20px;
@@ -57,14 +61,14 @@
         box-shadow: 0px 8px 24px 0px #0000000A;
     }
     .lab{
-        font-family: 'Poppins' sans-serif;
-font-size: 16px;
-font-weight: 500;
-line-height: 38px;
-text-align: left;
-
-        
-
+        font-family: 'Poppins';
+        font-size: 16px;
+        font-weight: 500;
+        line-height: 38px;
+        text-align: left;
+    }
+    .heading{
+        font-family: "Montserrat" !important;
     }
 </style>
 {% endblock css %}
@@ -72,7 +76,7 @@ text-align: left;
 
 {% block content %}
 <div class="container px-2 mt-3">
-    <h3>
+    <h3 class="heading">
         List An Item
     </h3>
     <hr>
@@ -113,28 +117,34 @@ text-align: left;
                     <div class="col-md-3 col-lg-2 col-sm-3 mb-3">
                         <label for="field3_daily" class="p-2 lab">Daily</label>
                         <input type="text" id="field3_daily" name="Daily" class="form-control">
+                        <span class="error" id="error_daily">Please enter a positive number</span>
                     </div>
                     <div class="col-md-3 col-lg-2 col-sm-3 mb-3">
                         <label for="field3_weekly" class="p-2 lab">Weekly</label>
                         <input type="text" id="field3_weekly" name="Weekly" class="form-control">
+                        <span class="error" id="error_weekly">Please enter a positive number</span>
                     </div>
                     <div class="col-md-3 col-lg-2 col-sm-3 mb-3">
                         <label for="field3_monthly" class="p-2 lab">Monthly</label>
                         <input type="text" id="field3_monthly" name="Monthly" class="form-control">
+                        <span class="error" id="error_monthly">Please enter a positive number</span>
                     </div>
                     <div class="col-md-4 col-lg-4 mb-3">
                         <label for="field3_market_value" class="p-2 lab">Market Value (HKD)</label>
                         <input type="text" id="field3_market_value" name="MarketValue" class="form-control">
+                        <span class="error" id="error_market_value">Please enter a positive number</span>
                     </div>
                     <div class="col-md-2 col-lg-2 mb-3">
                         <label for="field3_quantity" class="p-2 lab">Quantity</label>
                         <input type="text" id="field3_quantity" name="Quantity" class="form-control">
+                        <span class="error" id="error_quantity">Please enter a positive number</span>
                     </div>
                 </div>
                 <div class="row mb-3">
                     <div class="col-md-6 mb-3">
                         <label for="field3_min_rental_period" class="p-2 lab">Minimum Rental Period (Days)</label>
                         <input type="text" id="field3_min_rental_period" name="period" class="form-control">
+                        <span class="error" id="error_min_rental">Please enter a positive number</span>
                     </div>
                     <div class="col-md-6 mb-3">
                         <label for="field3_location" class="p-2 lab">Location:</label>
@@ -147,7 +157,7 @@ text-align: left;
                         <textarea id="description" name="description" class="form-control" rows="4"></textarea>
                     </div>
                 </div>
-                <button type="submit" class="btn btn-primary mt-3">Submit</button>
+                <button type="submit" class="btn btn-primary mt-3 heading">Submit</button>
             </form>
         </div>
 
@@ -235,9 +245,61 @@ text-align: left;
             }
         }).then(data => {
             alert(data);
+            window.location.href = '/'; 
         }).catch(error => {
             alert(error.message);
         });
     });
+
+
+    document.addEventListener('DOMContentLoaded', function() {
+            const fields = [
+                {id: 'field3_daily', errorId: 'error_daily'},
+                {id: 'field3_weekly', errorId: 'error_weekly'},
+                {id: 'field3_monthly', errorId: 'error_monthly'},
+                {id: 'field3_market_value', errorId: 'error_market_value'},
+                {id: 'field3_quantity', errorId: 'error_quantity'},
+                {id: 'field3_min_rental_period', errorId: 'error_min_rental'}
+            ];
+
+            fields.forEach(field => {
+                const input = document.getElementById(field.id);
+                const error = document.getElementById(field.errorId);
+
+                input.addEventListener('input', function() {
+                    validateInput(input, error);
+                });
+            });
+
+            document.getElementById('myForm').addEventListener('submit', function(event) {
+                let formIsValid = true;
+                console.log('form is selecting')
+                
+                fields.forEach(field => {
+                    const input = document.getElementById(field.id);
+                    const error = document.getElementById(field.errorId);
+                    
+                    if (!validateInput(input, error)) {
+                        formIsValid = false;
+                    }
+                });
+                
+                if (!formIsValid) {
+                    event.preventDefault();
+                    console.log('form is not submitting')
+                }
+            });
+
+            function validateInput(input, error) {
+                const value = parseFloat(input.value);
+                if (isNaN(value) || value <= 0) {
+                    error.style.display = 'block';
+                    return false;
+                } else {
+                    error.style.display = 'none';
+                    return true;
+                }
+            }
+        });
 </script>
 {% endblock js %}

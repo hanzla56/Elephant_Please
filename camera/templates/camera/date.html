@@ -1,0 +1,72 @@
+$(function() {
+      // Initialize daterangepicker with initial settings
+      var daterangepickerOptions = {
+          opens: 'left',
+          minDate: moment().startOf('day'), // Restrict to start from today
+          autoApply: true,
+          minSpan: { days: 1 }, // Apply selection automatically when user selects a range
+          locale: {
+              format: 'DD MMM'   /*i can change format from here*/
+          }
+      };
+  
+      // Initialize daterangepicker with default options
+      $('input[name="daterange"]').daterangepicker(daterangepickerOptions);
+  
+      // Function to update the date range limit based on selected option (daily, weekly, monthly)
+      function updateDateLimit(numDays) {
+          // Destroy the existing daterangepicker instance
+          $('input[name="daterange"]').data('daterangepicker').remove();
+          
+          // Update the date limit in the options
+          daterangepickerOptions.dateLimit = { days: numDays };
+  
+          // Reinitialize the daterangepicker with the updated options
+          $('input[name="daterange"]').daterangepicker(daterangepickerOptions);
+      }
+  
+      // Event listener for selecting different price options (divs)
+      $('.pricing-option').click(function() {
+          var optionType = $(this).attr('data-option-type');
+          var numDays = parseInt($(this).attr('data-days'));
+  
+          if (isNaN(numDays)) {
+              console.log("Invalid number of days for option:", optionType);
+              return;
+          }
+  
+          updateDateLimit(numDays);
+  
+          // Update active class for styling
+          $('.pricing-option').removeClass('active');
+          $(this).addClass('active');
+      });
+  
+      // Event listener for when the user selects a date range
+      $('input[name="daterange"]').on('apply.daterangepicker', function(ev, picker) {
+          var startDate = picker.startDate;
+          var endDate = picker.endDate;
+  
+          // Calculate the number of days selected
+          var numSelectedDays = endDate.diff(startDate, 'days') + 1; // +1 because diff() gives the difference, not inclusive
+  
+          // Validate the number of selected days against the current date limit
+          if (numSelectedDays !== daterangepickerOptions.dateLimit.days) {
+              // Show an alert or handle the error as per your application's requirement
+              alert('Please select exactly ' + daterangepickerOptions.dateLimit.days + ' days.');
+              // Reset the date range selection
+              picker.setStartDate(startDate);
+              picker.setEndDate(startDate.clone().add(daterangepickerOptions.dateLimit.days - 1, 'days'));
+          } else {
+              console.log("Selected date range:", startDate.format('YYYY-MM-DD'), 'to', endDate.format('YYYY-MM-DD'));
+              // Perform other actions based on the selected date range
+          }
+      });
+  });
+  
+
+
+
+var dailyPrice = {{product.Daily_price}}
+ var weeklyPrice = {{product.Weekly_price}};
+ var monthlyPrice = {{product.Monthly_price}};

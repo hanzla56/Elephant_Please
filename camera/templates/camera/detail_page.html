@@ -6,278 +6,276 @@
   <meta charset="utf-8" />
   <title>Swiper demo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1" />
+
   <!-- Link Swiper's CSS -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
+  <link rel="stylesheet" href="{% static "css/detail_page.css" %}">
 
-     <!-- Bootstrap cdn -->
-     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+   <!-- font cdn -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
 
-   
+  <!-- Bootstrap cdn -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+    crossorigin="anonymous"></script>
 
-  <!-- Demo styles -->
-  <style>
-    html,
-    body {
-      position: relative;
-      height: 100%;
-    }
 
-    body {
-      background: #eee;
-      font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
-      font-size: 14px;
-      color: #000;
-      margin: 0;
-      padding: 0;
-    }
 
-    .swiper {
-      width: 100%;
-      height: 100%;
-    }
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/moment-range/moment-range.min.js"></script>
 
-    .swiper-slide {
-      text-align: center;
-      font-size: 18px;
-      background: #fff;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/raty/2.9.0/jquery.raty.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
 
-    .swiper-slide img {
-      display: block;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-
-    .swiper {
-      width: 100%;
-      height: 200px;
-      margin-left: auto;
-      margin-right: auto;
-    }
-
-    .swiper-slide {
-      background-size: cover;
-      background-position: center;
-    }
-
-    .mySwiper2 {
-      height: 80%;
-      width: 100%;
-    }
-
-    .mySwiper {
-      height: 20%;
-      box-sizing: border-box;
-      padding: 10px 0;
-    }
-
-    .mySwiper .swiper-slide {
-      width: 20%;
-      height: 100%;
-      opacity: 0.4;
-    }
-
-    .mySwiper .swiper-slide-thumb-active {
-      opacity: 1;
-    }
-
-    .swiper-slide img {
-      display: block;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-    .title {
-      font-family: "Montserrat" sans-serif;
-      font-size: 24px;
-      font-weight: 600;
-      line-height: 38px;
-      text-align: left;
-    }
-    .address {
-      font-family: 'Poppins' sans-serif;
-      font-size: 12px;
-      font-weight: 500;
-      line-height: 24px;
-      text-align: left;
-      color: #969696;
-    }
-    .name{
-      font-family: Montserrat;
-font-size: 24px;
-font-weight: 500;
-line-height: 32px;
-text-align: left;
-
-    }
-    .review{
-      font-family: 'Poppins' sans-serif;
-font-size: 24px;
-font-weight: 400;
-line-height: 36px;
-text-align: left;
-color: #969696;
-
-    }
-    .price{
-font-weight: 600;
-font-size: 22px;
-font-style: bold;
-color: #005494;
-    }
-    .map_div iframe{
-      width: 100%;
-      height: 450px;
-    }
-  </style>
 </head>
 
 <body>
-      {% include "camera/header.html" %}
-  <!-- Swiper -->
-  <div class="container mt-5">
-      <div class="row">
-            <div class="col-md-7">
-                  <div style="--swiper-navigation-color: #fff; --swiper-pagination-color: #fff" class="swiper mySwiper2">
-                        <div class="swiper-wrapper">
-                          <div class="swiper-slide">
-                            <img src="https://swiperjs.com/demos/images/nature-1.jpg" />
-                          </div>
-                          <div class="swiper-slide">
-                            <img src="https://swiperjs.com/demos/images/nature-2.jpg" />
-                          </div>
-                          <div class="swiper-slide">
-                            <img src="https://swiperjs.com/demos/images/nature-3.jpg" />
-                          </div>
-                          <div class="swiper-slide">
-                            <img src="https://swiperjs.com/demos/images/nature-4.jpg" />
-                          </div>
-                          <div class="swiper-slide">
-                            <img src="https://swiperjs.com/demos/images/nature-5.jpg" />
-                          </div>
-                          <div class="swiper-slide">
-                            <img src="https://swiperjs.com/demos/images/nature-6.jpg" />
-                          </div>
-                          <div class="swiper-slide">
-                            <img src="https://swiperjs.com/demos/images/nature-7.jpg" />
-                          </div>
-                          <div class="swiper-slide">
-                            <img src="https://swiperjs.com/demos/images/nature-8.jpg" />
-                          </div>
-                          <div class="swiper-slide">
-                            <img src="https://swiperjs.com/demos/images/nature-9.jpg" />
-                          </div>
-                          <div class="swiper-slide">
-                            <img src="https://swiperjs.com/demos/images/nature-10.jpg" />
-                          </div>
-                        </div>
-                        
-                      </div>
-                      <div thumbsSlider="" class="swiper mySwiper">
-                        <div class="swiper-wrapper">
-                          <div class="swiper-slide">
-                            <img src="https://swiperjs.com/demos/images/nature-1.jpg" />
-                          </div>
-                          <div class="swiper-slide">
-                            <img src="https://swiperjs.com/demos/images/nature-2.jpg" />
-                          </div>
-                          <div class="swiper-slide">
-                            <img src="https://swiperjs.com/demos/images/nature-3.jpg" />
-                          </div>
-                          <div class="swiper-slide">
-                            <img src="https://swiperjs.com/demos/images/nature-4.jpg" />
-                          </div>
-                          <div class="swiper-slide">
-                            <img src="https://swiperjs.com/demos/images/nature-5.jpg" />
-                          </div>
-                        </div>
-                      </div>
-                    
+  {% include "header.html" %}
 
-            </div>
-            <div class="col-md-5">
-                  <div class="card" style="max-width: 32rem; height: 37rem;">
-                    <div class="card-body">
-                      <h5 class="card-title title">SONY PXW-X200 Full Camera Kit</h5>
-                      <p class="map-img address">
-                        <img src="{% static "image/nav/map-pin.png" %}" class="pe-1" alt="">Ohio
-                        St. 16 H. 435 South Gate, California
-                      </p>
-                      <p class="name">
-                        <img src="{% static "image/nav/Group1961.png" %}" class="pe-1" alt="">Ben in shek O <img src="{% static "image/nav/Side Nav icons.png" %}" alt="">
-                      </p>
-                      <p class="">
-                        <img src="{% static "image/nav/star_rate.png" %}" class="pe-1" alt="">4.8 <span class="">(20 reviews)</span><span class="ms-2"><a href="">Write a Review</a></span>
-                      </p>
-                      <div class="d-flex gap-3">
-                        <div style="width: 33%; border: 1px solid #CCCCCC; display: flex; flex-direction: column; align-items: center; justify-content: center;" class="py-2">
-                          <p class="review">Daily</p>
-                          <p class="price">$60.00 <span class="review">/day</span></p>
-                        </div>
-                        <div style="width: 33%;border: 1px solid #CCCCCC; display: flex; flex-direction: column; align-items: center; justify-content: center;" class="py-2">
-                          <p class="review">Weekly</p>
-                          <p class="price">$60.00 <span class="review">/day</span></p>
-                        </div>
-                        <div style="width: 33%;border: 1px solid #CCCCCC; display: flex; flex-direction: column; align-items: center; justify-content: center;" class="py-2">
-                          <p class="review">Monthly</p>
-                          <p class="price">$60.00 <span class="review">/day</span></p>
-                        </div>
-                      </div>
-                      <br>
-                      <button type="button" style="background-color:#005494 ; color: #FFFFFF;" class="btn-lg btn-block w-100">Check Price and Availabillity</button>
-                
-                    </div>
-                  </div>
-                </div>
-                
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title order-btn" id="exampleModalLabel">Add Review</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-      <div class="mt-5">
-      <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
-          <li class="nav-item" role="presentation">
-            <button class="nav-link active" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true">Description</button>
-          </li>
-          <li class="nav-item" role="presentation">
-            <button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="false">Reviews</button>
-          </li>
-        </ul>
-        <div class="tab-content" id="pills-tabContent">
-          <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">Description herere</div>
-          <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">ddd</div>
+      <div class="modal-body">
+        <div class="container">
+          <h3 class="order-btn">Add Review for {{ product.title }}</h3>
+        <form method="post" action="{% url 'camera:add_review' product.id %}">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label for="rating" class="form-label order-btn">Rating</label>
+                <div id="star-rating"></div>
+                <input type="hidden" id="id_rating" name="rating">
+            </div>
+            <div class="mb-3">
+                <label for="comment" class="form-label order-btn">Comment</label>
+                <textarea name="comment" class="form-control" rows="4"></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary" id="popin">Submit</button>
+        </form>
+      </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="dateRangeModal" tabindex="-1" aria-labelledby="dateRangeModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title order-btn" id="dateRangeModalLabel">Select Dates</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form id="dateRangeForm">
+          <div class="mb-3">
+            <input type="text" name="daterange" id="daterange" class="form-control" />
+            <input type="hidden" id="product_id" value='{{product.id}}'>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" id="popin" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" id="popin" class="btn btn-primary" onclick="submitDateRange()">Submit</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="container mt-5" style="display: flex;">
+  <div>
+      <p>
+          <a href="#" class="home_link">Home</a>
+          <i class="bi bi-chevron-right" style="color: rgba(109, 109, 109, 1);"></i> 
+      </p>
+  </div>
+
+  <div>  
+    <p>
+      <a href="#" class="home_link">Camera</a>
+      <i class="bi bi-chevron-right" style="color: rgba(109, 109, 109, 1);"></i> 
+      <span class="check_link">{{product.title}}</span>
+      </p>
+  </div>
+</div>
+
+
+  <!-- Swiper -->
+  <div class="container mt-3 border border-danger">
+    <div class="row">
+      <div class="col-lg-7">
+        <div style="--swiper-navigation-color: #fff; --swiper-pagination-color: #fff" class="swiper mySwiper2">
+          <div class="swiper-wrapper">
+            {% for image in product.image.all %}
+            <div class="swiper-slide">
+              <img src="{{image.url.url}}" />
+            </div>
+            {% endfor %}
+
+          </div>
+        </div>
+        <div thumbsSlider="" class="swiper mySwiper">
+          <div class="swiper-wrapper">
+
+            {% for image in product.image.all %}
+            <div class="swiper-slide">
+              <img src="{{image.url.url}}" />
+            </div>
+            {% endfor %}
+
+          </div>
+
         </div>
       </div>
 
 
+      <div class="col-lg-5 mt-sm-3 ">
+        <div class="card" style="max-width: 32rem; height: 32rem; border:3px solid E6E6E6">
+          <div class="card-body">
+            <h5 class="card-title title">{{product.title}}</h5>
+            <p class="map-img address">
+              <img src="{% static "image/nav/map-pin.png" %}" class="pe-1" alt="">{{product.location}}
+            </p>
+            <p class="name">
+              <img src="{% static "image/nav/Group1961.png" %}" class="pe-1" alt="">Ben in shek O <img src="{% static "image/nav/Side Nav icons.png" %}" alt="">
+            </p>
+            <p class="">
+              <img src="{% static "image/nav/star_rate.png" %}" class="pe-1" alt="">{{ average_rating }} <span class="">({{ reviews_count }} reviews)</span><span class="ms-2">
+                  <button type="button" class="btn btn-link" id='popin' data-bs-toggle="modal" data-bs-target="#exampleModal">
+                      Write a Review
+                  </button>
+              </span>
+              
+            </p>
 
-     <div class="mt-4 mb-5 map_div">
-      <h3>Address</h3>
-      <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d27221.428710350294!2d74.24158215522772!3d31.478026574563344!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39190233a83c0335%3A0xa646aee86216e404!2sCentre%20for%20Excellence%20in%20Molecular%20Biology!5e0!3m2!1sen!2s!4v1716821146210!5m2!1sen!2s" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-
-     </div>
 
 
-      <div class="d-flex">
-            <div class="">
-              Other Items From Ben
-            </div>
-            <div class="ms-auto">
-                <button type="button" class="btn btn-primary">Primary</button>
-            </div>
+            <div class="d-flex gap-3">
+              <div id="daily-option" class="pricing-option active" data-option-type="daily" data-days="1" onclick="selectOption('daily')">
+                  <p class="review">Daily</p>
+                  <p class="price">${{product.Daily_price}} <span class="review">/day</span></p>
+              </div>
+              <div id="weekly-option" class="pricing-option" data-option-type="weekly" data-days="7" onclick="selectOption('weekly')">
+                  <p class="review">Weekly</p>
+                  <p class="price">${{product.Weekly_price}} <span class="review">/day</span></p>
+              </div>
+              <div id="monthly-option" class="pricing-option" data-option-type="monthly" data-days="30" onclick="selectOption('monthly')">
+                  <p class="review">Monthly</p>
+                  <p class="price">${{product.Monthly_price}} <span class="review">/day</span></p>
+              </div>
+
+              <!-- Hidden input to store the selected option -->
+<input type="hidden" id="selected-option" value="">
           </div>
 
 
-     <div class="other-items">
 
-     </div>
+            <br>
+            <button type="button" style="background-color:#005494; color: #FFFFFF;" class="btn-lg btn-block w-100 order-btn" data-bs-toggle="modal" data-bs-target="#dateRangeModal">
+              Check Price and Availability
+            </button>
+            
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <div class="mt-5">
+      <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+        <li class="nav-item" role="presentation">
+          <button class="nav-link title active" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home"
+            type="button" role="tab" aria-controls="pills-home" aria-selected="true">Description</button>
+        </li>
+        <li class="nav-item" role="presentation">
+          <button class="nav-link title" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile"
+            type="button" role="tab" aria-controls="pills-profile" aria-selected="false">Reviews</button>
+        </li>
+      </ul>
+      <div class="tab-content" id="pills-tabContent">
+        <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+          Description here</div>
+        <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
+
+          <div class="container mt-4">
+            <h1>{{ product.name }}</h1>
+            <h2 class='order-btn'>Reviews</h2>
+            <div class="reviews-container">
+                <div class="row">
+                  {% if reviews %}
+                  {% for review in reviews %}
+                    <div class="col-md-12 col-lg-12">
+                      <div class="review-card d-flex align-items-start">
+                        <img src="{{ review.user.profile.image.url }}" alt="{{ review.user.username }}'s profile picture" class="me-3">
+                        <div>
+                          <div class="username order-btn">{{ review.user.username }}</div>
+                          <div class="stars">
+                            {% for star in star_range %}
+                              {% if star <= review.rating %}
+                                <span class="fa fa-star checked"></span>
+                              {% else %}
+                                <span class="fa fa-star"></span>
+                              {% endif %}
+                            {% endfor %}
+                          </div>
+                          <p class="comment" id="popin">{{ review.comment }}</p>
+                        </div>
+                      </div>
+                    </div>
+                  {% endfor %}
+                {% else %}
+                  <p class="no-reviews">There are no reviews available at this time.</p>
+                {% endif %}
+                
+                </div>
+            </div>
+        </div>
+ 
+        </div>
+      </div>
+    </div>
+
+
+
+    <div class="mt-4 mb-5 map_div">
+      <h3 class='title'>Address</h3>
+      <iframe
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d27221.428710350294!2d74.24158215522772!3d31.478026574563344!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39190233a83c0335%3A0xa646aee86216e404!2sCentre%20for%20Excellence%20in%20Molecular%20Biology!5e0!3m2!1sen!2s!4v1716821146210!5m2!1sen!2s"
+        style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+
+    </div>
+
+
+    <div class="d-flex">
+      <div class="">
+        Other Items From Ben
+      </div>
+      <div class="ms-auto">
+        <button type="button" class="btn btn-primary">Primary</button>
+      </div>
+    </div>
+
+
+    <div class="other-items">
+
+    </div>
 
 
   </div>
 
-  {% include "camera/footer.html" %}
+  </div>
+  {% include "footer.html" %}
 
 
   <!-- Swiper JS -->
@@ -287,7 +285,7 @@ color: #005494;
   <script>
     var swiper = new Swiper(".mySwiper", {
       spaceBetween: 10,
-      slidesPerView: 5,
+      slidesPerView: 4,
       freeMode: true,
       watchSlidesProgress: true,
     });
@@ -301,6 +299,253 @@ color: #005494;
         swiper: swiper,
       },
     });
+
+    $(function() {
+    // Initialize daterangepicker with initial settings
+    var daterangepickerOptions = {
+        opens: 'left',
+        minDate: moment().startOf('day'), // Restrict to start from today
+        autoApply: true, // Apply selection automatically when user selects a range
+        minSpan: { days: 1 }, // Ensure the minimum range is 1 day
+        locale: {
+            format: 'DD MMM' // Change the date format to "DD MMM YYYY"
+        }
+    };
+
+    // Function to update the date range limit and default dates based on selected option (daily, weekly, monthly)
+    function updateDateLimit(numDays) {
+        // Calculate new end date based on the selected option
+        var newEndDate = moment().startOf('day').clone().add(numDays - 1, 'days');
+
+        // Update the daterangepicker options with the new date limit and default dates
+        daterangepickerOptions.dateLimit = { days: numDays };
+        daterangepickerOptions.startDate = moment().startOf('day');
+        daterangepickerOptions.endDate = newEndDate;
+
+        // Destroy the existing daterangepicker instance
+        $('input[name="daterange"]').data('daterangepicker').remove();
+
+        // Reinitialize the daterangepicker with the updated options
+        $('input[name="daterange"]').daterangepicker(daterangepickerOptions);
+    }
+
+    // Initialize daterangepicker with default options
+    $('input[name="daterange"]').daterangepicker(daterangepickerOptions);
+
+    // Event listener for selecting different price options (divs)
+    $('.pricing-option').click(function() {
+        var optionType = $(this).attr('data-option-type');
+        var numDays = parseInt($(this).attr('data-days'));
+
+        if (isNaN(numDays)) {
+            console.log("Invalid number of days for option:", optionType);
+            return;
+        }
+
+        updateDateLimit(numDays);
+
+        // Update active class for styling
+        $('.pricing-option').removeClass('active');
+        $(this).addClass('active');
+    });
+
+    // Event listener for when the user selects a date range
+    $('input[name="daterange"]').on('apply.daterangepicker', function(ev, picker) {
+        var startDate = picker.startDate;
+        var endDate = picker.endDate;
+
+        // Calculate the number of days selected
+        var numSelectedDays = endDate.diff(startDate, 'days') + 1; // +1 because diff() gives the difference, not inclusive
+
+        // Validate the number of selected days against the current date limit
+        if (numSelectedDays !== daterangepickerOptions.dateLimit.days) {
+            // Show an alert or handle the error as per your application's requirement
+            alert('Please select exactly ' + daterangepickerOptions.dateLimit.days + ' days.');
+            // Reset the date range selection
+            picker.setStartDate(startDate);
+            picker.setEndDate(startDate.clone().add(daterangepickerOptions.dateLimit.days - 1, 'days'));
+        } else {
+            console.log("Selected date range:", startDate.format('YYYY-MM-DD'), 'to', endDate.format('YYYY-MM-DD'));
+            // Perform other actions based on the selected date range
+        }
+    });
+});
+
+
+
+
+
+
+
+// $(function() {
+//   moment.locale('en');
+//         $('input[name="daterange"]').daterangepicker({
+//             opens: 'left',
+//             minDate: moment().startOf('day')  // Restrict to start from today
+//         }, function(start, end, label) {
+//             console.log("A new date selection was made: " + start.format('DD-MM-YYYY') + ' to ' + end.format('DD-MM-YYYY'));
+//         });
+//     });
+
+
+
+
+// function submitDateRange() {
+//   console.log('selected option')
+//   var productId = document.getElementById('product_id').value;
+//   var pricingOption = document.querySelector('.pricing-option.active').id;
+//   var startDate;
+//   var endDate;
+
+//   // Get the selected start and end dates from the date range picker
+//   var selectedStartDate = $('#daterange').data('daterangepicker').startDate;
+//   var selectedEndDate = $('#daterange').data('daterangepicker').endDate;
+
+//   // Initialize moment-range
+//   var momentRange = moment.range;
+
+//   // Determine the new start and end dates based on the selected pricing option
+//   switch (pricingOption) {
+//       case 'daily-option':
+//           // For Daily option, ensure the duration is 1 day
+//           startDate = selectedStartDate.clone();
+//           endDate = startDate.clone().add(1, 'days');
+//           break;
+//       case 'weekly-option':
+//           // For Weekly option, ensure the duration is 7 days
+//           startDate = selectedStartDate.clone();
+//           endDate = startDate.clone().add(7, 'days');
+//           break;
+//       case 'monthly-option':
+//           // For Monthly option, ensure the duration is 30 days
+//           startDate = selectedStartDate.clone();
+//           endDate = startDate.clone().add(30, 'days');
+//           break;
+//       default:
+//           // Default to daily option if none selected
+//           startDate = selectedStartDate.clone();
+//           endDate = startDate.clone().add(1, 'days');
+//           break;
+//   }
+
+//   // Check if the selected dates are within the allowed duration
+//   var selectedRange = momentRange(startDate, endDate);
+//   var userSelectedRange = momentRange(selectedStartDate, selectedEndDate);
+
+//   if (!selectedRange.contains(userSelectedRange)) {
+//       // Show warning message if user's selection is outside the allowed duration
+//       alert('Please select dates within the specified duration (' + pricingOption.replace('-option', '') + ')');
+//       return;
+//   }
+
+//   // Construct the URL for redirection
+//   var url = '/camera/checkout/?start_date=' + encodeURIComponent(startDate.format('YYYY-MM-DD')) +
+//             '&end_date=' + encodeURIComponent(endDate.format('YYYY-MM-DD')) +
+//             '&product_id=' + encodeURIComponent(productId);
+
+//   // Redirect to the checkout page with the selected dates and product ID
+//   window.location.href = url;
+// }
+
+
+
+function selectOption(option) {
+    // Store the selected option in the hidden input
+    document.getElementById('selected-option').value = option;
+
+    // Optionally, update UI to reflect the selected option
+    document.querySelectorAll('.pricing-option').forEach(function(element) {
+        element.classList.remove('active');
+    });
+    document.getElementById(option + '-option').classList.add('active');
+}
+
+
+
+function submitDateRange() {
+    // Get the date range value from the input field
+    var daterange = document.getElementById('daterange').value;
+    
+    // Get the selected option from the hidden input field
+    var selectedOption = document.getElementById('selected-option').value;
+    
+    // Get the product ID from the input field
+    var productId = document.getElementById('product_id').value;
+    
+    // Build the URL with daterange, selected option, and product ID
+    var url = '/checkout/?option=' + encodeURIComponent(selectedOption) + 
+              '&daterange=' + encodeURIComponent(daterange) + 
+              '&product_id=' + encodeURIComponent(productId);
+    
+    // Redirect to the checkout page with the constructed URL
+    window.location.href = url;
+}
+
+
+// function submitDateRange() {
+//     var daterange = document.getElementById('daterange').value;
+//     var productId = document.getElementById('product_id').value;// Assuming you have an input field with id 'product_id'
+//     var url = '/checkout/?daterange=' + encodeURIComponent(daterange) + '&product_id=' + encodeURIComponent(productId);
+//     window.location.href = url;
+// }
+
+
+// function selectOption(option) {
+//         // Remove active class from all options
+//         const pricingOptions = document.querySelectorAll('.pricing-option');
+//         pricingOptions.forEach(option => {
+//             option.classList.remove('active');
+//         });
+
+//         // Add active class to the clicked option
+//         const selectedOption = document.getElementById(`${option}-option`);
+//         selectedOption.classList.add('active');
+
+//         // Here you can optionally perform additional actions based on the selected option
+//         // For example, update a hidden input field with the selected option value
+//         //document.getElementById('selected-option').value = option;
+//     }
+
+// function submitDateRange() {
+//     var startDate = new Date(document.getElementById('start_date').value);
+//     var endDate = new Date(document.getElementById('end_date').value);
+    
+//     // Calculate the difference in days
+//     var differenceInTime = endDate.getTime() - startDate.getTime();
+//     var differenceInDays = Math.ceil(differenceInTime / (1000 * 3600 * 24));
+    
+//     // Format the start and end dates
+//     var startDay = startDate.getDate();
+//     var startMonth = startDate.toLocaleString('default', { month: 'short' });
+    
+//     var endDay = endDate.getDate();
+//     var endMonth = endDate.toLocaleString('default', { month: 'short' });
+    
+//     // Construct the formatted date range string
+//     var formattedDateRange = differenceInDays + ' days ' + startDay + ' ' + startMonth + ' - ' + endDay + ' ' + endMonth;
+    
+//     var productId = document.getElementById('product_id').value;
+//     var url = '/camera/checkout/?daterange=' + encodeURIComponent(formattedDateRange) + '&product_id=' + encodeURIComponent(productId);
+//     window.location.href = url;
+// }
+
+
+
+
+$(document).ready(function(){
+  $('#star-rating').raty({
+      scoreName: 'rating',
+      number: 5,
+      half: false,
+      starType: 'i',
+      starOn: 'fa fa-star checked',
+      starOff: 'fa fa-star',
+      starHalf: 'fa fa-star-half-alt',
+      click: function(score, evt) {
+          $('#id_rating').val(score);
+      }
+  });
+});
   </script>
 </body>
 

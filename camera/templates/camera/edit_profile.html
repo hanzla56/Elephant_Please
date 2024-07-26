@@ -1,15 +1,15 @@
 {% extends "Base.html" %}
-{% load static %} 
+{% load static %}
 
- {% block css %}
+{% block css %}
 <link rel="stylesheet" href="{% static "css/user_profile.css" %}">
- {% endblock css %}
+{% endblock css %}
 
-
- {% block content %} 
- <div class="container mb-5">
+{% block content %}
+<form action="{% url "camera:edit_profile"%}" enctype="multipart/form-data" method="post">
+{% csrf_token %}
+<div class="container mb-5">
     <div class="row">
-        
         <div class="col-md-3 profile-container">
             <div>
                 <h1 class="mt-5 profile-heading">Profile Details</h1>
@@ -18,17 +18,14 @@
                 <div class="container d-flex justify-content-center align-items-center ">
                     <div class="text-center">
                         <div class="profile-image mt-5">
-                            
                             {% if user_profile.profile_img %}
-    
-                            <img class="img1 profile-preview-image" id="preview_image" src="{{user_profile.profile_img.url}}" alt="Profile Image">
-                        {% else %}
-                            <img class="img1 profile-preview-image" id="preview_image" src="{% static 'image/nav/coin.png' %}" alt="Default Profile Image">
-                        {% endif %}
-                        
-
+                            <img class="img1 profile-preview-image" id="preview_image" src="{{ user_profile.profile_img.url }}" alt="Profile Image">
+                            {% else %}
+                            <p>No profile image found</p>
+                            {% endif %}
                         </div>
-                        <input type="file" id="upload-input" accept="image/*" style="display: none;">
+                        <input type="file" id="upload-input" name="profile_img" accept="image/*" style="display: none;">
+                        <label for="upload-input" class="btn btn-primary mt-2">Choose Image</label>
                     </div>
                 </div>
                 <h1 class="profile-name">{{ user_profile.name }}</h1>
@@ -37,19 +34,18 @@
             <div>
                 <h1 class="mt-5 profile-statistics">Your statistics</h1>
                 <a href="#" style="text-decoration: none; color: rgb(0, 0, 0);">
-                <div class="profile-box">
-                    <h2 class="profile-statistics-value">$0.00</h2>
-                    <div class="profile-row">
-                     
+                    <div class="profile-box">
+                        <h2 class="profile-statistics-value">$0.00</h2>
+                        <div class="profile-row">
                             <div>
                                 <h1 class="profile-statistics-info">Lifetime earnings</h1>
                             </div>
                             <div>
                                 <img class="profile-coin" src="{% static 'image/nav/coin.png' %}" alt>
                             </div>
-                        
-                    </div></a>
-                </div></a>
+                        </div>
+                    </div>
+                </a>
                 <div class="row mt-2">
                     <div class="col-6">
                         <div class="profile-column">
@@ -59,7 +55,7 @@
                     </div>
                     <div class="col-6">
                         <div class="profile-column">
-                            <h1 id="#" class="profile-number">{{ user.days_since_creation }}</h1>
+                            <h1 id="#" class="profile-number">{{ user_profile.days_since_creation }}</h1>
                             <h2 class="profile-statistics-number">Day with us</h2>
                         </div>
                     </div>
@@ -67,10 +63,11 @@
                 <div class="row mt-2">
                     <div class="col-6">
                         <a style="text-decoration: none;color: black;" href="">
-                        <div class="profile-column">
-                            <h1 class="profile-number">0</h1>
-                            <h2 class="profile-statistics-number">Lend</h2>
-                        </div></a>
+                            <div class="profile-column">
+                                <h1 class="profile-number">0</h1>
+                                <h2 class="profile-statistics-number">Lend</h2>
+                            </div>
+                        </a>
                     </div>
                     <div class="col-6">
                         <div class="profile-column">
@@ -83,67 +80,82 @@
         </div>
         <div id="profileContent" class="col-md-9 mt-5 profile-content">
             <div class="top_button">
-                <div class="inbox d-flex justify-content-between ">
+                <div class="inbox d-flex justify-content-between">
                     <div>
                         <a class="profile-link" href="{% url 'camera:create' %}">
-                            <button class="  earn-button profile-button">
+                            <button class="earn-button profile-button">
                                 <h1 class="profile-button-text">List and earn</h1>
                             </button>
                         </a>
                     </div>
                     <div>
-                        <a class="profile-link" href="{% url "camera:edit_profile"%}">
-                            <button class=" inbox-button profile-button">
-                                <h1 class="profile-button-text">Edit Profile</h1>
-                            </button>
-                        </a>
+                        <button class="inbox-button profile-button" type="submit">
+                            <h1 class="profile-button-text">Save</h1>
+                        </button>
                     </div>
                 </div>
             </div>
-            <div class="formss mt-5 profile-form"
-                style="border:1px solid rgba(234, 234, 234, 1);border-radius:10px;padding:30px;">
+            <div class="formss mt-5 profile-form" style="border:1px solid rgba(234, 234, 234, 1);border-radius:10px;padding:30px;">
                 <div class="row">
                     <div class="col-lg-6 col-md-12">
                         <div class="mb-3">
                             <label for="firstName" class="form-label profile-label">First Name</label>
-                            <br>
-                            <input value="{{ user_profile.username }}" type="text" class="form-1 profile-input" readonly id="firstName">
+                            <input value="{{ user_profile.username }}" type="text" class="form-1 profile-input" name="firstName" id="firstName">
                         </div>
                         <div class="mb-3">
                             <label for="emailAddress" class="form-label profile-label">Email Address</label>
-                            <input value="{{ user_profile.email }}" type="text" class="form-1 profile-input" readonly id="emailAddress">
+                            <input value="{{ user_profile.email }}" type="text" class="form-1 profile-input" name="emailAddress" id="emailAddress">
                         </div>
                         <div class="mb-3">
                             <label for="location" class="form-label profile-label">Location</label>
-                            <input type="text" value="{% if user_profile.location %}{{ user_profile.location }}{% else %}  {% endif %}" class="form-1 profile-input" readonly id="location">
+                            <input type="text" value="{{ user_profile.location }}" class="form-1 profile-input" name="location" id="location">
                         </div>
                     </div>
                     <div class="col-lg-6 col-md-12">
                         <div class="mb-3">
                             <label for="lastName" class="form-label profile-label">Last Name</label>
-                            <input type="text" class="form-1 profile-input" value="{{ user_profile.last_name }}" readonly id="lastName">
+                            <input type="text" class="form-1 profile-input" value="{{ user_profile.last_name }}" name="lastName" id="lastName">
                         </div>
                         <div class="mb-3">
                             <label for="phoneNumber" class="form-label profile-label">Phone Number</label>
-                            <input type="text" class="form-1 profile-input" value="{{ user_profile.mobile_number }}" readonly id="phoneNumber">
+                            <input type="text" class="form-1 profile-input" value="{{ user_profile.mobile_number }}" name="phoneNumber" id="phoneNumber">
                         </div>
                     </div>
                 </div>
                 <div class="describation">
                     <div class="mb-3">
                         <label for="profileDescription" class="form-label profile-label">Profile Description</label>
-                        <textarea class="form-control profile-textarea" id="profileDescription" rows="7" readonly 
-                            maxlength="200">{{ user_profile.about_me }}</textarea>
+                        <textarea class="form-control profile-textarea" name="profileDescription" id="profileDescription" rows="7" maxlength="200">{{ user_profile.about_me }}</textarea>
                         <div id="wordCount" class="form-text">0/200 words</div>
                     </div>
                 </div>
-            </div></div></div></div>
+            </div>
+        </div>
+    </div>
+</div>
+</form>
+{% endblock %}
 
+{% block js %}
+<script>
+function handleFileSelect(event) {
+    var file = event.target.files[0];
+    var previewImage = document.getElementById('preview_image');
 
+    var reader = new FileReader();
+    reader.onload = function(event) {
+        previewImage.src = event.target.result;
+        console.log(event.target.result)
+    };
 
+    if (file) {
+        reader.readAsDataURL(file);
+    }
+}
 
-
-
-
-      
-        </div> {% endblock %}
+var uploadInput = document.getElementById('upload-input');
+if (uploadInput) {
+    uploadInput.addEventListener('change', handleFileSelect);
+}
+</script>
+{% endblock %}

@@ -34,6 +34,7 @@ INSTALLED_APPS = [
     # 'jazzmin',
     # 'admin_interface',
     # "colorfield",
+    'channels',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -76,12 +77,14 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'camera.context_processors.user_info',   #context processors
             ],
         },
     },
 ]
 
 WSGI_APPLICATION = 'core.wsgi.application'
+ASGI_APPLICATION = 'core.asgi.application'
 
 
 # Database
@@ -141,7 +144,7 @@ MEDIA_URL = '/media/'
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = 'static/' 
 
 
 # Default primary key field type
@@ -151,6 +154,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
 AUTH_USER_MODEL = 'accounts.MyUser'
+
+
 
 
 SOCIALACCOUNT_PROVIDERS = {
@@ -188,12 +193,46 @@ SOCIALACCOUNT_PROVIDERS = {
     }
 }
 
+
+
+# Specify that email is used for authentication
+ACCOUNT_AUTHENTICATION_METHOD = 'email'
+
+# Require a user's email address
+ACCOUNT_EMAIL_REQUIRED = True
+
 ACCOUNT_LOGOUT_ON_GET = True
 SOCIALACCOUNT_LOGIN_ON_GET = True
 LOGIN_REDIRECT_URL = "/"
 LOGOUT_REDIRECT_URL = '/'
 
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'hanzlaanzar921@gmail.com'
+EMAIL_HOST_PASSWORD = 'wyth bnpl bquy crfc'
 
 
-ANONYMOUS_USER_ID = 1
+
+
+
+
+STRIPE_SECRET_KEY = "sk_test_51PRCFWP2bdyRuebigkk4IWfXJQJwOOqw8DLjgFpSskSIVTZ4U6gaHvXgpMfGCWfaQfJmEeEZDOzlsC8GplVCckMC00OXl9jm55"
+STRIPE_PUBLISHABLE_KEY = "pk_test_51PRCFWP2bdyRuebiW6latZmlLbu9Z2pDpVpoSiBqbjvdai9jVmugvGh8uk1a9jbd0JJYhAEXZU6GyuP9g8tHUI6q00mv2vnGuL"
+STRIPE_WEBHOOK_SECRET = "whsec_1005fa7e2b0a30cf3b2ddc43c00639f5291808f14fead060e4071dbad821e7e9"
+
+
+
+
+
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels_redis.core.RedisChannelLayer",
+        "CONFIG": {
+            "hosts": [("127.0.0.1", 6379)],
+        },
+    },
+}

@@ -1,0 +1,171 @@
+.searchBar_main_div {
+  width: 100%;
+  max-width: 550px;
+  margin: auto;
+}
+.maindiv_text {
+  color: white;
+}
+.maindiv_text_first {
+  font-family: "Montserrat";
+  font-size: 55px;
+  font-weight: 800;
+  line-height: 80px;
+  text-align: center;
+}
+.maindiv_text_second {
+  font-family: "Nunito Sans";
+  font-size: 17px;
+  font-weight: 500;
+  line-height: 30px;
+  text-align: center;
+}
+
+@media (max-width: 992px) {
+  .maindiv_text_first {
+    font-size: 40px;
+    line-height: 60px;
+  }
+
+  .maindiv_text_second {
+    font-size: 16px;
+    line-height: 28px;
+  }
+}
+
+@media (max-width: 768px) {
+  .maindiv_text_first {
+    font-size: 30px;
+    line-height: 40px;
+  }
+
+  .maindiv_text_second {
+    font-size: 12px;
+    line-height: 28px;
+  }
+}
+
+.searchBar_inner_div {
+  display: flex;
+  align-items: center;
+  box-shadow: 0px 19px 29px 0px #3e357824;
+  border-radius: 12px 0px 0px 12px;
+}
+.searchBar_inner_div input {
+  width: 100%;
+  border: none;
+  padding: 18px;
+  border-radius: 12px 0px 0px 12px;
+  outline: none;
+}
+.searchBar_inner_div button {
+  width: 160px;
+  border: none;
+  padding: 15px 0px;
+  background: #005494;
+  border-radius: 14px;
+  color: white;
+}
+.custom-card {
+  border: none;
+  box-shadow: 20px;
+}
+
+.title {
+  font-family: "Montserrat";
+  font-size: 17px;
+  font-weight: 600;
+  line-height: 28px;
+  text-align: left;
+  min-height: 50px;
+}
+.address {
+  font-family: "Poppins";
+  font-size: 10px;
+  font-weight: 500;
+  /* line-height: 24px; */
+  text-align: left;
+  color: #969696;
+  margin: 0 !important;
+}
+.pr-price {
+  font-family: "Montserrat";
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 38px;
+  text-align: left;
+}
+.rating {
+  font-family: "Poppins";
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 32px;
+  text-align: left;
+}
+
+.image {
+  width: 361px;
+  object-fit: cover;
+}
+.map-img {
+  object-fit: cover;
+  min-height: 20px;
+  margin: 0 !important;
+}
+.inner-div {
+  padding: 3px;
+}
+.card-img-top {
+  min-height: 200px;
+}
+.search_container {
+  background-color: #005494;
+  border-radius: 20px;
+}
+.pd {
+  min-height: 300px;
+}
+
+.name_of_category_link {
+  text-decoration: none;
+  font-family: "Poppins";
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 32px;
+  text-align: left;
+  color: rgba(109, 109, 109, 1);
+}
+.item_link {
+  text-decoration: none;
+  font-family: "Poppins";
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 32px;
+  text-align: left;
+  color: rgba(109, 109, 109, 1);
+}
+
+.check_link {
+  text-decoration: none;
+  font-family: "Poppins";
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 32px;
+  text-align: left;
+  color: rgba(0, 84, 148, 1);
+}
+.home_link {
+  text-decoration: none;
+  font-family: "Poppins";
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 32px;
+  text-align: left;
+  color: rgba(109, 109, 109, 1);
+}
+.new_div{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+}

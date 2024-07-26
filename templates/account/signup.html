@@ -1,204 +1,214 @@
-{% extends "base.html" %}
+{% extends "account_base.html" %}
+{% load static %}
 {% load socialaccount %}
 {% block css %}
 <style>
-.signpage {
-    margin-top: 80px;
-    width: 100%;
-    max-width: 500px;
-    border-radius: 32px;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    box-shadow: 0px 10px 40px 0px rgba(0, 0, 0, 0.1);
-    background-color: white;
-}
+    .signpage {
+        margin: 80px 0px 140px 0px;
+        width: 100%;
+        max-width: 500px;
+        border-radius: 32px;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        box-shadow: 0px 10px 40px 0px rgba(0, 0, 0, 0.1);
+        background-color: white;
+    }
 
-.signup_h1 {
-    font-family: Montserrat;
-    font-size: 32px;
-    font-weight: 600;
-
-
-}
-
-.input_field {
-    width: 100%;
-    /* Adjust the width as needed */
-    border: none;
-    background-color: white;
-}
+    .signup_h1 {
+        font-family: Montserrat;
+        font-size: 32px;
+        font-weight: 600;
 
 
-.email_label {
+    }
+
+    .input_field {
+        width: 100%;
+        /* Adjust the width as needed */
+        border: none;
+        background-color: white;
+    }
 
 
-    font-family: Poppins;
-    font-size: 12px;
-    font-weight: 400;
-    line-height: 24px;
-    text-align: left;
-
-    color: rgba(109, 109, 109, 1);
+    .email_label {
 
 
+        font-family: Poppins;
+        font-size: 12px;
+        font-weight: 400;
+        line-height: 24px;
+        text-align: left;
 
-}
-
-.profile-img {
-    max-width: 200px;
-    height: auto;
-    border-radius: 50%;
-}
-
-/* styles.css */
-
-.reset-button {
-    width: 198px;
-    height: 60px;
-    border-radius: 16px;
-    background: rgba(0, 84, 148, 1);
-}
-
-.reset-button h1 {
-    font-family: Poppins;
-    color: white;
-    font-size: 18px;
-    font-weight: 600;
-    margin: 0;
-}
+        color: rgba(109, 109, 109, 1);
 
 
 
+    }
 
-.custom-sign-in-btn {
-    font-family: 'Poppins', sans-serif;
-    font-size: 16px;
-    font-weight: 600;
-    line-height: 32px;
-    text-align: center;
-    background-color: #005494;
-    color: white;
-}
-#id_password {
-    border: none;
-    border-bottom: 1px solid rgba(204, 204, 204, 1);
-    outline: none;
-    width: 100%;
+    .profile-img {
+        max-width: 200px;
+        height: auto;
+        border-radius: 50%;
+    }
 
-}
+    /* styles.css */
 
-#id_email {
-    border: none;
-    border-bottom: 1px solid rgba(204, 204, 204, 1);
-    outline: none;
-    width: 100%;
-}
+    .reset-button {
+        width: 198px;
+        height: 60px;
+        border-radius: 16px;
+        background: rgba(0, 84, 148, 1);
+    }
 
-.not_account_heading {
-    font-family: Poppins;
-    font-size: 14px;
-    font-weight: 500;
-    text-align: center;
-
-}
-
-#id_first_name {
-    border: none;
-    border: none;
-    border-bottom: 3px solid rgba(0, 84, 148, 1);
-    outline: none;
-    width: 100%;
-}
-#id_username{
-    border: none;
-    border-bottom: 1px solid rgba(204, 204, 204, 1);
-    outline: none;
-    width: 100%;
-}
-#id_password1{
-    border: none;
-    border-bottom: 1px solid rgba(204, 204, 204, 1);
-    outline: none;
-    width: 100%;
-}
-#id_password2{
-    border: none;
-    border-bottom: 1px solid rgba(204, 204, 204, 1);
-    outline: none;
-    width: 100%;
-}
+    .reset-button h1 {
+        font-family: Poppins;
+        color: white;
+        font-size: 18px;
+        font-weight: 600;
+        margin: 0;
+    }
 
 
 
-#id_last_name {
-    border: none;
-    border-bottom: 1px solid rgba(204, 204, 204, 1);
-    outline: none;
-    width: 100%;
-}
+
+    .custom-sign-in-btn {
+        font-family: 'Poppins', sans-serif;
+        font-size: 16px;
+        font-weight: 600;
+        line-height: 32px;
+        text-align: center;
+        background-color: #005494;
+        color: white;
+    }
+
+    #id_password {
+        border: none;
+        border-bottom: 1px solid rgba(204, 204, 204, 1);
+        outline: none;
+        width: 100%;
+
+    }
+
+    #id_email {
+        border: none;
+        border-bottom: 1px solid rgba(204, 204, 204, 1);
+        outline: none;
+        width: 100%;
+    }
+
+    .not_account_heading {
+        font-family: Poppins;
+        font-size: 14px;
+        font-weight: 500;
+        text-align: center;
+
+    }
+
+    #id_first_name {
+        border: none;
+        border: none;
+        border-bottom: 3px solid rgba(0, 84, 148, 1);
+        outline: none;
+        width: 100%;
+    }
+
+    #id_username {
+        border: none;
+        border-bottom: 1px solid rgba(204, 204, 204, 1);
+        outline: none;
+        width: 100%;
+    }
+
+    #id_password1 {
+        border: none;
+        border-bottom: 1px solid rgba(204, 204, 204, 1);
+        outline: none;
+        width: 100%;
+    }
+
+    #id_password2 {
+        border: none;
+        border-bottom: 1px solid rgba(204, 204, 204, 1);
+        outline: none;
+        width: 100%;
+    }
+
+
+
+    #id_last_name {
+        border: none;
+        border-bottom: 1px solid rgba(204, 204, 204, 1);
+        outline: none;
+        width: 100%;
+    }
 </style>
 
 {% endblock css %}
 {% block content %}
-    <div class="mb-5" style=" position: relative; height: auto; min-height: 100vh;">
-        <div class="text-center"
-        
-            style="width: 100%; height: 40vh; gap: 0px; opacity: 0px; background: rgba(0, 84, 148, 1);">
-            {% comment %} <img class="img-fluid mt-5" src="{% static 'image/nav/Group 154.png' %}" alt> {% endcomment %}
-        </div>
-        <div class="container pt-5 signpage">
-            <div class="headingjj">
-                <div class="text-center signup_h1">
-                    <h1>Sign up</h1>
-                </div>
-                <div class="forms_signup">
-                    <div style="
+<div class="mb-5" style=" position: relative; height: auto; min-height: 120vh;">
+    <div class="text-center"
+        style="width: 100%; height: 40vh; gap: 0px; opacity: 0px; background: rgba(0, 84, 148, 1);">
+        <img class="img-fluid mt-5" src="{% static 'image/nav/Group 154.png' %}" alt>
+    </div>
+    <div class="container">
+        <div class="heading signpage pt-5">
+            <div class="text-center signup_h1">
+                <h1>Sign up</h1>
+            </div>
+            <div class="forms_signup">
+                <div style="
                     font-family: Poppins;
                     font-size: 14px;
                     font-weight: 400;
                     color: #6D6D6D;
 
                     " class="form-group p-5">
-                    
-                        <form action="{% url 'account_signup' %}" method="POST" >
-                            {% csrf_token %}
-                            
-                     {% for fm in form %}
-                                {{ fm.label_tag }} {{ fm }} {{ fm.errors|striptags }} <br><br>
-                            {% endfor %}
-                                
-                          
-                            <div class="text-center">
-                                <button style="width:100%;height:60px;border-radius:16px;background:rgba(0, 84, 148, 1);" type='submit' class="btn inbox-button" id="editProfileButton">
-                                    <h1 style="font-family:Poppins;color:white;font-size:18px;font-weight:600;margin:0;">
-                               sign up</h1>
-                                </button>
-                            </div>
-                        </form>
+
+                    <form action="{% url 'account_signup' %}" method="POST">
+                        {% csrf_token %}
+
+                        {% for fm in form %}
+                        {{ fm.label_tag }} {{ fm }} {{ fm.errors|striptags }} <br><br>
+                        {% endfor %}
+
+
+                        <div class="text-center">
+                            <button style="width:100%;height:60px;border-radius:16px;background:rgba(0, 84, 148, 1);"
+                                type='submit' class="btn inbox-button" id="editProfileButton">
+                                <h1 style="font-family:Poppins;color:white;font-size:18px;font-weight:600;margin:0;">
+                                    sign up</h1>
+                            </button>
                         </div>
-                        </form>
-                        <div class="or">
-                            <div class=" mt-2 text-center">
-                                <h6>Or</h6>
-                            </div>
-                        </div>
-                        <div>
-                            <div class="text-center">
-                                <a href="{% provider_login_url 'google' action='reauthenticate' %}" class="alert-link"><button class="btn btn-primary mb-2 mr-2"><i class="fab fa-google"></i></button></a>
-                                <a href="{% provider_login_url 'facebook' action='reauthenticate' %}" class="alert-link"><button class="btn btn-primary mb-2 mr-2"><i class="fab fa-facebook"></i></button></a>
-                                <a href="{% provider_login_url 'github' action='reauthenticate' %}" class="alert-link"><button class="btn btn-primary mb-2 mr-2"><i class="fab fa-github"></i></button></a>
-                            </div>
-                        </div>
-                        <br>
-                        <div>
-                            <h4 class="not_account_heading"><a href="{% url 'account_login' %}"
-                                    style="color: rgba(0, 84, 148, 1);">Sign in.</a></h4>
-                        </div>
+                    </form>
+                </div>
+                </form>
+                <div class="or">
+                    <div class=" mt-2 text-center">
+                        <h6>Or</h6>
                     </div>
+                </div>
+                <div>
+                    <div class="text-center">
+                        <a href="{% provider_login_url 'google' action='reauthenticate' %}" class="alert-link"><button
+                                class="btn btn-primary mb-2 mr-2"><i class="fab fa-google"></i></button></a>
+                       {% comment %} <a href="{% provider_login_url 'facebook' action='reauthenticate' %}"
+                            class="alert-link"><button class="btn btn-primary mb-2 mr-2"><i
+                                    class="fab fa-facebook"></i></button></a>
+                        <a href="{% provider_login_url 'github' action='reauthenticate' %}" class="alert-link"><button
+                                class="btn btn-primary mb-2 mr-2"><i class="fab fa-github"></i></button></a> {%
+                       {% endcomment %}
+                    </div>
+                </div>
+                <br>
+                <div>
+                    <h4 class="not_account_heading"><a href="{% url 'account_login' %}"
+                            style="color: rgba(0, 84, 148, 1);">Sign in.</a></h4>
                 </div>
             </div>
         </div>
     </div>
-    {% endblock content %}
+</div>
+</div>
+{% endblock content %}
