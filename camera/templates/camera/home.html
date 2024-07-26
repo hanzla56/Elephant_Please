@@ -52,7 +52,7 @@
 
 {% for item in items %}
 
-      <div class="custom-card border border-warning" style="height: 440px; max-width: 390px; border-radius: 16px;">
+      <div class="custom-card" style="height: 360px; max-width: 390px; border-radius: 16px; box-shadow: 0px 6px 5px 6px #dee2e6;">
         <div class="inner-div">
           {% if item.image.exists%}
           <a href="{% url "camera:detail" item.id %}">
