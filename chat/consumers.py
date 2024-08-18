@@ -1,7 +1,7 @@
 import json
 from channels.generic.websocket import AsyncWebsocketConsumer 
 from asgiref.sync import async_to_sync
-from chat.models import Mychats
+from chat.models import Mychats,Notification
 from time import sleep
 import datetime
 from channels.db import database_sync_to_async
@@ -32,6 +32,8 @@ class MychatApp(AsyncWebsocketConsumer):
                 'msg':text_data['msg']
             }
             )
+        async_to_sync
+        database_sync_to_async
         await self.save_chat(text_data)
 
     @database_sync_to_async   
@@ -136,16 +138,37 @@ def send_payment_notification(sender, user_id, product, **kwargs):
     owner_id = product.owner.id
     print(f'this is product owner id {owner_id}')
     print(f'the socket connection receive to consumer {product_name}')
+    
+    
+    
+    owner_message = f"Congrats! You received a new order for {product_name}"
+    user_message = f"Payment successful for {product_name}"
+    
+    
+    Notification.objects.create(user_id=owner_id, message=owner_message)
+    Notification.objects.create(user_id=user_id, message=user_message)
+
 
     async def send_notification_to_user():
         channel_layer = get_channel_layer()
         print(channel_layer)
         print('channel layer is executed')
+        
+          
+        await channel_layer.group_send(
+            f"user_{owner_id}",
+            {
+                'type': 'send_notification',
+                'message': owner_message
+            }
+        )
+        print('message is sent to the owner group')
+        
         await channel_layer.group_send(
             f"user_{user_id}",
             {
                 'type': 'send_notification',
-                'message': f"Payment successful for {product_name}"
+                'message': user_message
             }
         )
         print('message is sent to the group')

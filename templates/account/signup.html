@@ -23,6 +23,10 @@
 
 
     }
+    .placeholder{
+        font-size: 12px;
+        font-weight: 40;
+    }
 
     .input_field {
         width: 100%;
@@ -85,7 +89,7 @@
 
     #id_password {
         border: none;
-        border-bottom: 1px solid rgba(204, 204, 204, 1);
+        border-bottom: 2px solid rgba(204, 204, 204, 1);
         outline: none;
         width: 100%;
 
@@ -93,7 +97,7 @@
 
     #id_email {
         border: none;
-        border-bottom: 1px solid rgba(204, 204, 204, 1);
+        border-bottom: 2px solid rgba(204, 204, 204, 1);
         outline: none;
         width: 100%;
     }
@@ -109,40 +113,57 @@
     #id_first_name {
         border: none;
         border: none;
-        border-bottom: 3px solid rgba(0, 84, 148, 1);
+        border-bottom: 2px solid rgba(204, 204, 204, 1);
         outline: none;
         width: 100%;
     }
 
     #id_username {
         border: none;
-        border-bottom: 1px solid rgba(204, 204, 204, 1);
+        border-bottom: 2px solid rgba(204, 204, 204, 1);
         outline: none;
         width: 100%;
     }
 
     #id_password1 {
         border: none;
-        border-bottom: 1px solid rgba(204, 204, 204, 1);
+        border-bottom: 2px solid rgba(204, 204, 204, 1);
         outline: none;
         width: 100%;
     }
 
     #id_password2 {
         border: none;
-        border-bottom: 1px solid rgba(204, 204, 204, 1);
+        border-bottom: 2px solid rgba(204, 204, 204, 1);
         outline: none;
         width: 100%;
+    }
+    .toggle-password {
+        cursor: pointer;
+        color: rgba(0, 84, 148, 1);
+        position: absolute;
+        right: 54px;
+        top: 60%;
+        transform: translateY(-50%);
+        user-select: none;
+        display: none; /* Hidden by default */
     }
 
 
 
     #id_last_name {
         border: none;
-        border-bottom: 1px solid rgba(204, 204, 204, 1);
+        border-bottom: 2px solid rgba(204, 204, 204, 1);
         outline: none;
         width: 100%;
     }
+    #id_first_name:focus,
+#id_username:focus,
+#id_password1:focus,
+#id_email:focus,
+#id_last_name:focus {
+    border-bottom: 1px solid rgba(0, 84, 148, 1); /* Blue color */
+}
 </style>
 
 {% endblock css %}
@@ -157,6 +178,17 @@
             <div class="text-center signup_h1">
                 <h1>Sign up</h1>
             </div>
+
+            <div class="form-errors">
+                {% if form.non_field_errors %}
+                    <div class="alert alert-danger">
+                        {% for error in form.non_field_errors %}
+                            <p>{{ error }}</p>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+            
             <div class="forms_signup">
                 <div style="
                     font-family: Poppins;
@@ -170,7 +202,12 @@
                         {% csrf_token %}
 
                         {% for fm in form %}
-                        {{ fm.label_tag }} {{ fm }} {{ fm.errors|striptags }} <br><br>
+                        {{ fm.label_tag }}
+                        {{ fm }} 
+                        {% if fm.name == "password1" %}
+                                    <span class="toggle-password" onclick="togglePassword()">Show</span>
+                        {% endif %}
+                        {{ fm.errors|striptags }} <br><br>
                         {% endfor %}
 
 
@@ -191,24 +228,61 @@
                 </div>
                 <div>
                     <div class="text-center">
-                        <a href="{% provider_login_url 'google' action='reauthenticate' %}" class="alert-link"><button
-                                class="btn btn-primary mb-2 mr-2"><i class="fab fa-google"></i></button></a>
-                       {% comment %} <a href="{% provider_login_url 'facebook' action='reauthenticate' %}"
-                            class="alert-link"><button class="btn btn-primary mb-2 mr-2"><i
-                                    class="fab fa-facebook"></i></button></a>
-                        <a href="{% provider_login_url 'github' action='reauthenticate' %}" class="alert-link"><button
-                                class="btn btn-primary mb-2 mr-2"><i class="fab fa-github"></i></button></a> {%
-                       {% endcomment %}
+                    
+                        <a href="{% provider_login_url 'google' action='reauthenticate' %}" class="alert-link text-decoration-none">
+                            <button class="btn px-4" style="box-shadow: 0px 0px 2px 2px #e5dddd;">
+                                <img class="img-fluid" height="23px" width="20px" src="{% static 'image/nav/search.png' %}" alt="">
+                            </button>
+                        </a>
+                        
+                        <a href="{% provider_login_url 'facebook' action='reauthenticate' %}" class="alert-link text-decoration-none">
+                            <button class="btn px-4" style="box-shadow: 0px 0px 2px 2px #e5dddd;">
+                                <img class="img-fluid" height="20px" width="20px" src="{% static 'image/nav/facebook.png' %}" alt="">
+                            </button>
+                        </a>
+                        
+                        <a href="{% provider_login_url 'github' action='reauthenticate' %}" class="alert-link text-decoration-none">
+                            <button class="btn px-4" style="box-shadow: 0px 0px 2px 2px #e5dddd;">
+                                <img class="img-fluid" height="20px" width="20px" src="{% static 'image/nav/facebook.png' %}" alt="">
+                            </button>
+                        </a>
+                    
                     </div>
                 </div>
                 <br>
                 <div>
-                    <h4 class="not_account_heading"><a href="{% url 'account_login' %}"
-                            style="color: rgba(0, 84, 148, 1);">Sign in.</a></h4>
+                    <h4 class="not_account_heading">
+                        Have an account?
+                        <a href="{% url 'account_login' %}" style="color: rgba(0, 84, 148, 1); text-decoration: none;">Sign in.</a></h4>
                 </div>
             </div>
         </div>
     </div>
 </div>
 </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const passwordField = document.getElementById('id_password1');
+        const togglePassword = document.querySelector('.toggle-password');
+
+        passwordField.addEventListener('input', function() {
+            if (passwordField.value.length > 0) {
+                togglePassword.style.display = 'block';
+            } else {
+                togglePassword.style.display = 'none';
+            }
+        });
+
+        togglePassword.addEventListener('click', function() {
+            if (passwordField.type === 'password') {
+                passwordField.type = 'text';
+                togglePassword.textContent = 'Hide';
+            } else {
+                passwordField.type = 'password';
+                togglePassword.textContent = 'Show';
+            }
+        });
+    });
+</script>
 {% endblock content %}

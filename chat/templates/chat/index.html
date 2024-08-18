@@ -175,7 +175,8 @@
 
   /* Styling for the chat container */
   .chat-container {
-    display: flex;
+    {% comment %} display: flex; {% endcomment %}
+    width:100%
   }
 
   /* Styling for the left sidebar */
@@ -327,33 +328,33 @@
 
 {% block content %}
 
-<div class="main container mt-5 mb-5">
-  <div class="d-flex align-items-start chat-container">
-    <div class="sidebar">
-      <div class="sidebar-header">
-        <a class="nav-link" href="/?user={{default_user}}" role="tab" aria-controls="v-pills-home" aria-selected="true">
-          <span>Inbox</span>
-        </a>
-      </div>
-      <nav class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-        {% for frnd in frnds %}
-        <a class="nav-link{% if frnd.username == default_user %} active{% endif %}" href="/chat/?user={{frnd.username}}" role="tab" aria-controls="v-pills-home" aria-selected="false">
-          <div class="sidebar-item">
-            <div class="sidebar-item-img" style="background-image: url(https://image.flaticon.com/icons/svg/145/145867.svg);">
-              
-            </div>
-
-            <span class="sidebar-item-username">{{frnd.username}}</span>
-          </div>
-        </a>
-        {% endfor %}
-      </nav> 
+<div class="main d-flex container mt-5 mb-5">
+  <div class="sidebar">
+    <div class="sidebar-header">
+      <a class="nav-link" href="/?user={{default_user}}" role="tab" aria-controls="v-pills-home" aria-selected="true">
+        <span>Inbox</span>
+      </a>
     </div>
+    <nav class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+      {% for frnd in frnds %}
+      <a class="nav-link{% if frnd.username == default_user %} active{% endif %}" href="/chat/?user={{frnd.username}}" role="tab" aria-controls="v-pills-home" aria-selected="false">
+        <div class="sidebar-item">
+          <div class="sidebar-item-img" style="background-image: url(https://image.flaticon.com/icons/svg/145/145867.svg);">
+            
+          </div>
+
+          <span class="sidebar-item-username">{{frnd.username}}</span>
+        </div>
+      </a>
+      {% endfor %}
+    </nav> 
+  </div>
+  <div class="chat-container">
     <div class="chat-content">
       <div class="navbar" id="top-nav">
         <div class="container-fluid">
           <a class="navbar-brand user-detail" href="#">
-            <div class="msg-img" style="background-image: url('{{ user.profile_img.url }}');">
+            {% comment %} <div class="msg-img" style="background-image: url('{{ user.profile_img.url }}');"> {% endcomment %}
                 
             </div>
             <h2 id="username" class="m-auto">{{default_user}}<span class="red-dot"></span></h2>

@@ -146,6 +146,7 @@ border-color: #005494; /* Example: Change border color for active option */
   font-size: 20px;
   font-style: bold;
   color: #005494;
+  font-family: "Poppins";
 }
 
 .map_div iframe {

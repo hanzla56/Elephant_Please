@@ -39,11 +39,12 @@ def success_view(request,p_id):
 class CreateCheckoutSessionView(View):
     @method_decorator(login_required)
     def post(self, request, *args, **kwargs):
-        print(f"this is request dictionary {request}")
         YOUR_DOMAIN = 'http://127.0.0.1:8000/'  # Adjust this URL as needed
-        print(f'this is dict {kwargs}')
         p_id = kwargs.get('id')
-        address = kwargs.get('address')
+        daterange = request.POST.get('daterange')
+        print(daterange)
+        price = request.POST.get('price')
+        price = int(price)
         user = request.user
         try:
             print(p_id)
@@ -56,7 +57,7 @@ class CreateCheckoutSessionView(View):
                     {
                         'price_data':{
                             'currency':'usd',
-                            'unit_amount':int(product.Weekly_price * 100),
+                            'unit_amount':int(price * 100),
                             'product_data':{
                                 'name':product.title,
                                 # 'images':[product.main_img],
@@ -70,7 +71,9 @@ class CreateCheckoutSessionView(View):
                 ],
                 metadata={
                     'product_id':product.id,
-                    'user_id':user.id
+                    'user_id':user.id,
+                    'date_range':daterange,
+                    'price':price
                 },
                 
                 mode='payment',
@@ -118,12 +121,14 @@ def stripe_webhook(request):
             customer_email = session['customer_details']['email']
             product_id = session['metadata'].get('product_id')
             user_id = session['metadata'].get('user_id')
+            price = session['metadata'].get('price')
+            daterange = session['metadata'].get('date_range')
 
             if not product_id or not user_id:
                 logger.error(f"Missing product_id or user_id in session metadata: {session['metadata']}")
                 return HttpResponse(status=400)
 
-            fulfill_order(user_id, product_id)
+            fulfill_order(user_id, product_id,total_price=price,time=daterange)
 
             product = item.objects.get(id=product_id)
             payment_successful_signal.send(sender=__name__, user_id=user_id, product=product)
@@ -149,17 +154,22 @@ def stripe_webhook(request):
 
     return HttpResponse(status=200)
 
-def fulfill_order(user_id, p_id):
+def fulfill_order(user_id, p_id,*args,**kwargs):
     print('fulfill function runs')
     try:
         product = item.objects.get(id=p_id)
         us = User_Data.objects.get(id=user_id)
+        price = kwargs.get('total_price')
+        span = kwargs.get('time')
+        print(f'product span inside the database {span}')
 
         ord = Order.objects.create(
             product=product,
             user=us,
             quantity=1,
-            total_price=product.Daily_price
+            total_price=price,
+            time_span = span
+            
         )
         ord.save()
         logger.info(f"Order fulfilled for user: {user_id}, product: {p_id}")
@@ -181,6 +191,7 @@ def fulfill_order(user_id, p_id):
 def Home(request):
     current_user = request.user
     item_list = item.objects.exclude(owner=current_user)
+    count = item_list.count()
     print(current_user)
     print(item_list)
     paginator = Paginator(item_list, 4)  # Adjust the number of items per page as needed
@@ -193,7 +204,7 @@ def Home(request):
     except EmptyPage:
         items = paginator.page(paginator.num_pages)
 
-    return render(request, 'camera/home.html', {'items': items})
+    return render(request, 'camera/home.html', {'items': items,'count':count})
     
 # def Home(request):
 #     item_list = item.objects.all()

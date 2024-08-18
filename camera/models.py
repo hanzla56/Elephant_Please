@@ -54,14 +54,13 @@ class Order(models.Model):
     total_price = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
     time_span = models.CharField(max_length=40, null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True, null=True, blank=True)
-
     first_name = models.CharField(max_length=30, null=True,blank=True)
     last_name = models.CharField(max_length=30 ,null=True,blank=True)
     email = models.EmailField(null=True,blank=True)
     mobile_no = models.CharField(max_length=20, null=True,blank=True)  # Consider using CharField for phone numbers
     address = models.CharField(max_length=60, null=True,blank=True)
     note = models.CharField(max_length=100, null=True,blank=True)
-    payment_status = models.CharField(max_length=1, null=True,blank=True, choices=PAYMENT_STATUS_CHOICES, default='p')
+    payment_status = models.CharField(max_length=1, null=True,blank=True, choices=PAYMENT_STATUS_CHOICES, default='s')
 
     
     def __str__(self) -> str:

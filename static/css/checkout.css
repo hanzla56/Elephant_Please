@@ -1,0 +1,147 @@
+.checkout_total_price_h {
+  margin-left: auto;
+  font-family: "Poppins";
+  font-size: 28px;
+  font-weight: 600;
+  color: rgba(0, 84, 148, 1);
+  border: 5px solid red;
+}
+.home_link {
+  text-decoration: none;
+  font-family: "Poppins";
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 32px;
+  text-align: left;
+  color: rgba(109, 109, 109, 1);
+}
+.popup {
+  display: none;
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1;
+}
+
+.popup-content {
+  background-color: #fefefe;
+  margin: 15% auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 60%;
+}
+.name_of_category_link {
+  text-decoration: none;
+  font-family: "Poppins";
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 32px;
+  text-align: left;
+  color: rgba(109, 109, 109, 1);
+}
+.item_link {
+  text-decoration: none;
+  font-family: "Poppins";
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 32px;
+  text-align: left;
+  color: rgba(109, 109, 109, 1);
+}
+
+.check_link {
+  text-decoration: none;
+  font-family: "Poppins";
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 32px;
+  text-align: left;
+  color: rgba(0, 84, 148, 1);
+}
+#place_order {
+  width: 100%;
+  background-color: rgba(0, 84, 148, 1);
+  color: white;
+  font-family: "Poppins";
+  font-size: 18px;
+  font-weight: 500;
+}
+.container label {
+  font-family: "Poppins";
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 27px;
+  text-align: left;
+  margin: 6px 0px 6px 0px;
+}
+.checkh1 {
+  font-family: "Poppins";
+  font-size: 30px;
+  font-weight: 600;
+  line-height: 45px;
+  text-align: left;
+}
+.card-text {
+  font-family: "Lato";
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 26px;
+  text-align: left;
+  color: #263238;
+}
+.card-price {
+  font-family: "Lato";
+  font-size: 20px;
+  font-weight: 450;
+  line-height: 24px;
+  text-align: right;
+  margin-left: auto;
+}
+.promo {
+  font-family: "Poppins";
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 24px;
+  text-align: left;
+}
+#changeHeader {
+  font-family: "Poppins";
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 30px;
+  text-align: right;
+  color: #005494;
+  margin-left: auto;
+}
+.title {
+  font-family: "Poppins";
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 30px;
+  text-align: left;
+  color: #005494;
+}
+.location {
+  font-family: "Poppins";
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 24px;
+  text-align: left;
+}
+#total {
+  font-family: "Poppins";
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 27px;
+  text-align: left;
+}
+#dateRangeDisplay {
+  font-family: "Poppins";
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 30px;
+  text-align: left;
+}

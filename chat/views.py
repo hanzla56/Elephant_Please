@@ -2,13 +2,40 @@ import json
 from django.shortcuts import render
 from django.views.generic import View
 from django.http import JsonResponse
-from .models import Mychats
+from .models import Mychats,Notification
 from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
 from django.db.models import OuterRef, Exists
 
 
 User = get_user_model()
+
+def fetch_notifications(request):
+    if request.user.is_authenticated:
+        notifications = Notification.objects.filter(user=request.user).order_by('-timestamp')
+        notifications_data = [{
+            'id': notification.id,
+            'message': notification.message,
+            'timestamp': notification.timestamp,
+            'read': notification.read
+        } for notification in notifications]
+        return JsonResponse(notifications_data, safe=False)
+    else:
+        return JsonResponse([], safe=False)
+    
+    
+
+def mark_as_read(request, notification_id):
+    if request.user.is_authenticated:
+        try:
+            notification = Notification.objects.get(id=notification_id, user=request.user)
+            notification.read = True
+            notification.save()
+            return JsonResponse({'status': 'success'})
+        except Notification.DoesNotExist:
+            return JsonResponse({'status': 'not_found'}, status=404)
+    else:
+        return JsonResponse({'status': 'unauthorized'}, status=401)
 
 
 @login_required

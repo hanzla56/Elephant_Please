@@ -20,6 +20,13 @@
   line-height: 30px;
   text-align: center;
 }
+.heading{
+  font-family: 'Montserrat';
+}
+
+#popin{
+  font-family: 'Poppins';
+}
 
 @media (max-width: 992px) {
   .maindiv_text_first {
@@ -44,6 +51,13 @@
     line-height: 28px;
   }
 }
+
+@media (max-width: 576px) {
+  .remove-on-small {
+      display: none;
+  }
+}
+
 
 .searchBar_inner_div {
   display: flex;

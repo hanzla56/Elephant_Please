@@ -108,9 +108,9 @@ AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
     },
-    {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
-    },
+    # {
+    #     'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+    # },
     {
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
@@ -123,8 +123,8 @@ AUTHENTICATION_BACKENDS = [
 ]
 
 ACCOUNT_FORMS = {
+    'login':'accounts.forms.CustomLoginForm',
     'signup': 'accounts.forms.CustomSignupForm',
-    'login':'accounts.forms.LoginForm',
 }
 
 # Internationalization
@@ -144,6 +144,8 @@ MEDIA_URL = '/media/'
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
+
+STATIC_ROOT = BASE_DIR/'static'
 STATIC_URL = 'static/' 
 
 

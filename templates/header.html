@@ -37,127 +37,240 @@
             min-width: 2em;
             font-weight: bold;
         }
+        .outer_bell{
+            position: absolute;
+            top: 10px;
+            right: 97px;
+        }
+        .nav-item{
+            text-align: center !important;
+        }
+        .dropdown-menu {
+            max-height: 100px; /* Adjust the height as needed */
+            overflow-y: auto; /* Enable vertical scrolling */
+        }
     </style>
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-lg bg-body-tertiary">
-        <div class="container">
-            <a class="navbar-brand" href="">
-                <img src="{% static 'image/nav/Elephant Please.png' %}" alt="..">
-                <img src="{% static 'image/nav/elephant.png' %}" alt>
-            </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav me-auto">
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="{% url "camera:home_page" %}">Rent</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url "camera:create" %}">Lend</a>
-                    </li>
-                    </li>
-                </ul>
-                <ul class="navbar-nav mt-2 ms-auto gap-3">
-                    <li class="nav-item dropdown dropdown-menu-start">
-                        <a class="nav-link " href="#" data-bs-toggle="dropdown" aria-expanded="false">
-                            <i id="bellCount" class="fa-solid fa-bell" data-count="0"></i>
-                        </a>
-                        <ul class="dropdown-menu dropdown-menu-dark  text-wrap" id="notify"
-                            style="width: 300px !important;"></ul>
-                    </li>
-                </ul>
-                <ul class="navbar-nav ms-3 gap-3" style="align-items: center;">
-                    <li class="nav-item">
-                        <a class="nav-link" href=" {% url 'chat:index' %}">
-                            <img src="{% static 'image/nav/Group 2070.png' %}" alt>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'camera:profile' %}">
-                            {% if user.profile_img %}
-                            <img class="img1 P_img" style="height: 54px; width: 54px;" id="preview_image_1"
-                                src="{{ user.profile_img.url }}" alt="Image">
-                            {% else %}
-                            <img class="img1 P_img" style="height: 54px; width: 54px;" id="preview_image_1"
-                                src="{% static 'image/nav/coin.png' %}" alt="Default Image">
-                            {% endif %}
+    <div>
 
-                            <span class="font">{{user.username}}</span>
-                        </a>
-                    </li>
-                    <li>
-                        <div class="dropdown">
-                            <a class="dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
-                                aria-expanded="false" style="color: black; text-decoration:none;"> EN </a>
-                            <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="#">Urdu</a></li>
-                                <li><a class="dropdown-item" href="#">Spanish</a></li>
-                                <li><a class="dropdown-item" href="#"> Roman </a></li>
-                            </ul>
-                        </div>
-                    </li>
-                </ul>
+        <nav class="navbar navbar-expand-lg bg-body-tertiary">
+            <div class="container">
+                <a class="navbar-brand" href="">
+                    <img src="{% static 'image/nav/Elephant Please.png' %}" alt="..">
+                    <img src="{% static 'image/nav/elephant.png' %}" alt>
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav me-auto">
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="{% url "camera:home_page" %}">Rent</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url "camera:create" %}">Lend</a>
+                        </li>
+                        </li>
+                    </ul>
+                    <ul class="navbar-nav mt-2 ms-auto gap-3">
+                        <li class="nav-item dropdown dropdown-menu-start">
+                            <a class="nav-link " href="#" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i id="bellCount" class="fa-solid fa-bell" data-count="0"></i>
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-dark  text-wrap" id="notify"
+                                style="width: 300px !important;"></ul>
+                        </li>
+                    </ul>
+                    <ul class="navbar-nav ms-3 gap-3" style="align-items: center;">
+                        <li class="nav-item">
+                            <a class="nav-link" href=" {% url 'chat:index' %}">
+                                <img src="{% static 'image/nav/Group 2070.png' %}" alt>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'camera:profile' %}">
+                                {% if user.profile_img %}
+                                <img class="img1 P_img" style="height: 54px; width: 54px;" id="preview_image_1"
+                                    src="{{ user.profile_img.url }}" alt="Image">
+                                {% else %}
+                                <img class="img1 P_img" style="height: 54px; width: 54px;" id="preview_image_1"
+                                    src="{% static 'image/nav/coin.png' %}" alt="Default Image">
+                                {% endif %}
+    
+                                <span class="font">{{user.username}}</span>
+                            </a>
+                        </li>
+                        <li>
+                            <div class="dropdown">
+                                <a class="dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                                    aria-expanded="false" style="color: black; text-decoration:none;"> EN </a>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="#">Urdu</a></li>
+                                    <li><a class="dropdown-item" href="#">Spanish</a></li>
+                                    <li><a class="dropdown-item" href="#"> Roman </a></li>
+                                </ul>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
             </div>
+        </nav>
+        <div class="outer_bell">
+
+            <ul class="navbar-nav mt-2 ms-auto gap-3">
+                <li class="nav-item dropdown dropdown-menu-start">
+                    <a class="nav-link " href="#" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i id="bellCount" class="fa-solid fa-bell" data-count="0"></i>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-dark  text-wrap" id="notify"
+                        style="width: 300px !important;"></ul>
+                </li>
+            </ul>
         </div>
-    </nav>
+
+
+
+    </div>
 
 
     <script>
         // setup chat scoket
-        const notifyScoket = new WebSocket(
-            'ws://'
-            + window.location.host
-            + '/ws/notify/'
-        );
+        document.addEventListener('DOMContentLoaded', function() {
+            // Function to create and handle the WebSocket connection
+            function setupWebSocket() {
+                const notifySocket = new WebSocket(
+                    'ws://'
+                    + window.location.host
+                    + '/ws/notify/'
+                );
 
-        // on socket open
-        notifyScoket.onopen = function (e) {
-            console.log('Socket successfully connected.');
-        };
+                // on socket open
+                notifySocket.onopen = function (e) {
+                    console.log('Socket successfully connected.');
+                };
+ 
+                // on socket close
+                notifySocket.onclose = function (e) {
+                    console.log('Socket closed unexpectedly');
+                    // Attempt to reconnect after a delay
+                    setTimeout(function() {
+                        console.log('Reconnecting...');
+                        setupWebSocket();
+                    }, 5000); // Reconnect after 5 seconds
+                };
 
-        // on socket close
-        notifyScoket.onclose = function (e) {
-            console.log('Socket closed unexpectedly');
-        };
+                // on receiving message on group
+                notifySocket.onmessage = function (e) {
+                    const data = JSON.parse(e.data);
+                    const message = data.message;
+                    console.log(message);
+                    // Call the setMessage function to add the new li element
+                    setMessage(message, false);  // Assuming the message is unread
+                };
+            }
 
-        // on receiving message on group
-        notifyScoket.onmessage = function (e) {
-            const data = JSON.parse(e.data);
-            const message = data.message;
-            console.log(message)
-            // Call the setMessage function to add the new li element
-            setMessage(message);
+            // Function to set a message
+            function setMessage(message, read, notificationId) {
+                // Create a new li element
+                console.log('set message function');
+                var newLi = document.createElement('li');
 
-        };
+                // Create a new anchor element
+                var newAnchor = document.createElement('a');
+                newAnchor.className = 'dropdown-item text-wrap';
+                newAnchor.href = '#';
+                newAnchor.textContent = message;
 
-        function setMessage(message) {
-            // Create a new li element
-            console.log('set message function')
-            var newLi = document.createElement('li');
+                // If the notification is unread, mark it visually
+                if (!read) {
+                    newLi.style.backgroundColor = 'blue';  // Change the background color for unread notifications
+                }
 
-            // Create a new anchor element
-            var newAnchor = document.createElement('a');
-            newAnchor.className = 'dropdown-item text-wrap';
-            newAnchor.href = '#';
-            newAnchor.textContent = message;
+                // Add click event listener to mark notification as read
+                newAnchor.addEventListener('click', function() {
+                    markNotificationAsRead(notificationId, newLi);
+                });
 
-            // Append the anchor element to the li element
-            newLi.appendChild(newAnchor);
+                // Append the anchor element to the li element
+                newLi.appendChild(newAnchor);
 
-            // Get the ul element with the id "notify"
-            var ulElement = document.getElementById('notify');
+                // Get the ul element with the id "notify"
+                var ulElement = document.getElementById('notify');
 
-            // Append the new li element to the ul element
-            ulElement.appendChild(newLi);
+                // Append the new li element to the ul element
+                ulElement.appendChild(newLi);
 
-            // getting object of count
-            count = document.getElementById('bellCount').getAttribute('data-count');
-            document.getElementById('bellCount').setAttribute('data-count', parseInt(count) + 1);
-        }
+                // Update the bell icon count if the notification is unread
+                
+                var count = document.getElementById('bellCount').getAttribute('data-count');
+                document.getElementById('bellCount').setAttribute('data-count', parseInt(count) + 1);
+               
+            }
+
+            // Function to fetch notifications from the server
+            function fetchNotifications() {
+                fetch('/chat/api/notifications/')
+                    .then(response => response.json())
+                    .then(data => {
+                        data.forEach(notification => {
+                            console.log('this is data loop')
+                            setMessage(notification.message, notification.read, notification.id);
+                        });
+                    })
+                    .catch(error => console.error('Error fetching notifications:', error));
+            }
+
+            // Function to mark notification as read
+            function markNotificationAsRead(notificationId, notificationLi) {
+                fetch(`/chat/api/notifications/${notificationId}/read/`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': getCookie('csrftoken')  // Make sure to include the CSRF token
+                    }
+                }).then(response => {
+                    if (response.ok) {
+                        console.log(`Notification ${notificationId} marked as read`);
+                        notificationLi.style.backgroundColor = '';  // Reset background color
+                        // Decrease the bell icon count
+                        var count = document.getElementById('bellCount').getAttribute('data-count');
+                        document.getElementById('bellCount').setAttribute('data-count', parseInt(count) - 1);
+                    } else {
+                        console.error(`Failed to mark notification ${notificationId} as read`);
+                    }
+                }).catch(error => {
+                    console.error('Error marking notification as read:', error);
+                });
+            }
+
+            // Helper function to get CSRF token
+            function getCookie(name) {
+                let cookieValue = null;
+                if (document.cookie && document.cookie !== '') {
+                    const cookies = document.cookie.split(';');
+                    for (let i = 0; i < cookies.length; i++) {
+                        const cookie = cookies[i].trim();
+                        // Does this cookie string begin with the name we want?
+                        if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                            cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                            break;
+                        }
+                    }
+                }
+                return cookieValue;
+            }
+
+            // Fetch notifications on page load
+            fetchNotifications();
+
+            // Initialize the WebSocket connection
+            setupWebSocket();
+        });
+
+
 
 
     </script>

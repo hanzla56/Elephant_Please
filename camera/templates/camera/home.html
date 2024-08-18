@@ -22,15 +22,14 @@
 
 <div class="container d-flex flex-column gap-3 mt-3">
   <div class="row search_container p-5">
-  <div class="text-center">
-
-    <h1 class="maindiv_text maindiv_text_first">Rent Camera in Hong kong <br> with 
-       Elephant Please</h1>
-  </div>
-  <div class="text-center">
-     <h6 class="maindiv_text maindiv_text_second">Rent a Camera from a fellow photographer in Hong Kong. Over 50% <br> Cheaper Than Traditional Rental Spend less & Enjoy more</h6>
-
-  </div>
+    <div class="text-center">
+        <h1 class="maindiv_text maindiv_text_first">Rent Camera in Hong Kong <br class="remove-on-small"> with 
+            Elephant Please</h1>
+    </div>
+    <div class="text-center">
+        <h6 class="maindiv_text maindiv_text_second">Rent a Camera from a fellow photographer in Hong Kong. Over 50% <br class="remove-on-small"> Cheaper Than Traditional Rental Spend less & Enjoy more</h6>
+    </div>
+    
   <div class="search_bar_section mt-3">
     <div class="container">
       <div class="searchBar_main_div"> 
@@ -46,13 +45,33 @@
 
 
 
-<div class="container mt-4 mb-3">
-  <div class="row pd" style="display: flex; align-items: center; justify-content: center; gap: 3px;">
+<div class="container mt-4 mb-5">
+    <div class="container camera_section2" style="margin-top: 70px; margin-bottom: 30px;">
+        <div style="display: flex; justify-content: space-between; flex-wrap: wrap;">
+            <div>
+                <h1 style="font-family: Montserrat;">Browse Cameras</h1>
+                <p style="font-family: poppins; margin-left: 8px;">Displaying {{count}} Results</p>
+            </div>
+            <div>
+                <a class="dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"
+                    style="color: black; text-decoration: none; font-family:Montserrat">Sort By: Default Order</a>
+                <ul class="dropdown-menu" style="float: right;">
+                    <li><a class="dropdown-item" href="#">Sort Option 1</a></li>
+                    <li><a class="dropdown-item" href="#">Sort Option 2</a></li>
+                    <li><a class="dropdown-item" href="#">Sort Option 3</a></li>
+                </ul>
+                <img src="{% static 'image/nav/menu.png' %}" class="img" alt="Menu">
+                <img src="{% static 'image/nav/dashboard.png' %}" class="img" alt="Dashboard">
+                <img src="{% static 'image/nav/map-pin.png' %}" class="img" alt="Map Pin">
+            </div>
+        </div>
+    </div>
+  <div class="row pd" style="display: flex; align-items: center; justify-content: space-evenly; gap: 2px;">
  
 
 {% for item in items %}
 
-      <div class="custom-card" style="height: 360px; max-width: 390px; border-radius: 16px; box-shadow: 0px 6px 5px 6px #dee2e6;">
+      <div class="custom-card" style="height: 360px; max-width: 400px; border-radius: 16px; box-shadow: 0px 6px 5px 6px #dee2e6;">
         <div class="inner-div">
           {% if item.image.exists%}
           <a href="{% url "camera:detail" item.id %}">

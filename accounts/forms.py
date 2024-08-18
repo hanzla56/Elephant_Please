@@ -30,13 +30,18 @@ class CustomSignupForm(SignupForm):
 
         # Remove placeholder attribute from all fields
         for field_name, field in self.fields.items():
+            print('sign up form')
             field.widget.attrs.pop('placeholder', None)
+            
+        self.fields['password1'].widget.attrs.update({'placeholder': 'Should be 8 characters must use special character','class':'placeholder'})
 
     def save(self, request):
         user = super(CustomSignupForm, self).save(request)
-        user.first_name = self.cleaned_data['first_name']
+        user.username = self.cleaned_data['first_name']
+        print(user.username)
         user.last_name = self.cleaned_data['last_name']
         user.save()
+        print(user)
         return user
     
     
@@ -52,11 +57,17 @@ class CustomLoginForm(LoginForm):
         super().__init__(*args, **kwargs)
         # Remove the 'username' field
         # self.fields.pop('login')
-        self.fields.pop('remember')
+        # self.fields.pop('remember')
         
         # Change label of 'email' field
         self.fields['login'].label = 'Email'
+        
 
         # Remove placeholder attribute from all fields
         for field_name, field in self.fields.items():
+            print(field)
             field.widget.attrs.pop('placeholder', None)
+            
+            
+        # self.fields['login'].widget.attrs.update({'placeholder': 'Enter your email'})
+        self.fields['password'].widget.attrs.update({'placeholder': 'Should be 8 characters must use special character','class':'placeholder'})

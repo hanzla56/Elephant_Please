@@ -163,17 +163,17 @@
 
 
             <div class="d-flex gap-3">
-              <div id="daily-option" class="pricing-option active" data-option-type="daily" data-days="1" onclick="selectOption('daily')">
-                  <p class="review">Daily</p>
-                  <p class="price">${{product.Daily_price}} <span class="review">/day</span></p>
+              <div id="daily-option" class="pricing-option p-3 active" data-option-type="daily" data-days="1" onclick="selectOption('daily')">
+                  <span class="review">Daily</span>
+                  <span class="price">${{product.Daily_price}} <span class="review">/day</span></span>
               </div>
               <div id="weekly-option" class="pricing-option" data-option-type="weekly" data-days="7" onclick="selectOption('weekly')">
-                  <p class="review">Weekly</p>
-                  <p class="price">${{product.Weekly_price}} <span class="review">/day</span></p>
+                  <span class="review">Weekly</span>
+                  <span class="price">${{product.Weekly_price}} <span class="review">/day</span></span>
               </div>
               <div id="monthly-option" class="pricing-option" data-option-type="monthly" data-days="30" onclick="selectOption('monthly')">
-                  <p class="review">Monthly</p>
-                  <p class="price">${{product.Monthly_price}} <span class="review">/day</span></p>
+                  <span class="review">Monthly</span>
+                  <span class="price">${{product.Monthly_price}} <span class="review">/day</span></span>
               </div>
 
               <!-- Hidden input to store the selected option -->
@@ -183,7 +183,7 @@
 
 
             <br>
-            <button type="button" style="background-color:#005494; color: #FFFFFF;" class="btn-lg btn-block w-100 order-btn" data-bs-toggle="modal" data-bs-target="#dateRangeModal">
+            <button type="button" style="background-color:#005494; color: #FFFFFF; border: none;" class="btn-lg btn-block w-100 order-btn" data-bs-toggle="modal" data-bs-target="#dateRangeModal">
               Check Price and Availability
             </button>
             
@@ -451,7 +451,9 @@
 
 function selectOption(option) {
     // Store the selected option in the hidden input
-    document.getElementById('selected-option').value = option;
+    input = document.getElementById('selected-option')
+    input.value = option;
+    console.log(`this is the input value ${input.value}`)
 
     // Optionally, update UI to reflect the selected option
     document.querySelectorAll('.pricing-option').forEach(function(element) {
@@ -468,6 +470,12 @@ function submitDateRange() {
     
     // Get the selected option from the hidden input field
     var selectedOption = document.getElementById('selected-option').value;
+    if (!selectedOption) {
+      document.getElementById('selected-option').value = 'Daily';
+      selectedOption = 'daily';
+  }
+  
+  console.log(`This is the selected option: ${selectedOption}`);
     
     // Get the product ID from the input field
     var productId = document.getElementById('product_id').value;

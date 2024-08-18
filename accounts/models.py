@@ -12,7 +12,7 @@ class MyUser(AbstractBaseUser, PermissionsMixin):
     agree = models.BooleanField(default=False, blank=True)
     forget_password_token = models.CharField(max_length=300, blank=True)
     profile_img = models.ImageField(
-        upload_to='profile_imgs', null=True, blank=True)
+        upload_to='profile_imgs', null=True, blank=True,default='profile_imgs/coin.jpg')
 
 
     title = models.CharField(max_length=100, null=True, blank=True)
@@ -24,13 +24,13 @@ class MyUser(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(unique=True, blank=True, null=True)
     name = models.CharField(max_length=255, blank=True, null=True,unique=True)
     last_name = models.CharField(max_length=30, default=None, null=True)
-    username = models.CharField(max_length=200, unique=True , default='Huzaifa')
+    username = models.CharField(max_length=200, unique=True)
 
     created_at = models.DateTimeField(null=True, default=timezone.now)
     is_staff = True
     objects = UserProfileManager()
 
-    USERNAME_FIELD = 'name'
+    USERNAME_FIELD = 'username'
 
     REQUIRED_FIELDS = ['email']
 

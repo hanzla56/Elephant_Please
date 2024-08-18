@@ -34,6 +34,10 @@
 
   <form action="{% url "camera:create-checkout-session" pd.id %}" method="POST">
       {% csrf_token %}
+
+
+      <input type="hidden" name="daterange" value="{{ daterange }}">
+      <input type="hidden" name="price" value="{{ option }}">
   
       <div class="container form mb-5">
           <div class="row too">
@@ -170,7 +174,7 @@
         var serviceChargesElement = document.getElementById('serviceCharges');
         var discountElement = document.getElementById('discount');
 
-        console.log(option)
+        console.log(`this is option ${option}`)
         console.log(priceElement)
         console.log(days)
         console.log(resultElement)
@@ -214,6 +218,11 @@
 
             // Calculate the final total
             totalPrice = (price * multiplier) + serviceCharges - discount;
+
+            document.querySelector('input[name="daterange"]').value = dateRange;
+            document.querySelector('input[name="price"]').value = totalPrice;
+
+            console.log('price set')
 
             // Display the final total
             totalPriceElement.innerText = "$" + totalPrice.toFixed(2);

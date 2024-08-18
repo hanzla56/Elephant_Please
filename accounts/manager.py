@@ -9,7 +9,7 @@ class UserProfileManager(BaseUserManager):
         
         email = self.normalize_email(email)
         user = self.model(
-            name=name,
+            username=name,
             email=email,
             mobile_number=mobile_number,
             agree=agree,
