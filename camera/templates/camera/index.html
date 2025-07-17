@@ -1,0 +1,913 @@
+{% extends "Base.html" %} {% load static %} 
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/index.css' %}">
+
+{% endblock css %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero-section">
+      <div class="container">
+          <div class="row align-items-center">
+              <div class="col-lg-6 hero-content" >
+                  <h1 class="hero-title slide-in-left">Rent & Lend Anything, Anytime</h1>
+                  <p class="hero-subtitle slide-in-left">Join thousands of people sharing resources and building sustainable communities. From tools to tech, find what you need or earn from what you own.</p>
+                  
+                  <div class="hero-buttons slide-in-left">
+                      <a href="#" class="btn-primary-custom">
+                          <i class="fas fa-search"></i>
+                          Start Renting
+                      </a>
+                      <a href="#" class="btn-outline-custom">
+                          <i class="fas fa-plus"></i>
+                          Start Lending
+                      </a>
+                  </div>
+                  
+                  <div class="hero-stats slide-in-left">
+                      <div class="stat-item">
+                          <span class="stat-number">10K+</span>
+                          <span class="stat-label">Items Available</span>
+                      </div>
+                      <div class="stat-item">
+                          <span class="stat-number">5K+</span>
+                          <span class="stat-label">Happy Users</span>
+                      </div>
+                      <div class="stat-item">
+                          <span class="stat-number">50+</span>
+                          <span class="stat-label">Cities</span>
+                      </div>
+                  </div>
+              </div>
+              
+              <div class="col-lg-6">
+                  <div class="hero-image slide-in-right bg-primary">
+                      <div class="hero-placeholder">
+                          <i class="fas fa-handshake"></i>
+                      </div>
+                  </div>
+              </div>
+              
+          </div>
+      </div>
+  </section>
+  
+  <!-- Trust Indicators -->
+  <section class="trust-indicators">
+      <div class="container">
+          <div class="row">
+              <div class="col-lg-3 col-md-6 col-sm-6 mb-4">
+                  <div class="trust-item fade-in">
+                      <div class="trust-icon">
+                          <i class="fas fa-shield-check"></i>
+                      </div>
+                      <div class="trust-title">100% Secure</div>
+                      <div class="trust-subtitle">All transactions protected</div>
+                  </div>
+              </div>
+              
+              <div class="col-lg-3 col-md-6 col-sm-6 mb-4">
+                  <div class="trust-item fade-in">
+                      <div class="trust-icon">
+                          <i class="fas fa-users"></i>
+                      </div>
+                      <div class="trust-title">Verified Users</div>
+                      <div class="trust-subtitle">ID & background checks</div>
+                  </div>
+              </div>
+              
+              <div class="col-lg-3 col-md-6 col-sm-6 mb-4">
+                  <div class="trust-item fade-in">
+                      <div class="trust-icon">
+                          <i class="fas fa-headset"></i>
+                      </div>
+                      <div class="trust-title">24/7 Support</div>
+                      <div class="trust-subtitle">Always here to help</div>
+                  </div>
+              </div>
+              
+              <div class="col-lg-3 col-md-6 col-sm-6 mb-4">
+                  <div class="trust-item fade-in">
+                      <div class="trust-icon">
+                          <i class="fas fa-medal"></i>
+                      </div>
+                      <div class="trust-title">Best Prices</div>
+                      <div class="trust-subtitle">Up to 80% savings</div>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </section>
+  
+  <!-- Features Section -->
+  <section class="features-section">
+      <div class="container">
+          <h2 class="section-title fade-in">Why Choose Elephant Please?</h2>
+          <p class="section-subtitle fade-in">Experience the future of sharing economy with our platform</p>
+          
+          <div class="row">
+              <div class="col-lg-4 col-md-6 mb-4">
+                  <div class="feature-card fade-in">
+                      <div class="feature-icon">
+                          <i class="fas fa-shield-alt"></i>
+                      </div>
+                      <h3 class="feature-title">Secure & Trusted</h3>
+                      <p class="feature-description">All transactions are protected with our comprehensive insurance and verification system. Rent and lend with confidence.</p>
+                  </div>
+              </div>
+              
+              <div class="col-lg-4 col-md-6 mb-4">
+                  <div class="feature-card fade-in">
+                      <div class="feature-icon">
+                          <i class="fas fa-clock"></i>
+                      </div>
+                      <h3 class="feature-title">Instant Booking</h3>
+                      <p class="feature-description">Book items instantly or schedule for later. Our smart booking system ensures availability and seamless transactions.</p>
+                  </div>
+              </div>
+              
+              <div class="col-lg-4 col-md-6 mb-4">
+                  <div class="feature-card fade-in">
+                      <div class="feature-icon">
+                          <i class="fas fa-leaf"></i>
+                      </div>
+                      <h3 class="feature-title">Eco-Friendly</h3>
+                      <p class="feature-description">Reduce waste and carbon footprint by sharing resources. Together we're building a more sustainable future.</p>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </section>
+  
+  <!-- How It Works Section -->
+  <section class="how-it-works">
+      <div class="container">
+          <h2 class="section-title fade-in">How It Works</h2>
+          <p class="section-subtitle fade-in">Simple steps to start renting or lending</p>
+          
+          <div class="row">
+              <div class="col-lg-3 col-md-6 mb-4">
+                  <div class="step-card fade-in">
+                      <div class="step-number">1</div>
+                      <h3 class="step-title">Browse & Search</h3>
+                      <p class="step-description">Find exactly what you need from thousands of available items in your area.</p>
+                  </div>
+              </div>
+              
+              <div class="col-lg-3 col-md-6 mb-4">
+                  <div class="step-card fade-in">
+                      <div class="step-number">2</div>
+                      <h3 class="step-title">Book & Pay</h3>
+                      <p class="step-description">Secure your rental with our easy booking system and flexible payment options.</p>
+                  </div>
+              </div>
+              
+              <div class="col-lg-3 col-md-6 mb-4">
+                  <div class="step-card fade-in">
+                      <div class="step-number">3</div>
+                      <h3 class="step-title">Pick Up & Use</h3>
+                      <p class="step-description">Collect your item and enjoy. Return it when you're done. It's that simple!</p>
+                  </div>
+              </div>
+              
+              <div class="col-lg-3 col-md-6 mb-4">
+                  <div class="step-card fade-in">
+                      <div class="step-number">4</div>
+                      <h3 class="step-title">Review & Repeat</h3>
+                      <p class="step-description">Share your experience and discover more amazing items from our community.</p>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </section>
+  
+  <!-- Categories Section -->
+  <section class="categories-section">
+      <div class="container">
+          <h2 class="section-title fade-in">Popular Categories</h2>
+          <p class="section-subtitle fade-in">Discover what's available in your area</p>
+          
+          <!-- Search Button -->
+          <div class="text-center mb-5">
+              <a href="/search/" class="btn-search-categories">
+                  <i class="fas fa-search"></i>
+                  Search All Items
+              </a>
+          </div>
+          
+          <div class="category-grid">
+              <a href="#" class="category-card fade-in">
+                  <div class="category-image">
+                      <i class="fas fa-laptop"></i>
+                  </div>
+                  <div class="category-content">
+                      <h3 class="category-title">Electronics</h3>
+                      <p class="category-description">Cameras, laptops, gaming consoles, and more tech gear</p>
+                  </div>
+              </a>
+              
+              <a href="#" class="category-card fade-in">
+                  <div class="category-image">
+                      <i class="fas fa-tools"></i>
+                  </div>
+                  <div class="category-content">
+                      <h3 class="category-title">Tools & Equipment</h3>
+                      <p class="category-description">Power tools, construction equipment, and DIY essentials</p>
+                  </div>
+              </a>
+              
+              <a href="#" class="category-card fade-in">
+                  <div class="category-image">
+                      <i class="fas fa-football-ball"></i>
+                  </div>
+                  <div class="category-content">
+                      <h3 class="category-title">Sports & Outdoor</h3>
+                      <p class="category-description">Bikes, camping gear, sports equipment, and outdoor adventures</p>
+                  </div>
+              </a>
+              
+              <a href="#" class="category-card fade-in">
+                  <div class="category-image">
+                      <i class="fas fa-home"></i>
+                  </div>
+                  <div class="category-content">
+                      <h3 class="category-title">Home & Garden</h3>
+                      <p class="category-description">Furniture, appliances, gardening tools, and household items</p>
+                  </div>
+              </a>
+              
+              <a href="#" class="category-card fade-in">
+                  <div class="category-image">
+                      <i class="fas fa-car"></i>
+                  </div>
+                  <div class="category-content">
+                      <h3 class="category-title">Automotive</h3>
+                      <p class="category-description">Car accessories, tools, and automotive equipment</p>
+                  </div>
+              </a>
+              
+              <a href="#" class="category-card fade-in">
+                  <div class="category-image">
+                      <i class="fas fa-music"></i>
+                  </div>
+                  <div class="category-content">
+                      <h3 class="category-title">Music & Events</h3>
+                      <p class="category-description">Musical instruments, sound equipment, and event supplies</p>
+                  </div>
+              </a>
+          </div>
+      </div>
+  </section>
+  
+  <!-- Testimonials Section -->
+  <section class="testimonials-section">
+      <div class="container">
+          <h2 class="section-title fade-in">What Our Users Say</h2>
+          <p class="section-subtitle fade-in">Real stories from our amazing community</p>
+          
+          <div class="row">
+              <div class="col-lg-4 col-md-6 mb-4">
+                  <div class="testimonial-card fade-in">
+                      <p class="testimonial-text">"Amazing platform! I rented a professional camera for my wedding shoot and saved hundreds. The owner was super helpful and the process was seamless."</p>
+                      <div class="testimonial-author">
+                          <div class="author-avatar">SM</div>
+                          <div class="author-info">
+                              <h6>Sarah Miller</h6>
+                              <small>Photographer</small>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+              
+              <div class="col-lg-4 col-md-6 mb-4">
+                  <div class="testimonial-card fade-in">
+                      <p class="testimonial-text">"I've been lending my tools through Elephant Please for 6 months now. It's a great way to earn extra income while helping the community!"</p>
+                      <div class="testimonial-author">
+                          <div class="author-avatar">JD</div>
+                          <div class="author-info">
+                              <h6>John Davis</h6>
+                              <small>Contractor</small>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+              
+              <div class="col-lg-4 col-md-6 mb-4">
+                  <div class="testimonial-card fade-in">
+                      <p class="testimonial-text">"Perfect for occasional needs! Rented a pressure washer for my deck cleaning. Way better than buying something I'd use once a year."</p>
+                      <div class="testimonial-author">
+                          <div class="author-avatar">EP</div>
+                          <div class="author-info">
+                              <h6>Emma Peterson</h6>
+                              <small>Homeowner</small>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </section>
+  
+  <!-- Stats Section -->
+  <section class="stats-section" style="padding: 60px 0; background: white;">
+      <div class="container">
+          <div class="row text-center">
+              <div class="col-lg-3 col-md-6 mb-4">
+                  <div class="fade-in">
+                      <div style="font-size: 3rem; color: var(--primary-blue); font-weight: 700;">10,000+</div>
+                      <div style="font-size: 1.1rem; color: var(--dark-gray); opacity: 0.8;">Items Listed</div>
+                  </div>
+              </div>
+              <div class="col-lg-3 col-md-6 mb-4">
+                  <div class="fade-in">
+                      <div style="font-size: 3rem; color: var(--primary-blue); font-weight: 700;">5,000+</div>
+                      <div style="font-size: 1.1rem; color: var(--dark-gray); opacity: 0.8;">Happy Users</div>
+                  </div>
+              </div>
+              <div class="col-lg-3 col-md-6 mb-4">
+                  <div class="fade-in">
+                      <div style="font-size: 3rem; color: var(--primary-blue); font-weight: 700;">50+</div>
+                      <div style="font-size: 1.1rem; color: var(--dark-gray); opacity: 0.8;">Cities Covered</div>
+                  </div>
+              </div>
+              <div class="col-lg-3 col-md-6 mb-4">
+                  <div class="fade-in">
+                      <div style="font-size: 3rem; color: var(--primary-blue); font-weight: 700;">95%</div>
+                      <div style="font-size: 1.1rem; color: var(--dark-gray); opacity: 0.8;">Satisfaction Rate</div>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </section>
+  
+  <!-- App Download Section -->
+  <section class="app-section" style="padding: 80px 0; background: linear-gradient(135deg, #f8f9fa 0%, #ECF7FF 100%);">
+      <div class="container">
+          <div class="row align-items-center">
+              <div class="col-lg-6">
+                  <div class="slide-in-left">
+                      <h2 style="font-size: 2.5rem; font-weight: 700; color: var(--primary-blue); margin-bottom: 1rem;">Take Us With You</h2>
+                      <p style="font-size: 1.2rem; color: var(--dark-gray); opacity: 0.8; margin-bottom: 2rem;">Download our mobile app and rent or lend items on the go. Available for iOS and Android.</p>
+                      
+                      <div style="display: flex; gap: 1rem; margin-bottom: 2rem;">
+                          <a href="#" class="btn-primary-custom">
+                              <i class="fab fa-apple"></i>
+                              Download for iOS
+                          </a>
+                          <a href="#" class="btn-outline-custom">
+                              <i class="fab fa-google-play"></i>
+                              Download for Android
+                          </a>
+                      </div>
+                      
+                      <div style="display: flex; gap: 2rem;">
+                          <div>
+                              <div style="font-size: 1.5rem; font-weight: 700; color: var(--primary-blue);">4.8★</div>
+                              <div style="font-size: 0.9rem; color: var(--dark-gray); opacity: 0.7;">App Store Rating</div>
+                          </div>
+                          <div>
+                              <div style="font-size: 1.5rem; font-weight: 700; color: var(--primary-blue);">4.9★</div>
+                              <div style="font-size: 0.9rem; color: var(--dark-gray); opacity: 0.7;">Play Store Rating</div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+              
+              <div class="col-lg-6">
+                  <div class="slide-in-right">
+                      <div style="width: 100%; height: 400px; background: linear-gradient(135deg, #005494, #0066cc); border-radius: 20px; display: flex; align-items: center; justify-content: center; color: white; font-size: 4rem; position: relative; overflow: hidden;">
+                          <i class="fas fa-mobile-alt"></i>
+                          <div style="position: absolute; top: 20px; right: 20px; font-size: 1rem; opacity: 0.7;">
+                              <i class="fab fa-apple"></i>
+                              <i class="fab fa-android" style="margin-left: 10px;"></i>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </section>
+  
+  <!-- FAQ Section -->
+  <section class="faq-section" style="padding: 80px 0; background: white;">
+      <div class="container">
+          <h2 class="section-title fade-in">Frequently Asked Questions</h2>
+          <p class="section-subtitle fade-in">Everything you need to know about renting and lending</p>
+          
+          <div class="row">
+              <div class="col-lg-8 mx-auto">
+                  <div class="accordion fade-in" id="faqAccordion">
+                      <div class="accordion-item" style="border: none; margin-bottom: 15px; border-radius: 15px; overflow: hidden; box-shadow: 0 2px 10px var(--shadow-light);">
+                          <h3 class="accordion-header">
+                              <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#faq1" style="background: white; border: none; padding: 20px; font-weight: 600; color: var(--primary-blue);">
+                                  How does the rental process work?
+                              </button>
+                          </h3>
+                          <div id="faq1" class="accordion-collapse collapse show" data-bs-parent="#faqAccordion">
+                              <div class="accordion-body" style="padding: 0 20px 20px;">
+                                  Simply browse our catalog, select your desired item, choose your rental period, and complete the booking. Pick up the item from the owner and return it when you're done. It's that easy!
+                              </div>
+                          </div>
+                      </div>
+                      
+                      <div class="accordion-item" style="border: none; margin-bottom: 15px; border-radius: 15px; overflow: hidden; box-shadow: 0 2px 10px var(--shadow-light);">
+                          <h3 class="accordion-header">
+                              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq2" style="background: white; border: none; padding: 20px; font-weight: 600; color: var(--primary-blue);">
+                                  Is my item insured during rental?
+                              </button>
+                          </h3>
+                          <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                              <div class="accordion-body" style="padding: 0 20px 20px;">
+                                  Yes! All items are covered by our comprehensive insurance policy during the rental period. Both renters and lenders are protected against damage, theft, and loss.
+                              </div>
+                          </div>
+                      </div>
+                      
+                      <div class="accordion-item" style="border: none; margin-bottom: 15px; border-radius: 15px; overflow: hidden; box-shadow: 0 2px 10px var(--shadow-light);">
+                          <h3 class="accordion-header">
+                              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq3" style="background: white; border: none; padding: 20px; font-weight: 600; color: var(--primary-blue);">
+                                  How do I start lending my items?
+                              </button>
+                          </h3>
+                          <div id="faq3" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                              <div class="accordion-body" style="padding: 0 20px 20px;">
+                                  Create your account, take photos of your item, set your rental price and availability, and publish your listing. Start earning money from items you already own!
+                              </div>
+                          </div>
+                      </div>
+                      
+                      <div class="accordion-item" style="border: none; margin-bottom: 15px; border-radius: 15px; overflow: hidden; box-shadow: 0 2px 10px var(--shadow-light);">
+                          <h3 class="accordion-header">
+                              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq4" style="background: white; border: none; padding: 20px; font-weight: 600; color: var(--primary-blue);">
+                                  What if something goes wrong?
+                              </button>
+                          </h3>
+                          <div id="faq4" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                              <div class="accordion-body" style="padding: 0 20px 20px;">
+                                  Our customer support team is available 24/7 to help resolve any issues. We also have a comprehensive dispute resolution process and insurance coverage for peace of mind.
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </section>
+  
+  <!-- CTA Section -->
+  <section class="cta-section">
+      <div class="container">
+          <div class="fade-in">
+              <h2 class="cta-title">Ready to Start Sharing?</h2>
+              <p class="cta-subtitle">Join thousands of users who are already saving money and building communities</p>
+              
+              <div class="cta-buttons">
+                  <a href="#" class="btn-white">
+                      <i class="fas fa-user-plus"></i>
+                      Join Now - It's Free
+                  </a>
+                  <a href="#" class="btn-outline-white">
+                      <i class="fas fa-play"></i>
+                      Watch How It Works
+                  </a>
+              </div>
+          </div>
+      </div>
+  </section>
+
+{% endblock content %}
+
+{% block js %}
+<script>
+      document.addEventListener('DOMContentLoaded', function() {
+            // Intersection Observer for animations
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+        
+            const observer = new IntersectionObserver(function(entries) {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, observerOptions);
+        
+            // Observe all animated elements
+            document.querySelectorAll('.fade-in, .slide-in-left, .slide-in-right').forEach(el => {
+                observer.observe(el);
+            });
+        
+            // Smooth scrolling for anchor links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                });
+            });
+        
+            // Category card hover effects
+            document.querySelectorAll('.category-card').forEach(card => {
+                card.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-10px) scale(1.02)';
+                });
+                
+                card.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0) scale(1)';
+                });
+            });
+        
+            // Feature card stagger animation
+            document.querySelectorAll('.feature-card').forEach((card, index) => {
+                card.style.animationDelay = `${index * 0.1}s`;
+            });
+        
+            // Testimonial card stagger animation
+            document.querySelectorAll('.testimonial-card').forEach((card, index) => {
+                card.style.animationDelay = `${index * 0.2}s`;
+            });
+        
+            // Stats counter animation
+            function animateCounter(element, target, duration = 2000) {
+                const increment = target / (duration / 16);
+                let current = 0;
+                
+                const updateCounter = () => {
+                    current += increment;
+                    if (current < target) {
+                        element.textContent = Math.floor(current).toLocaleString() + (element.dataset.suffix || '');
+                        requestAnimationFrame(updateCounter);
+                    } else {
+                        element.textContent = target.toLocaleString() + (element.dataset.suffix || '');
+                    }
+                };
+                
+                updateCounter();
+            }
+        
+            // Animate stats when in view
+            const statsSection = document.querySelector('.stats-section');
+            if (statsSection) {
+                const statsObserver = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            const statNumbers = entry.target.querySelectorAll('[style*="font-size: 3rem"]');
+                            statNumbers.forEach(stat => {
+                                const text = stat.textContent;
+                                const number = parseInt(text.replace(/[^\d]/g, ''));
+                                const suffix = text.replace(/[\d,]/g, '');
+                                stat.dataset.suffix = suffix;
+                                stat.textContent = '0' + suffix;
+                                animateCounter(stat, number);
+                            });
+                            statsObserver.unobserve(entry.target);
+                        }
+                    });
+                }, { threshold: 0.5 });
+                
+                statsObserver.observe(statsSection);
+            }
+        
+            // Form validation and submission
+            const forms = document.querySelectorAll('form');
+            forms.forEach(form => {
+                form.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    
+                    // Simple form validation
+                    const inputs = form.querySelectorAll('input[required]');
+                    let isValid = true;
+                    
+                    inputs.forEach(input => {
+                        if (!input.value.trim()) {
+                            isValid = false;
+                            input.style.borderColor = '#dc3545';
+                        } else {
+                            input.style.borderColor = '#28a745';
+                        }
+                    });
+                    
+                    if (isValid) {
+                        // Show success message
+                        alert('Thank you! We\'ll get back to you soon.');
+                        form.reset();
+                        
+                        // Reset border colors
+                        inputs.forEach(input => {
+                            input.style.borderColor = '';
+                        });
+                    }
+                });
+            });
+        
+            // Add loading states to buttons
+            document.querySelectorAll('.btn-primary-custom, .btn-outline-custom, .btn-white, .btn-search-categories').forEach(btn => {
+                btn.addEventListener('click', function(e) {
+                    if (this.getAttribute('href') === '#') {
+                        e.preventDefault();
+                        
+                        const originalText = this.innerHTML;
+                        this.innerHTML = '<div class="loading-dots"><div></div><div></div><div></div><div></div></div>';
+                        this.style.pointerEvents = 'none';
+                        
+                        setTimeout(() => {
+                            this.innerHTML = originalText;
+                            this.style.pointerEvents = 'auto';
+                        }, 2000);
+                    }
+                });
+            });
+        
+            // Remove parallax effect that was causing hero section to persist
+            // This was the issue causing the hero section to show while scrolling
+        
+            // Scroll to top on page load
+            window.scrollTo(0, 0);
+        
+            // Add smooth transitions to all links
+            document.querySelectorAll('a').forEach(link => {
+                link.addEventListener('click', function(e) {
+                    // Add transition effect
+                    this.style.transition = 'all 0.3s ease';
+                });
+            });
+        
+            // Trust indicators animation
+            const trustItems = document.querySelectorAll('.trust-item');
+            trustItems.forEach((item, index) => {
+                item.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-5px) scale(1.05)';
+                });
+                
+                item.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0) scale(1)';
+                });
+            });
+        
+            // FAQ accordion enhancement
+            document.querySelectorAll('.accordion-button').forEach(button => {
+                button.addEventListener('click', function() {
+                    const target = document.querySelector(this.getAttribute('data-bs-target'));
+                    if (target) {
+                        setTimeout(() => {
+                            target.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                        }, 350);
+                    }
+                });
+            });
+        
+            // Hero stats animation on scroll
+            const heroStats = document.querySelector('.hero-stats');
+            if (heroStats) {
+                const heroStatsObserver = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            const statNumbers = entry.target.querySelectorAll('.stat-number');
+                            statNumbers.forEach((stat, index) => {
+                                setTimeout(() => {
+                                    stat.style.transform = 'scale(1.1)';
+                                    setTimeout(() => {
+                                        stat.style.transform = 'scale(1)';
+                                    }, 200);
+                                }, index * 100);
+                            });
+                            heroStatsObserver.unobserve(entry.target);
+                        }
+                    });
+                }, { threshold: 0.8 });
+                
+                heroStatsObserver.observe(heroStats);
+            }
+        
+            // Add ripple effect to buttons
+            document.querySelectorAll('.btn-primary-custom, .btn-outline-custom, .btn-search-categories').forEach(btn => {
+                btn.addEventListener('click', function(e) {
+                    const ripple = document.createElement('span');
+                    const rect = this.getBoundingClientRect();
+                    const size = Math.max(rect.width, rect.height);
+                    const x = e.clientX - rect.left - size / 2;
+                    const y = e.clientY - rect.top - size / 2;
+                    
+                    ripple.style.cssText = `
+                        position: absolute;
+                        width: ${size}px;
+                        height: ${size}px;
+                        left: ${x}px;
+                        top: ${y}px;
+                        background: rgba(255, 255, 255, 0.3);
+                        border-radius: 50%;
+                        transform: scale(0);
+                        animation: ripple 0.6s ease-out;
+                        pointer-events: none;
+                    `;
+                    
+                    this.style.position = 'relative';
+                    this.style.overflow = 'hidden';
+                    this.appendChild(ripple);
+                    
+                    setTimeout(() => {
+                        ripple.remove();
+                    }, 600);
+                });
+            });
+        
+            // Add CSS for ripple animation
+            const style = document.createElement('style');
+            style.textContent = `
+                @keyframes ripple {
+                    to {
+                        transform: scale(2);
+                        opacity: 0;
+                    }
+                }
+            `;
+            document.head.appendChild(style);
+        
+            // Initialize all animations
+            const initializeAnimations = () => {
+                // Add entrance animations for elements
+                document.querySelectorAll('.feature-card, .step-card, .testimonial-card').forEach((el, index) => {
+                    el.style.opacity = '0';
+                    el.style.transform = 'translateY(30px)';
+                    el.style.transition = 'all 0.6s ease';
+                    el.style.transitionDelay = `${index * 0.1}s`;
+                });
+            };
+        
+            initializeAnimations();
+        
+            // Performance optimization: Throttle scroll events
+            let ticking = false;
+            
+            function updateScrollEffects() {
+                // Any scroll-based effects can go here
+                // Removed the problematic parallax effect
+                ticking = false;
+            }
+        
+            window.addEventListener('scroll', function() {
+                if (!ticking) {
+                    requestAnimationFrame(updateScrollEffects);
+                    ticking = true;
+                }
+            });
+        
+            // Add responsive image loading
+            const images = document.querySelectorAll('img[data-src]');
+            const imageObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const img = entry.target;
+                        img.src = img.dataset.src;
+                        img.classList.remove('lazy');
+                        imageObserver.unobserve(img);
+                    }
+                });
+            });
+        
+            images.forEach(img => imageObserver.observe(img));
+        
+            // Mobile menu improvements
+            const handleMobileInteractions = () => {
+                // Add touch-friendly interactions for mobile
+                const touchElements = document.querySelectorAll('.category-card, .feature-card, .testimonial-card');
+                
+                touchElements.forEach(element => {
+                    element.addEventListener('touchstart', function() {
+                        this.style.transform = 'scale(0.98)';
+                    });
+                    
+                    element.addEventListener('touchend', function() {
+                        this.style.transform = '';
+                    });
+                });
+            };
+        
+            // Check if device supports touch
+            if ('ontouchstart' in window) {
+                handleMobileInteractions();
+            }
+        
+            // Improved button interactions
+            document.querySelectorAll('.btn-primary-custom, .btn-outline-custom, .btn-search-categories').forEach(btn => {
+                btn.addEventListener('mousedown', function() {
+                    this.style.transform = 'scale(0.95)';
+                });
+                
+                btn.addEventListener('mouseup', function() {
+                    this.style.transform = '';
+                });
+                
+                btn.addEventListener('mouseleave', function() {
+                    this.style.transform = '';
+                });
+            });
+        
+            // Enhanced accessibility
+            document.querySelectorAll('a, button').forEach(element => {
+                element.addEventListener('keydown', function(e) {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        this.click();
+                    }
+                });
+            });
+        
+            // Smooth section transitions
+            const sections = document.querySelectorAll('section');
+            const sectionObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, { threshold: 0.1 });
+        
+            sections.forEach(section => {
+                section.style.opacity = '0';
+                section.style.transform = 'translateY(20px)';
+                section.style.transition = 'all 0.6s ease';
+                sectionObserver.observe(section);
+            });
+        
+            // Fix for viewport height on mobile
+            const setViewportHeight = () => {
+                const vh = window.innerHeight * 0.01;
+                document.documentElement.style.setProperty('--vh', `${vh}px`);
+            };
+        
+            window.addEventListener('resize', setViewportHeight);
+            setViewportHeight();
+        
+            // Preload critical images
+            const preloadImages = () => {
+                const criticalImages = [
+                    // Add your critical image URLs here
+                ];
+                
+                criticalImages.forEach(src => {
+                    const img = new Image();
+                    img.src = src;
+                });
+            };
+        
+            preloadImages();
+        
+            console.log('Homepage JavaScript loaded successfully!');
+        });
+        });
+                    this.appendChild(ripple);
+                    
+                    setTimeout(() => {
+                        ripple.remove();
+                    }, 600);
+                });
+            });
+        
+            // Add CSS for ripple animation
+            const style = document.createElement('style');
+            style.textContent = `
+                @keyframes ripple {
+                    to {
+                        transform: scale(2);
+                        opacity: 0;
+                    }
+                }
+            `;
+            document.head.appendChild(style);
+        
+            // Initialize all animations
+            const initializeAnimations = () => {
+                // Add entrance animations for elements
+                document.querySelectorAll('.feature-card, .step-card, .testimonial-card').forEach((el, index) => {
+                    el.style.opacity = '0';
+                    el.style.transform = 'translateY(30px)';
+                    el.style.transition = 'all 0.6s ease';
+                    el.style.transitionDelay = `${index * 0.1}s`;
+                });
+            };
+        
+            initializeAnimations();
+        
+            // Performance optimization: Debounce scroll events
+            let scrollTimeout;
+            window.addEventListener('scroll', function() {
+                clearTimeout(scrollTimeout);
+                scrollTimeout = setTimeout(() => {
+                    // Scroll-based animations here
+                }, 16);
+            });
+        
+            console.log('Homepage JavaScript loaded successfully!');
+        });
+  </script>
+{% endblock js %}

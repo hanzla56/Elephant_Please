@@ -65,6 +65,7 @@ def index(request):
         chat = my_chat or frnd_chat
 
         if chat and chat.chats:
+            print('this is the try block')
             try:
                 chat_data = json.loads(chat.chats)
                 last_message = max(chat_data, key=lambda msg: msg['timestamp'])
@@ -74,6 +75,7 @@ def index(request):
 
     # Set default friend if no friend is specified
     if not frnd_name and friends_with_chats.exists():
+        print('no frient name exists')
         frnd_ = friends_with_chats.first()
         if Mychats.objects.filter(me=request.user, frnd=frnd_).exists():
             mychats_data = Mychats.objects.get(me=request.user, frnd=frnd_).chats

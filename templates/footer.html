@@ -1,63 +1,149 @@
-
-
-
 {% load static %}
-
-
-
-
-
-
-
-<footer>
-    <div class="container-fluid" style="background: rgba(236, 247, 255, 1);">
-        <div class="container relative">
-            <div class="foot">
-                <div class="row">
-                    <div class="col-lg-4 mt-5">
-                        <div class="mb-4 footer-logo-wrap" id=><a href="/index.html" id="pak" class="footer-logo">
-                                <img src="{% static 'image/nav/Elephant Please.png' %}" alt="..">
-                                <img src="{% static 'image/nav/elephant.png' %}" alt>
-                            </a></div>
-                        <p class="mb-4" id="ot">Elephant Please was established in 2021 to alleviate and bring
-                            awareness to excessive purchasing, over spending and its effect on climate change.
-                            Elephant Please is a member of Revision AI Limited. </p>
-                        <div class="social-icons">
-                            <a href="#"  style="text-decoration: none;" class="fa-brands fa-facebook ms-2"></a>
-                            <a href="#" style="text-decoration: none;"class="fa-brands fa-twitter ms-2"></a>
-                            <a href="#" style="text-decoration: none;"class="fa-brands fa-linkedin ms-2"></a>
-                            <a href="#" style="text-decoration: none;"class="fa-brands fa-instagram ms-2"></a>
-                            <a href="#" style="text-decoration: none;" class="fa-brands fa-youtube ms-2"></a>
-                        </div>
+<footer class="footer-modern">
+    <div class="container">
+        <div class="row">
+            <!-- Logo & About Section -->
+            <div class="col-lg-4 col-md-6 mb-5 footer-section">
+                <div class="footer-logo-section">
+                    <div class="footer-logo">
+                        <img src="{% static 'image/nav/Elephant Please.png' %}" alt="Elephant Please Logo">
+                        <img src="{% static 'image/nav/elephant.png' %}" alt="Elephant Icon">
                     </div>
-                    <div class="col-lg-1"></div>
-                    <div class="col-lg-7 mt-5">
-                        <div class="row links-wrap">
-                            <div class="col-7 col-sm-7 col-md-4">
-                                <ul class="list-unstyled" style="line-height: 45px;">
-                                    <h6
-                                        style="font-family: Poppins; font-size: 20px; font-weight: 600; line-height: 30px; text-align: left; color: rgba(0, 84, 148, 1);">
-                                        Elephant Please</h6>
-                                    <li><a href="#" style="color:black; text-decoration: none;">How renting
-                                            Works</a></li>
-                                    <li><a href="#" style="text-decoration: none; color:black;">How lending
-                                            Works</a></li>
-                                    <li><a href="#" style="text-decoration: none; color:black;">FAQs</a></li>
-                                </ul>
-                            </div>
-                            <div class="col-5 col-sm-5 col-md-5" style="margin-top:53px">
-                                <div class="footer_contact_text">
-                                    <p>Term of use </a></p>
-                                    <p>Privacy policy</p>
-                                </div>
-                            </div>
-                        </div>
+                    <p class="footer-description">
+                        Established in 2021, Elephant Please raises awareness around excessive purchasing and its climate impact. A proud member of Revision AI Limited, we're committed to sustainable sharing economy.
+                    </p>
+                    
+                    <!-- Social Media Links -->
+                    <div class="social-links">
+                        <a href="#" class="social-link" title="Facebook">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="social-link" title="Twitter">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="social-link" title="LinkedIn">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                        <a href="#" class="social-link" title="Instagram">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="social-link" title="YouTube">
+                            <i class="fab fa-youtube"></i>
+                        </a>
                     </div>
+                </div>
+            </div>
+
+            <!-- Quick Links Section -->
+            <div class="col-lg-4 col-md-6 mb-5 footer-section">
+                <h5 class="footer-section-title">Quick Links</h5>
+                <ul class="footer-links">
+                    <li><a href="#" class="footer-link">How Renting Works</a></li>
+                    <li><a href="#" class="footer-link">How Lending Works</a></li>
+                    <li><a href="#" class="footer-link">FAQs</a></li>
+                    <li><a href="#" class="footer-link">Terms of Use</a></li>
+                    <li><a href="#" class="footer-link">Privacy Policy</a></li>
+                    <li><a href="#" class="footer-link">Contact Support</a></li>
+                </ul>
+            </div>
+
+            <!-- Newsletter Section -->
+            <div class="col-lg-4 col-md-12 mb-5 footer-section">
+                <div class="newsletter-section">
+                    <h5 class="footer-section-title">Stay Connected</h5>
+                    <p class="newsletter-description">
+                        Get the latest updates, tips, and exclusive offers delivered straight to your inbox.
+                    </p>
+                    <form class="newsletter-form">
+                        <div class="input-group">
+                            <input type="email" class="form-control newsletter-input" placeholder="Enter your email address" aria-label="Email" required>
+                            <button class="btn newsletter-btn" type="submit">
+                                <i class="fas fa-paper-plane me-2"></i>Subscribe
+                            </button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
     </div>
+
+    <!-- Copyright Section -->
+    <div class="footer-copyright">
+        <div class="container">
+            <p class="mb-0">
+                © 2021 Elephant Please. All rights reserved. | Built with 💚 for a sustainable future.
+            </p>
+        </div>
+    </div>
 </footer>
-<div class="mt-0 pt-3 pb-3" style="background-color: rgba(0, 84, 148, 0.06);">
-    <p class="text-center mt-0 mb-0">© Elephant Please 2021 </p>
-</div>
+
+<!-- Scroll to Top Button -->
+<button class="scroll-to-top" id="scrollToTop">
+    <i class="fas fa-arrow-up"></i>
+</button>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Newsletter form submission
+    const newsletterForm = document.querySelector('.newsletter-form');
+    if (newsletterForm) {
+        newsletterForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const email = this.querySelector('input[type="email"]').value;
+            if (email) {
+                // Add your newsletter subscription logic here
+                alert('Thank you for subscribing to our newsletter!');
+                this.reset();
+            }
+        });
+    }
+
+    // Scroll to top functionality
+    const scrollToTopBtn = document.getElementById('scrollToTop');
+    
+    window.addEventListener('scroll', function() {
+        if (window.pageYOffset > 300) {
+            scrollToTopBtn.classList.add('show');
+        } else {
+            scrollToTopBtn.classList.remove('show');
+        }
+    });
+
+    scrollToTopBtn.addEventListener('click', function() {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    });
+
+    // Animate footer sections on scroll
+    const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver(function(entries) {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.style.opacity = '1';
+                entry.target.style.transform = 'translateY(0)';
+            }
+        });
+    }, observerOptions);
+
+    document.querySelectorAll('.footer-section').forEach(section => {
+        observer.observe(section);
+    });
+
+    // Social media hover effects
+    document.querySelectorAll('.social-link').forEach(link => {
+        link.addEventListener('mouseenter', function() {
+            this.style.transform = 'translateY(-3px) scale(1.1) rotate(5deg)';
+        });
+        
+        link.addEventListener('mouseleave', function() {
+            this.style.transform = 'translateY(0) scale(1) rotate(0deg)';
+        });
+    });
+});
+</script>

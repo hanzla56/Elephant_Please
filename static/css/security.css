@@ -1,0 +1,215 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Inter';
+}
+
+:root {
+  --text-color-secondary: #6b7280;
+  --text-color-purple: #4F46E5;
+}
+
+body {
+  background: #FDFAF7;
+}
+
+/* Container */
+.auth-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 20px;
+}
+
+/* Card */
+.auth-card {
+  width: 100%;
+  max-width: 447px;
+  background-color: #fff;
+  padding: 25px 25px 30px 25px;
+  border-radius: 8px;
+  box-shadow: 0px 0px 0px 0px #00000000;
+  border: 1px solid #0000001A;
+}
+
+/* Heading */
+.brand-title {
+  font-size: 30px;
+  font-weight: 700;
+  text-align: center;
+  color: #D7531B;
+  margin-bottom: 25px;
+}
+
+/* Form Layout */
+.form-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 18px;
+}
+
+.form-label {
+  font-family: 'Inter';
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 21px;
+  margin-bottom: 8px;
+  color: #1D1D1D;
+}
+
+.form-input {
+  border-radius: 6px;
+  border: 1px solid #0000001A;
+  padding: 9px 12px !important;
+  font-family: 'Inter';
+  font-weight: 400;
+  font-size: 14px;
+  letter-spacing: 0%;
+  outline: none;
+  transition: 0.2s ease-in-out;
+  color: #999999;
+}
+
+.form-input:focus {
+  border-color: #D7531B;
+  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.05);
+}
+
+/* Button */
+.main-btn {
+  padding: 10px;
+  border: none;
+  border-radius: 6px;
+  background: #D7531B;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 20px;
+  color: rgb(248, 250, 252);
+  cursor: pointer;
+  transition: 0.3s;
+  width: 100%;
+}
+
+.main-btn:hover {
+  background-color: #151a30;
+  opacity: 0.9;
+}
+
+/* Forgot */
+.forgot-wrap {
+  text-align: center;
+  margin-top: 24px;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 20px;
+  color: #1D1D1D;
+  text-align: center;
+}
+
+.forgot-link {
+  text-decoration: none;
+  color: #D7531B;
+}
+
+.forgot-link:hover {
+  text-decoration: underline;
+}
+
+.backBtn {
+  margin-top: 12px;
+  background: none !important;
+  color: #000;
+}
+
+.backBtn:hover {
+  background: #F1F5F9 !important;
+}
+
+.otp-input {
+  width : 100%;
+  max-width: 50px;
+  height: 50px;
+  border-radius: 6px;
+  border: 1px solid #0000001A;
+  padding: 9px 12px !important;
+  font-family: 'Inter';
+  font-weight: 400;
+  font-size: 14px;
+  letter-spacing: 0%;
+  outline: none;
+  transition: 0.2s ease-in-out;
+  color: #999999;
+  text-align: center;
+}
+
+.otp-input:focus {
+  border-color: #D7531B;
+  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.05);
+}
+
+.otp-group {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+@media (max-width : 576px) {
+  .auth-container {
+    padding: 15px;
+  }
+
+  .auth-card {
+    padding: 22px 20px 30px 20px;
+  }
+
+  .subtitle {
+    margin-bottom: 20px;
+  }
+
+  .form-label {
+    margin-bottom: 8px;
+  }
+  .otp-group {
+    gap: 5px;
+  }
+}
+
+
+.messages {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 1rem 0;
+}
+
+.messages li {
+  padding: 12px 16px;
+  border-radius: 6px;
+  margin-bottom: 10px;
+  font-weight: 500;
+}
+
+/* ✅ Success message (e.g. "Account created!") */
+.messages li.success {
+  background-color: #d4edda;
+  color: #155724;
+  border: 1px solid #c3e6cb;
+}
+
+/* ❌ Error message (e.g. "Email already exists") */
+.messages li.error {
+  background-color: #f8d7da;
+  color: #721c24;
+  border: 1px solid #f5c6cb;
+}
+
+/* ⚠️ Warning message */
+.messages li.warning {
+  background-color: #fff3cd;
+  color: #856404;
+  border: 1px solid #ffeeba;
+}

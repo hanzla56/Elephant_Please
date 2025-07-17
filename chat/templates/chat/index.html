@@ -1,578 +1,885 @@
-{% extends "base.html" %}
-
-{% block css %}
-
-<style>
-  :root {
-    /* --body-bg: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%); */
-    --msger-bg: #fff;
-    --border: 2px solid #ddd;
-    --left-msg-bg: #ececec;
-    --right-msg-bg:#005494;
-;
-  }
-
-  html {
-    box-sizing: border-box;
-  }
-
-  *,
-  *:before,
-  *:after {
-    margin: 0;
-    padding: 0;
-    box-sizing: inherit;
-  }
-
-  body {
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    background-image: var(--body-bg);
-  }
-
-  .msger {
-    display: flex;
-    flex-flow: column wrap;
-    justify-content: space-between;
-    width: 100%;
-    max-width: 100%;
-    margin: 25px 10px;
-    height: calc(100% - 50px);
-    border: var(--border);
-    border-radius: 5px;
-    background: var(--msger-bg);
-    box-shadow: 0 15px 15px -5px rgba(0, 0, 0, 0.2);
-  }
-
-  .msger-header {
-    display: flex;
-    justify-content: space-between;
-    padding: 10px;
-    border-bottom: var(--border);
-    background: #eee;
-    color: #666;
-  }
-
-  .msger-chat {
-    flex: 1;
-    overflow-y: auto;
-    padding: 10px;
-  }
-  .msger-chat::-webkit-scrollbar {
-    width: 6px;
-  }
-  .msger-chat::-webkit-scrollbar-track {
-    background: #ddd;
-  }
-  .msger-chat::-webkit-scrollbar-thumb {
-    background: #bdbdbd;
-  }
-  .msg {
-    display: flex;
-    /* align-items: flex-end; */
-    margin-bottom: 10px;
-  }
-  .msg:last-of-type {
-    margin: 0;
-  }
-  .msg-img {
-    width: 50px;
-    height: 50px;
-    margin-right: 10px;
-    background: #ddd;
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: cover;
-    border-radius: 50%;
-  }
-  .msg-bubble {
-    max-width: 450px;
-    padding: 15px;
-    border-radius: 15px;
-    background: var(--left-msg-bg);
-  }
-  .msg-info {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 10px;
-    gap: 18px;
-  }
-  .msg-info-name {
-    margin-right: 10px;
-    font-weight: bold;
-    font-family: "Ubunto";
-    margin: 8px;
-  }
-  .msg-info-time {
-    font-size: 0.75em;
-    margin-top: 15px;
-  }
-
-  .left-msg .msg-bubble {
-    border-bottom-left-radius: 0;
-  }
-
-  .right-msg {
-    flex-direction: row-reverse;
-  }
-  .right-msg .msg-bubble {
-    background: var(--right-msg-bg);
-    color: #fff;
-    border-bottom-right-radius: 0;
-  }
-  .right-msg .msg-img {
-    margin: 0 0 0 10px;
-  }
-
-  .msger-inputarea {
-    display: flex;
-    border-top: var(--border);
-    background: #eee;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  }
-  .msger-inputarea * {
-    padding: 10px;
-    border: none;
-    border-radius: 3px;
-    font-size: 1em;
-    font-family: "Ubunto";
-  }
-  .msger-input {
-    flex: 1;
-    background: white;
-  }
-  .msger-send-btn {
-    margin-left: 10px;
-    background: #005494;
-    color: #fff;
-    font-weight: bold;
-    cursor: pointer;
-    transition: background 0.23s;
-  }
-  .msger-send-btn:hover {
-    background: rgb(0, 180, 50);
-  }
-
-  .msger-chat {
-    background-color: #F1F3F9;
-  }
-  .user-detail{
-    display: flex;
-  }
-
-  /* Styling for the red dot */
-  .red-dot {
-    width: 10px;
-    height: 10px;
-    background-color: red;
-    border-radius: 50%;
-    /* display: inline-block; */
-    margin-left: 5px;
-    flex: 1;
-  }
-
-  /* Styling for the chat container */
-  .chat-container {
-    {% comment %} display: flex; {% endcomment %}
-    width:100%
-  }
-
-  /* Styling for the left sidebar */
-  .sidebar {
-    width: 20%;
-    background-color: #f0f0f0;
-    padding: 10px;
-  }
-
-  /* Styling for the chat content */
-  .chat-content {
-    width: 80%;
-    background-color: #fff;
-
-  }
-
-  /* Styling for the chat messages */
-  .chat-messages {
-    height: 70vh;
-    overflow-y: auto;
-    border-radius: 5px;
-    padding: 10px;
-  }
-
-  /* Styling for the textarea and send button */
-  .message-input {
-    width: 100%;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    padding: 5px;
-    margin-top: 10px;
-  }
-
-  .send-button {
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    padding: 5px 10px;
-    cursor: pointer;
-  }
-  .otherchat {
-    background-color: #007bff;
-    color: #fff;
-    max-width: 60%;
-    padding: 10px;
-    border-radius: 10px;
-    margin: 10px;
-    clear: both;
-    word-wrap: break-word;
-    float: left;
-  }
-
-  .chat-card {
-    background-color: #e0e0e0;
-    color: #000;
-    max-width: 60%;
-    padding: 10px;
-    border-radius: 10px;
-    margin: 10px;
-    clear: both;
-    word-wrap: break-word;
-    float: right;
-  }
-  .sidebar {
-    width: 26%;
-    background-color: white;
-    padding: 10px;
-    border-right: var(--border);
-    overflow-y: auto;
-    max-height: 80vh; /* Adjust this height as needed */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  }
-  
-  .sidebar-header {
-    margin-bottom: 15px;
-  }
-  
-  .sidebar-header .nav-link {
-    display: flex;
-    align-items: center;
-    padding: 10px;
-    border-radius: 4px;
-    font-weight: bold;
-    color: #333;
-    text-decoration: none;
-    background-color: var(--sidebar-item-bg);
-  }
-  
-  .sidebar-header .nav-link:hover {
-    background: var(--sidebar-item-hover-bg);
-  }
-  
-  .nav-link {
-    display: flex;
-    align-items: center;
-    padding: 10px;
-    margin-bottom: 8px;
-    border-radius: 4px;
-    background: var(--sidebar-item-bg);
-    color: #333;
-    text-decoration: none;
-    font-weight: 500;
-    transition: background 0.3s;
-  }
-  
-  .nav-link.active,
-  .nav-link:hover {
-    background: var(--sidebar-item-hover-bg);
-    color: var(--button-bg);
-  }
-  
-  .sidebar-item {
-    display: flex;
-    align-items: center;
-  }
-  
-  .sidebar-item-img {
-    width: 40px;
-    height: 40px;
-    margin-right: 10px;
-    background: #ddd;
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: cover;
-    border-radius: 50%;
-  }
-  
-  .sidebar-item-username {
-    font-size: 1rem;
-    color: #333;
-    font-family: "Ubunto";
-  }
-  #username{
-    font-family: "Ubuntu";
-    font-size: 22.55px;
-    font-weight: 500;
-    line-height: 25.9px;
-    text-align: left;
-
-  }
-  #top-nav{
-    background-color: white;
-  }
-  
-</style>
-
-{% endblock css %}
-
-{% block content %}
-
-<div class="main d-flex container mt-5 mb-5">
-  <div class="sidebar">
-    <div class="sidebar-header">
-      <a class="nav-link" href="/?user={{default_user}}" role="tab" aria-controls="v-pills-home" aria-selected="true">
-        <span>Inbox</span>
-      </a>
-    </div>
-    <nav class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-      {% for frnd in frnds %}
-      <a class="nav-link{% if frnd.username == default_user %} active{% endif %}" href="/chat/?user={{frnd.username}}" role="tab" aria-controls="v-pills-home" aria-selected="false">
-        <div class="sidebar-item">
-          <div class="sidebar-item-img" style="background-image: url(https://image.flaticon.com/icons/svg/145/145867.svg);">
-            
-          </div>
-
-          <span class="sidebar-item-username">{{frnd.username}}</span>
-        </div>
-      </a>
-      {% endfor %}
-    </nav> 
-  </div>
-  <div class="chat-container">
-    <div class="chat-content">
-      <div class="navbar" id="top-nav">
-        <div class="container-fluid">
-          <a class="navbar-brand user-detail" href="#">
-            {% comment %} <div class="msg-img" style="background-image: url('{{ user.profile_img.url }}');"> {% endcomment %}
-                
-            </div>
-            <h2 id="username" class="m-auto">{{default_user}}<span class="red-dot"></span></h2>
-          </a>
-        </div>
-      </div>
-      <div class="chat-messages msger-chat">
-        {% if chats %}
-          {% for key, chat in chats.items %} 
-          {% if chat.user == 'me' %}
-          <div class="msg right-msg">
-            <div class="msg-bubble">
-              <div class="msg-info">
-                <div class="msg-text">{{chat.msg}}</div>
-                <div class="msg-info-time">12:45</div>
-              </div>
-            </div>
-          </div>
-          {% else %}
-          <div class="msg left-msg">
-            <div class="msg-img" style="background-image: url(https://image.flaticon.com/icons/svg/145/145867.svg);"></div>
-            <div>
-              <div class="msg-info-name">{{chat.user}}</div>
-              <div class="msg-bubble">
-                <div class="msg-info">
-                  <div class="msg-text">{{chat.msg}}</div>
-                  <div class="msg-info-time">12:46</div>
-                </div>
-              </div>
-            </div>
-          </div>
-          {% endif %} 
-          {% endfor %}
-        {% endif %}
-      </div>
-      <div class="msger-inputarea">
-        <textarea type="text" class="msger-input" placeholder="Enter your message..."></textarea>
-        <button type="submit" class="msger-send-btn">Send</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-{% endblock content %}
-
-
-
-{% block js %}
-<script>
-  document.addEventListener("DOMContentLoaded", function () {
-    // Get the query parameter 'user' from the URL
-    const queryParams = new URLSearchParams(window.location.search);
-    const user = queryParams.get("user");
-    const PERSON_IMG =
-      "https://image.flaticon.com/icons/svg/145/145867.svg";
-
-    // Activate the tab based on the 'user' query parameter
-    const tab = document.querySelector(`[href="/?user=${user}"]`);
-    if (tab) {
-      tab.classList.add("active");
-      tab.setAttribute("aria-selected", "true");
-      document.getElementById("username").textContent = user;
-    }
-    if (user === null) {
-      const chatContent = document.querySelector(".chat-content");
-      chatContent.style.display = "none";
-    }
-    var sendButton = document.querySelector(".msger-send-btn");
-    var textarea = document.querySelector(".msger-input");
-    var chatMessages = document.querySelector(".msger-chat");
-    var ws;
-
-
-function appendMessage(name, text, img, side) {
- console.log(`this is side inside the appendMessage function ${side}`)
- let msgHTML;
-
-if (side === "right") {
-console.log('this is right side')
-msgHTML = `
-  <div class="msg ${side}-msg">
-    <div class="msg-bubble">
-      <div class="msg-info">
-        <div class="msg-text">${text}</div>
-        <div class="msg-info-time">${formatDate(new Date())}</div>
-      </div>
-    </div>
-  </div>
-`;
-} else {
-console.log('this is left side')
-msgHTML = `
-  <div class="msg ${side}-msg">
-    <div class="msg-img" style="background-image: url(${img})"></div>
-    <div>
-      <div class="msg-info-name">${name}</div>
-      <div class="msg-bubble">
-        <div class="msg-info">
-          <div class="msg-info-time">${formatDate(new Date())}</div>
-        </div>
-        <div class="msg-text">${text}</div>
-      </div>         
-    </div>
-  </div>
-`;
-}
-
-chatMessages.insertAdjacentHTML("beforeend", msgHTML);
-chatMessages.scrollTop += 500;
-}
-
-
-    function get(selector, root = document) {
-      return root.querySelector(selector);
-    }
-
-    function formatDate(date) {
-      const h = "0" + date.getHours();
-      const m = "0" + date.getMinutes();
-
-      return `${h.slice(-2)}:${m.slice(-2)}`;
-    }
-
-    function random(min, max) {
-      return Math.floor(Math.random() * (max - min) + min);
-    }
-
-    // Function to send a message via WebSocket
-    function sendMessage(message) {
-      if (ws && ws.readyState === WebSocket.OPEN) {
-        ws.send(JSON.stringify({ user: user, msg: message }));
-      }
-    }
-
-    // Connect to the WebSocket server
-    ws = new WebSocket("ws://127.0.0.1:8000/ws/wsc/");
-
-    // Handle WebSocket connection open
-    ws.addEventListener("open", function (event) {
-      console.log("WebSocket connection opened.");
-    });
-
-    // Handle WebSocket message received
-    ws.addEventListener("message", function (event) {
-      console.log(`this is message ${event.data}`);
-      appendMessage("frnd", event.data, PERSON_IMG, "left");
-    });
-
-    // Handle WebSocket close
-    ws.addEventListener("close", function (event) {
-      console.log("WebSocket connection closed.");
-    });
-
-    // Handle Send button click
-    sendButton.addEventListener("click", function () {
-      const messageText = textarea.value;
-
-      if (messageText.trim() !== "") {
-        sendMessage(messageText);
-
-        // Append the sent message to chat messages
-        appendMessage("me", messageText, PERSON_IMG, "right");
-
-        // Clear the textarea
-        textarea.value = "";
-      }
-    });
-  });
-
-
-  document.addEventListener("DOMContentLoaded", function () {
-    // Get the query parameter 'user' from the URL
-    const queryParams = new URLSearchParams(window.location.search);
-    const user = queryParams.get("user");
-    
-    // If no user is specified, set the default user
-    if (!user) {
-      const defaultUser = "{{ default_user }}";
-      if (defaultUser) {
-        window.location.href = `/chat/?user=${defaultUser}`;
-      }
-    }
-
-    // Set the active class for the current user
-    const links = document.querySelectorAll(".nav-link");
-    links.forEach(link => {
-      const href = link.getAttribute("href");
-      const linkUser = href.split("/").pop(); // Get the username from the URL
-      console.log('before if condition')
-
-      if (linkUser === user) {
-        console.log('second last function')
-        link.classList.add("active");
-      }
-    });
-  });
-
-
-console.log('aisy hi kra rha hoo')
-  document.addEventListener("DOMContentLoaded", function () {
-    // Get the query parameter 'user' from the URL
-    const queryParams = new URLSearchParams(window.location.search);
-    const user = queryParams.get("user");
-
-    if (user) {
-      // Set the active class for the current user
-      const links = document.querySelectorAll(".nav-link");
-      links.forEach(link => {
-        const linkUser = link.getAttribute("href").split("/")[2];
-        if (linkUser === user) {
-          console.log('last function')
-          link.classList.add("active");
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modern Chat Interface</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #3b82f6;
+            --primary-dark: #2563eb;
+            --secondary-color: #64748b;
+            --success-color: #10b981;
+            --background: #f8fafc;
+            --surface: #ffffff;
+            --surface-2: #f1f5f9;
+            --border: #e2e8f0;
+            --border-light: #f1f5f9;
+            --text-primary: #0f172a;
+            --text-secondary: #64748b;
+            --text-muted: #94a3b8;
+            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+            --shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+            --radius: 12px;
+            --radius-sm: 8px;
+            --radius-lg: 16px;
         }
-      });
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--background);
+            color: var(--text-primary);
+            line-height: 1.6;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .chat-container {
+            display: flex;
+            height: 100vh;
+            max-width: 1400px;
+            margin: 0 auto;
+            background: var(--surface);
+            box-shadow: var(--shadow-lg);
+        }
+
+        /* Sidebar Styles */
+        .sidebar {
+            width: 320px;
+            background: var(--surface);
+            border-right: 1px solid var(--border);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .sidebar-header {
+            padding: 24px 20px;
+            border-bottom: 1px solid var(--border);
+            background: var(--surface);
+        }
+
+        .sidebar-header h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 4px;
+        }
+
+        .sidebar-header p {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+        }
+
+        .sidebar-content {
+            flex: 1;
+            overflow-y: auto;
+            padding: 16px 0;
+        }
+
+        .sidebar-content::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        .sidebar-content::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .sidebar-content::-webkit-scrollbar-thumb {
+            background: var(--border);
+            border-radius: 2px;
+        }
+
+        .chat-item {
+            display: flex;
+            align-items: center;
+            padding: 12px 20px;
+            margin: 2px 12px;
+            border-radius: var(--radius-sm);
+            text-decoration: none;
+            color: var(--text-primary);
+            transition: all 0.2s ease;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .chat-item:hover {
+            background: var(--surface-2);
+            transform: translateX(4px);
+        }
+
+        .chat-item.active {
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+            color: white;
+            box-shadow: var(--shadow);
+        }
+
+        .chat-item.active:hover {
+            transform: translateX(0);
+        }
+
+        .chat-avatar {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary-color), var(--success-color));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 12px;
+            position: relative;
+            flex-shrink: 0;
+        }
+
+        .chat-avatar i {
+            color: white;
+            font-size: 1.1rem;
+        }
+
+        .chat-avatar::after {
+            content: '';
+            position: absolute;
+            bottom: 2px;
+            right: 2px;
+            width: 12px;
+            height: 12px;
+            background: var(--success-color);
+            border: 2px solid var(--surface);
+            border-radius: 50%;
+        }
+
+        .chat-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .chat-name {
+            font-weight: 600;
+            font-size: 0.95rem;
+            margin-bottom: 2px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .chat-last-message {
+            font-size: 0.8rem;
+            opacity: 0.7;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        /* Main Chat Area */
+        .chat-main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            background: var(--surface);
+            overflow: hidden;
+        }
+
+        .chat-header {
+            padding: 20px 24px;
+            border-bottom: 1px solid var(--border);
+            background: var(--surface);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .chat-header-info {
+            display: flex;
+            align-items: center;
+        }
+
+        .chat-header-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary-color), var(--success-color));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 12px;
+        }
+
+        .chat-header-avatar i {
+            color: white;
+            font-size: 1rem;
+        }
+
+        .chat-header-details h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 2px;
+        }
+
+        .chat-status {
+            font-size: 0.8rem;
+            color: var(--success-color);
+            display: flex;
+            align-items: center;
+        }
+
+        .chat-status::before {
+            content: '';
+            width: 6px;
+            height: 6px;
+            background: var(--success-color);
+            border-radius: 50%;
+            margin-right: 6px;
+        }
+
+        .chat-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .action-btn {
+            width: 36px;
+            height: 36px;
+            border: none;
+            border-radius: var(--radius-sm);
+            background: var(--surface-2);
+            color: var(--text-secondary);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+        }
+
+        .action-btn:hover {
+            background: var(--border);
+            color: var(--text-primary);
+        }
+
+        /* Messages Area */
+        .messages-container {
+            flex: 1;
+            overflow-y: auto;
+            padding: 24px;
+            background: var(--background);
+        }
+
+        .messages-container::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .messages-container::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .messages-container::-webkit-scrollbar-thumb {
+            background: var(--border);
+            border-radius: 3px;
+        }
+
+        .message {
+            display: flex;
+            margin-bottom: 16px;
+            animation: fadeInUp 0.3s ease;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .message.sent {
+            justify-content: flex-end;
+        }
+
+        .message-content {
+            max-width: 70%;
+            position: relative;
+        }
+
+        .message-bubble {
+            padding: 12px 16px;
+            border-radius: var(--radius);
+            position: relative;
+            word-wrap: break-word;
+        }
+
+        .message.received .message-bubble {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            color: var(--text-primary);
+            border-bottom-left-radius: 4px;
+        }
+
+        .message.sent .message-bubble {
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+            color: white;
+            border-bottom-right-radius: 4px;
+        }
+
+        .message-time {
+            font-size: 0.75rem;
+            opacity: 0.6;
+            margin-top: 4px;
+            text-align: right;
+        }
+
+        .message.received .message-time {
+            text-align: left;
+        }
+
+        .message-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--secondary-color), var(--text-muted));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 8px;
+            margin-top: 4px;
+            flex-shrink: 0;
+        }
+
+        .message-avatar i {
+            color: white;
+            font-size: 0.8rem;
+        }
+
+        /* Input Area */
+        .message-input-container {
+            padding: 20px 24px;
+            background: var(--surface);
+            border-top: 1px solid var(--border);
+        }
+
+        .message-input-wrapper {
+            display: flex;
+            align-items: flex-end;
+            gap: 12px;
+            background: var(--surface-2);
+            border-radius: var(--radius-lg);
+            padding: 12px 16px;
+            border: 1px solid var(--border);
+            transition: all 0.2s ease;
+        }
+
+        .message-input-wrapper:focus-within {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgb(59 130 246 / 0.1);
+        }
+
+        .message-input {
+            flex: 1;
+            border: none;
+            outline: none;
+            background: transparent;
+            resize: none;
+            font-family: inherit;
+            font-size: 0.95rem;
+            line-height: 1.5;
+            max-height: 120px;
+            min-height: 20px;
+        }
+
+        .message-input::placeholder {
+            color: var(--text-muted);
+        }
+
+        .input-actions {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .input-btn {
+            width: 32px;
+            height: 32px;
+            border: none;
+            border-radius: var(--radius-sm);
+            background: transparent;
+            color: var(--text-secondary);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+        }
+
+        .input-btn:hover {
+            background: var(--border);
+            color: var(--text-primary);
+        }
+
+        .send-btn {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .send-btn:hover {
+            background: var(--primary-dark);
+            transform: scale(1.05);
+        }
+
+        .send-btn:disabled {
+            background: var(--border);
+            color: var(--text-muted);
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 280px;
+                position: fixed;
+                left: -280px;
+                height: 100vh;
+                z-index: 1000;
+                transition: left 0.3s ease;
+            }
+
+            .sidebar.open {
+                left: 0;
+            }
+
+            .chat-main {
+                width: 100%;
+            }
+
+            .message-content {
+                max-width: 85%;
+            }
+
+            .chat-container {
+                max-width: 100%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .sidebar {
+                width: 100%;
+                left: -100%;
+            }
+
+            .chat-header,
+            .message-input-container {
+                padding: 16px;
+            }
+
+            .messages-container {
+                padding: 16px;
+            }
+
+            .message-content {
+                max-width: 90%;
+            }
+        }
+
+        /* Loading Animation */
+        .typing-indicator {
+            display: flex;
+            align-items: center;
+            padding: 16px;
+            background: var(--surface);
+            border-radius: var(--radius);
+            margin-bottom: 16px;
+            border: 1px solid var(--border);
+            max-width: 100px;
+        }
+
+        .typing-dots {
+            display: flex;
+            gap: 4px;
+        }
+
+        .typing-dot {
+            width: 6px;
+            height: 6px;
+            background: var(--text-muted);
+            border-radius: 50%;
+            animation: typing 1.4s infinite ease-in-out;
+        }
+
+        .typing-dot:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .typing-dot:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+
+        @keyframes typing {
+            0%, 60%, 100% {
+                transform: translateY(0);
+                opacity: 0.4;
+            }
+            30% {
+                transform: translateY(-10px);
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="chat-container">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="sidebar-header">
+                <h2>Messages</h2>
+                <p>5 conversations</p>
+            </div>
+            <div class="sidebar-content">
+                {% for f in frnds %}
+                <a href="/chat/?user={{f.username}}" class=" {% if f.username == default_user %} chat-item active {% endif %}" data-user="john_doe">
+                    <div class="chat-avatar">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="chat-info">
+                        <div class="chat-name">{{f.username}}</div>
+                        <div class="chat-last-message">Hey! How are you doing?</div>
+                    </div>
+                </a>
+                {% empty %}
+                <a href="#" class="chat-item active" data-user="john_doe">
+                    <div class="chat-avatar">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="chat-info">
+                        <div class="chat-name">John Doe</div>
+                        <div class="chat-last-message">Hey! How are you doing?</div>
+                    </div>
+                </a>
+                
+                <a href="#" class="chat-item" data-user="sarah_wilson">
+                    <div class="chat-avatar">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="chat-info">
+                        <div class="chat-name">Sarah Wilson</div>
+                        <div class="chat-last-message">Thanks for the help!</div>
+                    </div>
+                </a>
+                
+                <a href="#" class="chat-item" data-user="mike_johnson">
+                    <div class="chat-avatar">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="chat-info">
+                        <div class="chat-name">Mike Johnson</div>
+                        <div class="chat-last-message">Let's meet tomorrow</div>
+                    </div>
+                </a>
+                
+                <a href="#" class="chat-item" data-user="lisa_brown">
+                    <div class="chat-avatar">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="chat-info">
+                        <div class="chat-name">Lisa Brown</div>
+                        <div class="chat-last-message">Perfect! See you then</div>
+                    </div>
+                </a>
+
+                <a href="#" class="chat-item" data-user="alex_davis">
+                    <div class="chat-avatar">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="chat-info">
+                        <div class="chat-name">Alex Davis</div>
+                        <div class="chat-last-message">Got it, working on it now</div>
+                    </div>
+                </a>
+                {% endfor %}
+            </div>
+        </div>
+
+        <!-- Main Chat Area -->
+        <div class="chat-main">
+            <div class="chat-header">
+                <div class="chat-header-info">
+                    <div class="chat-header-avatar">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="chat-header-details">
+                        <h3 id="current-user">John Doe</h3>
+                        <div class="chat-status">Online</div>
+                    </div>
+                </div>
+                <div class="chat-actions">
+                    <button class="action-btn" title="Voice Call">
+                        <i class="fas fa-phone"></i>
+                    </button>
+                    <button class="action-btn" title="Video Call">
+                        <i class="fas fa-video"></i>
+                    </button>
+                    <button class="action-btn" title="More Options">
+                        <i class="fas fa-ellipsis-v"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div class="messages-container" id="messages">
+                <!-- Sample Messages -->
+                {% comment %} <div class="message received">
+                    <div class="message-avatar">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="message-content">
+                        <div class="message-bubble">
+                            Hey! How are you doing today?
+                        </div>
+                        <div class="message-time">2:45 PM</div>
+                    </div>
+                </div> {% endcomment %}
+
+                {% if chats %}
+                {% for key, chat in chats.items %} 
+                {% if chat.user == 'me' %}
+
+                <div class="message sent">
+                    <div class="message-content">
+                        <div class="message-bubble">
+                            {{chat.msg}}
+                        </div>
+                        <div class="message-time">2:46 PM</div>
+                    </div>
+                </div>
+                {% else %}
+                <div class="message received">
+                    <div class="message-avatar">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="message-content">
+                        <div class="message-bubble">
+                            {{chat.msg}}
+                        </div>
+                        <div class="message-time">2:47 PM</div>
+                    </div>
+                </div>
+                {% endif %} 
+                {% endfor %}
+                {% endif %}
+            </div>
+
+            <div class="message-input-container">
+                <div class="message-input-wrapper">
+                    <textarea 
+                        class="message-input" 
+                        placeholder="Type your message..."
+                        rows="1"
+                        id="messageInput"
+                    ></textarea>
+                    <div class="input-actions">
+                        <button class="input-btn" title="Attach File">
+                            <i class="fas fa-paperclip"></i>
+                        </button>
+                        <button class="input-btn" title="Emoji">
+                            <i class="fas fa-smile"></i>
+                        </button>
+                        <button class="input-btn send-btn" id="sendBtn" title="Send Message">
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Auto-resize textarea
+        const messageInput = document.getElementById('messageInput');
+        const sendBtn = document.getElementById('sendBtn');
+        const messagesContainer = document.getElementById('messages');
+        const currentUserElement = document.getElementById('current-user');
+
+        const queryParams = new URLSearchParams(window.location.search);
+        const user = queryParams.get("user");
+
+        if (!user) {
+            const defaultUser = "{{ default_user }}";
+            if (defaultUser) {
+                window.location.href = `/chat/?user=${defaultUser}`;
+            }
+            }
+
+        messageInput.addEventListener('input', function() {
+            this.style.height = 'auto';
+            this.style.height = Math.min(this.scrollHeight, 120) + 'px';
+            
+            // Enable/disable send button based on input
+            sendBtn.disabled = this.value.trim().length === 0;
+        });
+
+        // Handle send message
+        function send_and_addMessage() {
+            const message = messageInput.value.trim();
+            if (message) {
+                sendMessage(message)
+                addMessage(message, 'sent');
+                messageInput.value = '';
+                messageInput.style.height = 'auto';
+                sendBtn.disabled = true;
+                
+                // Simulate response after a delay
+                // setTimeout(() => {
+                //     showTypingIndicator();
+                //     setTimeout(() => {
+                //         hideTypingIndicator();
+                //         addMessage("Thanks for your message! I'll get back to you soon.", 'received');
+                //     }, 2000);
+                // }, 500);
+            }
+        }
+
+        sendBtn.addEventListener('click', send_and_addMessage);
+
+        messageInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                send_and_addMessage();
+            }
+        });
+
+        // Add message to chat
+        function addMessage(text, type) {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${type}`;
+            
+            const now = new Date();
+            const timeString = now.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+            
+            if (type === 'received') {
+                messageDiv.innerHTML = `
+                    <div class="message-avatar">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="message-content">
+                        <div class="message-bubble">${text}</div>
+                        <div class="message-time">${timeString}</div>
+                    </div>
+                `;
+            } else {
+                messageDiv.innerHTML = `
+                    <div class="message-content">
+                        <div class="message-bubble">${text}</div>
+                        <div class="message-time">${timeString}</div>
+                    </div>
+                `;
+            }
+            
+            messagesContainer.appendChild(messageDiv);
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+
+        // Typing indicator
+        // function showTypingIndicator() {
+        //     const typingDiv = document.createElement('div');
+        //     typingDiv.className = 'message received';
+        //     typingDiv.id = 'typing-indicator';
+        //     typingDiv.innerHTML = `
+        //         <div class="message-avatar">
+        //             <i class="fas fa-user"></i>
+        //         </div>
+        //         <div class="typing-indicator">
+        //             <div class="typing-dots">
+        //                 <div class="typing-dot"></div>
+        //                 <div class="typing-dot"></div>
+        //                 <div class="typing-dot"></div>
+        //             </div>
+        //         </div>
+        //     `;
+        //     messagesContainer.appendChild(typingDiv);
+        //     messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        // }
+
+        // function hideTypingIndicator() {
+        //     const typingIndicator = document.getElementById('typing-indicator');
+        //     if (typingIndicator) {
+        //         typingIndicator.remove();
+        //     }
+        // }
+
+        // Handle chat item clicks
+        document.querySelectorAll('.chat-item').forEach(item => {
+            item.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                // Remove active class from all items
+                document.querySelectorAll('.chat-item').forEach(i => i.classList.remove('active'));
+                
+                // Add active class to clicked item
+                this.classList.add('active');
+                
+                // Update current user name
+                const userName = this.querySelector('.chat-name').textContent;
+                currentUserElement.textContent = userName;
+                
+                // Clear messages (in a real app, you'd load messages for this user)
+                // messagesContainer.innerHTML = `
+                //     <div class="message received">
+                //         <div class="message-avatar">
+                //             <i class="fas fa-user"></i>
+                //         </div>
+                //         <div class="message-content">
+                //             <div class="message-bubble">
+                //                 Hello! How can I help you today?
+                //             </div>
+                //             <div class="message-time">Just now</div>
+                //         </div>
+                //     </div>
+                // `;
+            });
+        });
+
+        // Initialize send button state
+        sendBtn.disabled = true;
+
+
+
+
+    let ws_scheme = window.location.protocol === "https:" ? "wss" : "ws";
+    let ws = new WebSocket(`${ws_scheme}://${window.location.host}/ws/wsc/`);
+
+    function sendMessage(message) {
+        if (ws && ws.readyState === WebSocket.OPEN) {
+        ws.send(JSON.stringify({ user: user, msg: message }));
+        }
     }
-  });
-</script>
 
+    ws.addEventListener("open", () => console.log("WebSocket opened."));
 
-{% endblock js %}
+    ws.addEventListener("message", event => {
+        const data = JSON.parse(event.data);
+        addMessage(data.msg, 'received');  // instead of appendMessage(...)
 
+        // appendMessage(data.user, data.msg, PERSON_IMG, "left");
+    });
+
+    ws.addEventListener("close", () => console.log("WebSocket closed."));
+
+    // sendButton.addEventListener("click", () => {
+    //     const messageText = textarea.value.trim();
+    //     if (messageText !== "") {
+    //     sendMessage(messageText);
+    //     appendMessage("me", messageText, PERSON_IMG, "right");
+    //     textarea.value = "";
+    //     }
+    // });
+    </script>
+</body>
+</html>

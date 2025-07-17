@@ -14,6 +14,7 @@ cryptography==42.0.8
 daphne==3.0.2
 Django==5.0.6
 django-allauth==0.63.3
+django-jazzmin==3.0.1
 hiredis==2.3.2
 hyperlink==21.0.0
 idna==3.7
@@ -30,8 +31,8 @@ pyOpenSSL==24.1.0
 redis==5.0.5
 requests==2.32.3
 requests-oauthlib==2.0.0
+requests-toolbelt==1.0.0
 service-identity==24.1.0
-setuptools==70.0.0
 six==1.16.0
 sqlparse==0.5.0
 stripe==9.9.0

@@ -39,6 +39,7 @@ class MychatApp(AsyncWebsocketConsumer):
     @database_sync_to_async   
     def save_chat(self,text_data):
         print('we enter into the save chat function')
+        print(f'this is text data {text_data}')
         frnd = User.objects.get(username=text_data['user'])
         mychats, created = Mychats.objects.get_or_create(me=self.scope['user'], frnd=frnd)
         # If the object was just created, initialize the 'chats' field as an empty dictionary

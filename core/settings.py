@@ -31,7 +31,7 @@ ALLOWED_HOSTS = ['*']
 # Application definition
 
 INSTALLED_APPS = [
-    # 'jazzmin',
+    'jazzmin',
     # 'admin_interface',
     # "colorfield",
     'channels',
@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'camera',
     'chat',
     'accounts',
+    'security',
     'allauth',   
     'allauth.account',  
     'allauth.socialaccount',
@@ -145,9 +146,11 @@ MEDIA_URL = '/media/'
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
 
-STATIC_ROOT = BASE_DIR/'static'
-STATIC_URL = 'static/' 
-
+STATIC_ROOT = BASE_DIR/'staticfiles'
+STATIC_URL = '/static/' 
+STATICFILES_DIRS = [
+    BASE_DIR / 'static',  # Adjust this to the location of your global assets directory
+]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
@@ -155,7 +158,7 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
-AUTH_USER_MODEL = 'accounts.MyUser'
+AUTH_USER_MODEL = 'security.MyUser'
 
 
 

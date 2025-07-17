@@ -1,0 +1,65 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Voxelit</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'css/security.css' %}">
+    <script src="{% static 'js/script.js' %}"></script>
+</head>
+
+<body>
+    <div class="auth-container">
+        <div class="auth-card">
+            <h2 class="brand-title">Voxelit</h2>
+            {% if messages %}
+                <ul class="messages">
+                {% for message in messages %}
+                    <li class="{{ message.tags }}">{{ message }}</li>
+                {% endfor %}
+                </ul>
+            {% endif %}
+                <form method="post" action="{% url 'security:signup' %}">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label class="form-label">Full Name</label>
+                    <input type="text" name='username' class="form-input" required placeholder="Enter your full name" />
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Email</label>
+                    <input type="email" name='email' class="form-input" required placeholder="Enter your email" />
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Password</label>
+                    <input type="password" name='password1' class="form-input" required placeholder="Create a password" />
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Confirm Password</label>
+                    <input type="password" name='password2' class="form-input" required placeholder="Confirm your password" />
+                    <small class="text-muted">Password must be at least 8 characters, include a number and a special character.</small>
+
+                </div>
+
+                <a>
+                    <button class="main-btn" type="submit">Sign Up</button>
+                </a>
+                <div class="forgot-wrap">
+                    Already have an account? <a href="{% url 'security:login' %}" class="forgot-link">Login</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>

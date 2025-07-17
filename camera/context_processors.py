@@ -5,7 +5,7 @@ def user_info(request):
     if user.is_authenticated:
         user_data = {
             'username': user.username,
-            'img':user.profile_img
+            # 'img':user.profile_img
          
             # Include other relevant user fields as needed
             

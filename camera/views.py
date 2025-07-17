@@ -10,9 +10,9 @@ from django.contrib.auth import get_user_model
 from django.core.mail import send_mail
 from django.core.paginator import Paginator,PageNotAnInteger,EmptyPage
 from django.views.generic import View,TemplateView
-from .models import category,item,Image,Order,Review
+from .models import category,Image,Order,Review
 from .forms import *
-from accounts.models import MyUser
+from security.models import MyUser
 from django.dispatch import Signal
 from django.db.models import Avg, Count
 
@@ -187,7 +187,7 @@ def fulfill_order(user_id, p_id,*args,**kwargs):
     
     
     
-@login_required
+
 def Home(request):
     current_user = request.user
     item_list = item.objects.exclude(owner=current_user)
@@ -534,3 +534,282 @@ def submission(request):
               
 
     return HttpResponse('Invalid request method!', status=405)
+
+
+def index(request):
+    return render(request,'camera/index.html')
+
+
+
+
+
+# views.py
+from django.shortcuts import render
+from django.http import JsonResponse
+from django.db.models import Q
+from django.core.paginator import Paginator
+from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.http import require_http_methods
+import json
+from .models import Item
+
+def search_page(request):
+    """
+    Render the search page template
+    """
+    return render(request, 'search/search_page.html')
+
+def search_api(request):
+    """
+    API endpoint for search functionality with pagination
+    Handles all search, filter, and pagination logic
+    """
+    try:
+        # Get search parameters from request
+        query = request.GET.get('q', '').strip()
+        category = request.GET.get('category', '').strip()
+        location = request.GET.get('location', '').strip()
+        price_min = request.GET.get('price_min', '')
+        price_max = request.GET.get('price_max', '')
+        sort_by = request.GET.get('sort', 'relevance')
+        
+        # Get page number, default to 1
+        try:
+            page = int(request.GET.get('page', 1))
+            if page < 1:
+                page = 1
+        except (ValueError, TypeError):
+            page = 1
+        
+        # Start with base queryset - all active items
+        items = Item.objects.filter(is_active=True)
+        
+        # Apply text search filter
+        if query:
+            items = items.filter(
+                Q(title__icontains=query) | 
+                Q(description__icontains=query) |
+                Q(tags__icontains=query)
+            )
+        
+        # Apply category filter
+        if category:
+            items = items.filter(category=category)
+        
+        # Apply location filter
+        if location:
+            items = items.filter(
+                Q(location__icontains=location) |
+                Q(owner__profile__city__icontains=location)
+            )
+        
+        # Apply price filters
+        if price_min:
+            try:
+                items = items.filter(price__gte=float(price_min))
+            except ValueError:
+                pass
+        
+        if price_max:
+            try:
+                items = items.filter(price__lte=float(price_max))
+            except ValueError:
+                pass
+        
+        # Apply sorting
+        if sort_by == 'price-low':
+            items = items.order_by('price', '-created_at')
+        elif sort_by == 'price-high':
+            items = items.order_by('-price', '-created_at')
+        elif sort_by == 'newest':
+            items = items.order_by('-created_at')
+        elif sort_by == 'popular':
+            items = items.order_by('-rating', '-review_count', '-created_at')
+        elif sort_by == 'featured':
+            items = items.order_by('-is_featured', '-created_at')
+        else:  # relevance (default)
+            if query:
+                # If there's a search query, order by relevance
+                items = items.order_by('-updated_at')
+            else:
+                # If no query, show newest first
+                items = items.order_by('-created_at')
+        
+        # Get total count before pagination
+        total_count = items.count()
+        
+        # Apply pagination
+        items_per_page = 12
+        paginator = Paginator(items, items_per_page)
+        
+        try:
+            page_obj = paginator.get_page(page)
+        except:
+            page_obj = paginator.get_page(1)
+        
+        # Convert items to JSON format
+        results = []
+        for item in page_obj:
+            # Calculate distance (simplified - you'd use actual geolocation)
+            distance = f"{round(2.5 + (item.id % 10) * 0.5, 1)} km"
+            
+            # Get image URL
+            image_url = item.image.url if item.image else None
+            
+            results.append({
+                'id': item.id,
+                'title': item.title,
+                'description': item.description[:150] + '...' if len(item.description) > 150 else item.description,
+                'price': float(item.price),
+                'category': item.category,
+                'image': image_url,
+                'location': item.location,
+                'distance': distance,
+                'rating': float(item.rating) if item.rating else 0,
+                'review_count': item.review_count,
+                'owner': item.owner.username,
+                'is_featured': item.is_featured if hasattr(item, 'is_featured') else False,
+                'created_at': item.created_at.isoformat(),
+                'updated_at': item.updated_at.isoformat()
+            })
+        
+        # Prepare response data
+        response_data = {
+            'results': results,
+            'total_count': total_count,
+            'current_page': page_obj.number,
+            'total_pages': paginator.num_pages,
+            'has_next': page_obj.has_next(),
+            'has_previous': page_obj.has_previous(),
+            'next_page': page_obj.next_page_number() if page_obj.has_next() else None,
+            'previous_page': page_obj.previous_page_number() if page_obj.has_previous() else None,
+            'items_per_page': items_per_page,
+            'search_params': {
+                'query': query,
+                'category': category,
+                'location': location,
+                'price_min': price_min,
+                'price_max': price_max,
+                'sort': sort_by
+            }
+        }
+        
+        return JsonResponse(response_data)
+        
+    except Exception as e:
+        # Handle any errors
+        print(f'the error is {e}')
+        return JsonResponse({
+            'error': 'Search failed',
+            'message': str(e),
+            'results': [],
+            'total_count': 0,
+            'has_next': False,
+            'has_previous': False,
+            'current_page': 1,
+            'total_pages': 0
+        }, status=500)
+
+def get_search_suggestions(request):
+    """
+    API endpoint for search auto-complete suggestions
+    """
+    query = request.GET.get('q', '').strip()
+    
+    if len(query) < 2:
+        return JsonResponse({'suggestions': []})
+    
+    try:
+        # Get unique titles and tags that match the query
+        items = Item.objects.filter(
+            Q(title__icontains=query) | Q(tags__icontains=query),
+            is_active=True
+        )[:10]
+        
+        suggestions = []
+        
+        # Add matching titles
+        for item in items:
+            if item.title not in suggestions:
+                suggestions.append(item.title)
+        
+        # Add popular search terms (you can store these in database)
+        popular_terms = [
+            'Camera', 'DSLR', 'Canon', 'Nikon', 'Photography',
+            'Drill', 'Power Tools', 'DeWalt', 'Makita',
+            'Laptop', 'MacBook', 'Dell', 'HP', 'Computer',
+            'Bike', 'Bicycle', 'Mountain Bike', 'Road Bike',
+            'Guitar', 'Piano', 'Keyboard', 'Microphone',
+            'Tent', 'Camping', 'Hiking', 'Backpack'
+        ]
+        
+        for term in popular_terms:
+            if query.lower() in term.lower() and term not in suggestions:
+                suggestions.append(term)
+                if len(suggestions) >= 8:
+                    break
+        
+        return JsonResponse({'suggestions': suggestions[:8]})
+        
+    except Exception as e:
+        return JsonResponse({'suggestions': [], 'error': str(e)})
+
+def item_detail(request, item_id):
+    """
+    Redirect to item detail page (called when rent now is clicked)
+    """
+    try:
+        item = Item.objects.get(id=item_id, is_active=True)
+        return render(request, 'items/item_detail.html', {'item': item})
+    except Item.DoesNotExist:
+        return render(request, '404.html', status=404)
+
+# Additional utility views
+def get_categories(request):
+    """
+    Get all available categories for filter dropdown
+    """
+    categories = Item.objects.filter(is_active=True).values_list('category', flat=True).distinct()
+    
+    category_choices = []
+    for category in categories:
+        category_choices.append({
+            'value': category,
+            'label': category.replace('_', ' ').title()
+        })
+    
+    return JsonResponse({'categories': category_choices})
+
+def get_locations(request):
+    """
+    Get all available locations for filter dropdown
+    """
+    locations = Item.objects.filter(is_active=True).values_list('location', flat=True).distinct()
+    
+    return JsonResponse({'locations': list(locations)})
+
+def get_price_ranges(request):
+    """
+    Get price statistics for dynamic price filter
+    """
+    from django.db.models import Min, Max, Avg
+    
+    try:
+        price_stats = Item.objects.filter(is_active=True).aggregate(
+            min_price=Min('price'),
+            max_price=Max('price'),
+            avg_price=Avg('price')
+        )
+        
+        return JsonResponse({
+            'min_price': float(price_stats['min_price'] or 0),
+            'max_price': float(price_stats['max_price'] or 0),
+            'avg_price': float(price_stats['avg_price'] or 0)
+        })
+    except Exception as e:
+        return JsonResponse({
+            'min_price': 0,
+            'max_price': 1000,
+            'avg_price': 50,
+            'error': str(e)
+        })

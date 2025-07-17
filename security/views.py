@@ -14,7 +14,7 @@ from django.contrib.auth.tokens import default_token_generator
 from django.db import transaction, IntegrityError
 from django.core.exceptions import ValidationError
 from django.contrib.auth.password_validation import validate_password
-
+from .utils import clean_spaces,validate_and_clean_spaces
 
 import random
 import string
@@ -42,13 +42,13 @@ def send_otp(request):
             user = User.objects.get(email=email)
         except User.DoesNotExist:
             messages.error(request, "This email does not exist.")
-            return render(request, 'accounts/forgetPassword.html')
+            return render(request, 'security/forgetPassword.html')
 
 
         if email:
             # Generate a random 4-digit OTP
             print('dfdffdfdfff')
-            otp = ''.join(random.choices(string.digits, k=4))
+            otp = ''.join(random.choices(string.digits, k=6))
             otp_expiry = timezone.now() + timedelta(minutes=2)  # OTP is valid for 2 minutes
 
             # Save OTP and expiry in session (or save in the database for more robust handling)
@@ -57,15 +57,24 @@ def send_otp(request):
             request.session['email'] = email
 
             # Send OTP via email
-            send_mail(
+            try:
+                send_mail(
                 subject='Your OTP for Password Reset',
                 message=f'Your OTP for password reset is {otp}. It is valid for 2 minutes.',
                 from_email=settings.DEFAULT_FROM_EMAIL,
                 recipient_list=[email],
                 fail_silently=False,
             )
-
-            return render(request, 'accounts/otp.html')
+                messages.success(request, "OTP has been sent to your email. It is valid for 2 minutes.")
+                return redirect('security:verify-otp')  # Replace with your OTP verification view
+            
+            except:
+                print("Email sending failed:", e)
+                messages.error(request, "Failed to send OTP email. Please try again later.")
+                return redirect('security:forgot-password')
+                
+    
+            return render(request, 'security/otp.html')
 
     return render(request, 'otp.html')
 
@@ -90,17 +99,17 @@ def verify_otp(request):
         # Check if the OTP has expired
         if timezone.now() > otp_expiry:
             messages.error(request, "The otp has expired.")
-            return render(request, 'accounts/otp.html')
+            return render(request, 'security/otp.html')
 
         # Verify if the entered OTP matches the one in session
         if entered_otp == session_otp:
-            messages.error(request, "Congrats your otp has been matched.")
-            return render(request, 'accounts/resetPassword.html')
+            messages.success(request, "Congrats your otp has been matched.")
+            return render(request, 'security/resetPassword.html')
         else:
             messages.error(request, "invalid otp.")
-            return render(request, 'accounts/otp.html')
+            return render(request, 'security/otp.html')
 
-    return render(request, 'accounts/otp.html')
+    return render(request, 'security/otp.html')
     
     
 def reset_password(request):
@@ -109,11 +118,12 @@ def reset_password(request):
         print('reset')
         new_password = request.POST.get('password')
         confirm_password = request.POST.get('confirm_password')
+        print(f'the new password {new_password} and the confirm password is {confirm_password}')
 
         # Check if passwords match
         if new_password != confirm_password:
             messages.error(request, "Passwords do not match.")
-            return render(request, 'accounts/resetPassword.html')
+            return render(request, 'security/resetPassword.html')
         
         print('reset passowrd')
 
@@ -124,11 +134,16 @@ def reset_password(request):
             user = get_user_model().objects.get(email=email)
         except get_user_model().DoesNotExist:
             messages.error(request, "User does not exist.")
-            return render(request, 'accounts/resetPassword.html')
+            return render(request, 'security/resetPassword.html')
 
         # Update the user's password
-        user.password = make_password(new_password)
+        print(f"Before set_password: {user.password}")
+        user.set_password(new_password)
+        print(f"After set_password: {user.password}")
+
         user.save()
+        
+        print(f'the usre is this after password change {user}')
 
         # Clear session data
         request.session.pop('otp', None)
@@ -136,9 +151,9 @@ def reset_password(request):
         request.session.pop('email', None)
 
         messages.success(request, "Your password has been reset successfully.")
-        return redirect('accounts:login')
+        return redirect('security:login')
 
-    return render(request, 'accounts/resetPassword.html')     
+    return render(request, 'security/resetPassword.html')     
 
 
 def send_verification_email(request, user):
@@ -153,14 +168,14 @@ def send_verification_email(request, user):
 
     subject = "Activate Your Account"
     message = f"""
-Hi {user.first_name},
+        Hi {user.first_name},
 
-Thank you for registering. Please click the link below to confirm your email address:
+        Thank you for registering. Please click the link below to confirm your email address:
 
-{link}
+        {link}
 
-Thank you!
-"""
+        Thank you!
+    """
 
     send_mail(
         subject,
@@ -186,11 +201,11 @@ def register_view(request):
                         request,
                         "Registration successful! Please check your email to activate your account."
                     )
-                    return redirect('accounts:login')
+                    return redirect('security:login')
             except Exception as e:
                 print(e)
                 messages.error(request, f"Unexpected error: {e}")
-                return redirect('accounts:signup')
+                return redirect('security:signup')
         else:
             print('in else view')
             print(form.errors.as_json())
@@ -199,10 +214,10 @@ def register_view(request):
             for field, errors in form.errors.items():
                 for error in errors:
                     messages.error(request, f"{field.capitalize()}: {error}")
-            return redirect('accounts:signup')
+            return redirect('security:signup')
 
     else:
-        return render(request, 'accounts/signup.html')
+        return render(request, 'security/signup.html')
 
 
 # @csrf_exempt
@@ -221,11 +236,11 @@ def register_view(request):
                 
 #                 if first_name == last_name:
 #                     messages.error(request, "first_name and last_name should not match.")
-#                     return redirect('accounts:signup')
+#                     return redirect('security:signup')
 
 #                 if User.objects.filter(email__iexact=email).exists():
 #                     messages.error(request, "Email is already taken.")
-#                     return redirect('accounts:signup')
+#                     return redirect('security:signup')
                 
 #                 # Password strength validation
 #                 validate_password(password)
@@ -237,7 +252,7 @@ def register_view(request):
 #                 token = default_token_generator.make_token(user)
 #                 uid = urlsafe_base64_encode(force_bytes(user.pk))
 #                 domain = request.get_host()
-#                 link = f"http://{domain}/accounts/verify/{uid}/{token}/"
+#                 link = f"http://{domain}/security/verify/{uid}/{token}/"
 
 #                 subject = "Activate Your Account"
 #                 message = f"""
@@ -260,7 +275,7 @@ def register_view(request):
 #                 )
 
 #                 messages.success(request, "Registration successful. You can log in after clicking the given link we have sent to your email.")
-#                 return redirect('accounts:login') 
+#                 return redirect('security:login') 
             
 #         except ValidationError as e:
 #             if hasattr(e, 'message_dict'):
@@ -271,14 +286,14 @@ def register_view(request):
 #                 # fallback for non-field errors
 #                 for error in e.messages:
 #                     messages.error(request, error)
-#             return redirect('accounts:signup')
+#             return redirect('security:signup')
         
 #         except Exception as e:
 #             #    messages.error(request, "Something went wrong. Please try again.")
 #                messages.error(request,e)
-#                return redirect('accounts:signup')    
+#                return redirect('security:signup')    
 #     else:
-#         return render(request, 'accounts/signup.html')
+#         return render(request, 'security/signup.html')
     
     
 
@@ -292,16 +307,16 @@ def activate_account(request, uidb64, token):
         user = None
 
     if user is not None and default_token_generator.check_token(user, token):
-        user.is_active = True
+        user.email_verified = True
         user.save()
         # User.objects.filter(pk=user.pk).update(is_active=True)
         print('update')
-        print(f'the email link verififd {user.is_active}')
+        print(f'the email link verififd {user.email_verified}')
         messages.success(request, "Your account has been activated. You can now log in.")
-        return redirect('accounts:login')
+        return redirect('security:login')
     else:
         messages.error(request, "The activation link is invalid.")
-        return redirect('accounts:register')
+        return redirect('security:register')
 
 def login_view(request):
     if request.method == 'POST':
@@ -314,19 +329,20 @@ def login_view(request):
 
         try:
             user = User.objects.get(email=username_or_email)
+            print(f'the use is : {user}')
         except User.DoesNotExist:
             user = None
 
         if user is not None:
-            if not user.is_active:
+            if not user.email_verified:
                 messages.error(request, "Please verify your email before logging in.")
-                return redirect('accounts:login')
+                return redirect('security:login')
         
         user = authenticate(request, username=username_or_email, password=password)
         print(f'the user is {user}')
         
         if user is not None:
-            if user.is_active:  
+            if user.email_verified:  
                 auth_login(request, user)
                 messages.success(request, "Login successful.")
                 print("Logged in successfully")
@@ -346,35 +362,35 @@ def login_view(request):
                 
             else:
                 messages.error(request, "Please verify your email before logging in.")
-                return redirect('accounts:login')
+                return redirect('security:login')
         else:
             messages.error(request, "Invalid email or password.")
             print("Login failed")
-            return redirect('accounts:login')
+            return redirect('security:login')
     
-    return render(request, 'accounts/login.html')
+    return render(request, 'security/login.html')
 
 
 
 def signup_view(request):
-    return render(request, 'accounts/signup.html')
+    return render(request, 'security/signup.html')
 
 
 def login(request):
-      return render(request,"accounts/login.html")
+      return render(request,"security/login.html")
 
 
 def signup(request):
-      return render(request,"accounts/signup.html")
+      return render(request,"security/signup.html")
 
 
 def logout_view(request):
     logout(request)
-    return redirect('accounts:login')
+    return redirect('security:login')
 
 
 def forgot_view(request):
-    return render(request, 'accounts/forgetPassword.html')
+    return render(request, 'security/forgetPassword.html')
 
 def otp_view(request):
-    return render(request, 'accounts/otp.html')
+    return render(request, 'security/otp.html')

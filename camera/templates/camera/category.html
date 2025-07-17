@@ -1,81 +1,1727 @@
-{% extends "Base.html" %} {% load static %}
+{% extends "Base.html" %}
+{% load static %}
 
 {% block css %}
-<link rel="stylesheet" href="{% static "css/category.css" %}">
+<link rel="stylesheet" href="{% static 'css/category.css' %}">
+
 {% endblock css %}
 
-
-
- {% block content %}
-<div class="d-flex justify-content-end align-items-center button">
-  {% if user.is_authenticated %}
-      <a href="{% url 'account_logout' %}" type="button">Logout</a>
-  {% else %}
-      <a href="{% url 'account_login' %}" type="button">Sign in</a>
-  {% endif %}
-</div>
-
-
-<div class="container mt-4" style="display: flex;">
-  <div>
-      <p>
-          <a href="#" class="home_link">Home</a>
-          <i class="bi bi-chevron-right" style="color: rgba(109, 109, 109, 1);"></i>      
-      </p>
-  </div>
-  <div>  
-      <a href="#" class="check_link">Search</a>
-      </p>
-  </div>
-</div>
-
-
-
-<div class="container mt-5">
-  <div class="row">
-    <div class="col-lg-7 col-md-7 col-sm-12">
-      <div class="heading">
-        <h2>
-          Rent <span>camera</span> <br />
-          From <span>People</span> in<br />
-          Your Community
-        </h2>
+{% block content %}
+<!-- Search Page -->
+<div class="search-page">
+  <!-- Search Hero Section -->
+  <section class="search-hero">
+      <div class="container">
+          <div class="row justify-content-center">
+              <div class="col-lg-8">
+                  <h1 class="search-title">Find What You Need</h1>
+                  <p class="search-subtitle">Search from thousands of items available for rent in your area</p>
+                  
+                  <!-- Main Search Form -->
+                  <div class="search-form-container">
+                      <form class="main-search-form" id="searchForm">
+                          <div class="search-input-group">
+                              <div class="search-input-wrapper">
+                                  <i class="fas fa-search search-icon"></i>
+                                  <input type="text" class="search-input" placeholder="Search for cameras, tools, bikes, furniture..." id="searchQuery">
+                              </div>
+                              <div class="location-input-wrapper">
+                                  <i class="fas fa-map-marker-alt location-icon"></i>
+                                  <input type="text" class="location-input" placeholder="Enter your location" id="locationInput">
+                              </div>
+                              <button type="submit" class="search-submit-btn">
+                                  <i class="fas fa-search"></i>
+                                  Search
+                              </button>
+                          </div>
+                      </form>
+                  </div>
+              </div>
+          </div>
       </div>
-      <div class="text mt-2 mb-sm-2">
-        Enjoy the item without the burden to own <br />
-        and at a fraction of the price
+  </section>
+
+  <!-- Filters Section -->
+  <section class="filters-section">
+      <div class="container">
+          <div class="row">
+              <div class="col-12">
+                  <div class="filters-container">
+                      <!-- Category Filter -->
+                      <div class="filter-group">
+                          <label class="filter-label">Category</label>
+                          <select class="filter-select" id="categoryFilter">
+                              <option value="">All Categories</option>
+                              <option value="electronics">Electronics</option>
+                              <option value="tools">Tools & Equipment</option>
+                              <option value="sports">Sports & Outdoor</option>
+                              <option value="home">Home & Garden</option>
+                              <option value="automotive">Automotive</option>
+                              <option value="music">Music & Events</option>
+                              <option value="photography">Photography</option>
+                              <option value="fitness">Fitness</option>
+                          </select>
+                      </div>
+
+                      <!-- Price Filter -->
+                      <div class="filter-group">
+                          <label class="filter-label">Price Range</label>
+                          <select class="filter-select" id="priceFilter">
+                              <option value="">Any Price</option>
+                              <option value="0-25">$0 - $25</option>
+                              <option value="26-50">$26 - $50</option>
+                              <option value="51-100">$51 - $100</option>
+                              <option value="101-200">$101 - $200</option>
+                              <option value="201+">$201+</option>
+                          </select>
+                      </div>
+
+                      <!-- Duration Filter -->
+                      <div class="filter-group">
+                          <label class="filter-label">Duration</label>
+                          <select class="filter-select" id="durationFilter">
+                              <option value="">Any Duration</option>
+                              <option value="hourly">Hourly</option>
+                              <option value="daily">Daily</option>
+                              <option value="weekly">Weekly</option>
+                              <option value="monthly">Monthly</option>
+                          </select>
+                      </div>
+
+                      <!-- Sort Filter -->
+                      <div class="filter-group">
+                          <label class="filter-label">Sort By</label>
+                          <select class="filter-select" id="sortFilter">
+                              <option value="relevance">Relevance</option>
+                              <option value="price-low">Price: Low to High</option>
+                              <option value="price-high">Price: High to Low</option>
+                              <option value="newest">Newest First</option>
+                              <option value="popular">Most Popular</option>
+                          </select>
+                      </div>
+
+                      <!-- Clear Filters -->
+                      <button class="clear-filters-btn" id="clearFilters">
+                          <i class="fas fa-times"></i>
+                          Clear Filters
+                      </button>
+                  </div>
+              </div>
+          </div>
       </div>
-    </div>
-    <div class="col-lg-5 col-md-5 col-sm-12 mt-sm-2">
-      <div class="second_div"></div>
-    </div>
-  </div>
-</div>
+  </section>
 
-<section class="search_bar_section mb-5">
-  <div class="container">
-    <div class="searchBar_main_div">
-      <h3>Search By Term</h3>
-      <form class="searchBar_inner_div">
-        <input type="search" placeholder="Search Here..." required />
-        <button type="submit">Search</button>
-      </form>
-    </div>
-  </div>
-</section>
+  <!-- Search Results Section -->
+  <section class="search-results-section">
+      <div class="container">
+          <!-- Results Header -->
+          <div class="results-header">
+              <h2 class="results-title">Search Results</h2>
+              <div class="results-count">
+                  <span id="resultsCount">Showing 1-12 of 156 results</span>
+              </div>
+          </div>
 
-<div class="container mt-3 mb-5">
-  <h3 class="seach_heading m-3">Search By Category</h3>
+          <!-- Results Grid -->
+          <div class="results-grid" id="resultsGrid">
+              <!-- Sample Result Items -->
+              <div class="result-item" data-category="photography" data-price="45">
+                  <div class="item-image">
+                      <img src="https://via.placeholder.com/300x200/005494/FFFFFF?text=Canon+DSLR" alt="Canon DSLR Camera">
+                      <div class="item-badge">Featured</div>
+                  </div>
+                  <div class="item-details">
+                      <h3 class="item-title">Canon EOS 80D DSLR Camera</h3>
+                      <p class="item-description">Professional DSLR camera with 24.2MP sensor, perfect for photography and videography.</p>
+                      <div class="item-meta">
+                          <span class="item-category">
+                              <i class="fas fa-camera"></i>
+                              Photography
+                          </span>
+                          <span class="item-location">
+                              <i class="fas fa-map-marker-alt"></i>
+                              2.3 km away
+                          </span>
+                      </div>
+                      <div class="item-pricing">
+                          <span class="item-price">$45<span class="price-period">/day</span></span>
+                          <div class="item-rating">
+                              <i class="fas fa-star"></i>
+                              <i class="fas fa-star"></i>
+                              <i class="fas fa-star"></i>
+                              <i class="fas fa-star"></i>
+                              <i class="fas fa-star"></i>
+                              <span class="rating-count">(24)</span>
+                          </div>
+                      </div>
+                      <button class="rent-now-btn">
+                          <i class="fas fa-calendar-alt"></i>
+                          Rent Now
+                      </button>
+                  </div>
+              </div>
 
-  <div class="main-container">
-    <div class="row-container">
-      {% for item in data %}
-      <div class="item">
-        <img src="{{item.image.url}}" alt="" />
+              <div class="result-item" data-category="tools" data-price="30">
+                  <div class="item-image">
+                      <img src="https://via.placeholder.com/300x200/005494/FFFFFF?text=Power+Drill" alt="Power Drill">
+                  </div>
+                  <div class="item-details">
+                      <h3 class="item-title">DeWalt 18V Cordless Drill</h3>
+                      <p class="item-description">Heavy-duty cordless drill with 2 batteries and charger included.</p>
+                      <div class="item-meta">
+                          <span class="item-category">
+                              <i class="fas fa-tools"></i>
+                              Tools
+                          </span>
+                          <span class="item-location">
+                              <i class="fas fa-map-marker-alt"></i>
+                              1.8 km away
+                          </span>
+                      </div>
+                      <div class="item-pricing">
+                          <span class="item-price">$30<span class="price-period">/day</span></span>
+                          <div class="item-rating">
+                              <i class="fas fa-star"></i>
+                              <i class="fas fa-star"></i>
+                              <i class="fas fa-star"></i>
+                              <i class="fas fa-star"></i>
+                              <i class="far fa-star"></i>
+                              <span class="rating-count">(18)</span>
+                          </div>
+                      </div>
+                      <button class="rent-now-btn">
+                          <i class="fas fa-calendar-alt"></i>
+                          Rent Now
+                      </button>
+                  </div>
+              </div>
+
+              <div class="result-item" data-category="sports" data-price="25">
+                  <div class="item-image">
+                      <img src="https://via.placeholder.com/300x200/005494/FFFFFF?text=Mountain+Bike" alt="Mountain Bike">
+                  </div>
+                  <div class="item-details">
+                      <h3 class="item-title">Trek Mountain Bike</h3>
+                      <p class="item-description">21-speed mountain bike, perfect for trails and city riding.</p>
+                      <div class="item-meta">
+                          <span class="item-category">
+                              <i class="fas fa-bicycle"></i>
+                              Sports
+                          </span>
+                          <span class="item-location">
+                              <i class="fas fa-map-marker-alt"></i>
+                              3.1 km away
+                          </span>
+                      </div>
+                      <div class="item-pricing">
+                          <span class="item-price">$25<span class="price-period">/day</span></span>
+                          <div class="item-rating">
+                              <i class="fas fa-star"></i>
+                              <i class="fas fa-star"></i>
+                              <i class="fas fa-star"></i>
+                              <i class="fas fa-star"></i>
+                              <i class="fas fa-star"></i>
+                              <span class="rating-count">(31)</span>
+                          </div>
+                      </div>
+                      <button class="rent-now-btn">
+                          <i class="fas fa-calendar-alt"></i>
+                          Rent Now
+                      </button>
+                  </div>
+              </div>
+
+              <div class="result-item" data-category="electronics" data-price="60">
+                  <div class="item-image">
+                      <img src="https://via.placeholder.com/300x200/005494/FFFFFF?text=MacBook+Pro" alt="MacBook Pro">
+                      <div class="item-badge">Popular</div>
+                  </div>
+                  <div class="item-details">
+                      <h3 class="item-title">MacBook Pro 16" M1</h3>
+                      <p class="item-description">Latest MacBook Pro with M1 chip, 16GB RAM, 512GB SSD.</p>
+                      <div class="item-meta">
+                          <span class="item-category">
+                              <i class="fas fa-laptop"></i>
+                              Electronics
+                          </span>
+                          <span class="item-location">
+                              <i class="fas fa-map-marker-alt"></i>
+                              4.2 km away
+                          </span>
+                      </div>
+                      <div class="item-pricing">
+                          <span class="item-price">$60<span class="price-period">/day</span></span>
+                          <div class="item-rating">
+                              <i class="fas fa-star"></i>
+                              <i class="fas fa-star"></i>
+                              <i class="fas fa-star"></i>
+                              <i class="fas fa-star"></i>
+                              <i class="fas fa-star"></i>
+                              <span class="rating-count">(42)</span>
+                          </div>
+                      </div>
+                      <button class="rent-now-btn">
+                          <i class="fas fa-calendar-alt"></i>
+                          Rent Now
+                      </button>
+                  </div>
+              </div>
+
+              <div class="result-item" data-category="home" data-price="35">
+                  <div class="item-image">
+                      <img src="https://via.placeholder.com/300x200/005494/FFFFFF?text=Pressure+Washer" alt="Pressure Washer">
+                  </div>
+                  <div class="item-details">
+                      <h3 class="item-title">Karcher Pressure Washer</h3>
+                      <p class="item-description">High-pressure washer for cleaning driveways, cars, and outdoor surfaces.</p>
+                      <div class="item-meta">
+                          <span class="item-category">
+                              <i class="fas fa-home"></i>
+                              Home & Garden
+                          </span>
+                          <span class="item-location">
+                              <i class="fas fa-map-marker-alt"></i>
+                              1.5 km away
+                          </span>
+                      </div>
+                      <div class="item-pricing">
+                          <span class="item-price">$35<span class="price-period">/day</span></span>
+                          <div class="item-rating">
+                              <i class="fas fa-star"></i>
+                              <i class="fas fa-star"></i>
+                              <i class="fas fa-star"></i>
+                              <i class="fas fa-star"></i>
+                              <i class="far fa-star"></i>
+                              <span class="rating-count">(16)</span>
+                          </div>
+                      </div>
+                      <button class="rent-now-btn">
+                          <i class="fas fa-calendar-alt"></i>
+                          Rent Now
+                      </button>
+                  </div>
+              </div>
+
+              <div class="result-item" data-category="automotive" data-price="40">
+                  <div class="item-image">
+                      <img src="https://via.placeholder.com/300x200/005494/FFFFFF?text=Car+Jack" alt="Car Jack">
+                  </div>
+                  <div class="item-details">
+                      <h3 class="item-title">Hydraulic Floor Jack</h3>
+                      <p class="item-description">3-ton hydraulic floor jack with jack stands included.</p>
+                      <div class="item-meta">
+                          <span class="item-category">
+                              <i class="fas fa-car"></i>
+                              Automotive
+                          </span>
+                          <span class="item-location">
+                              <i class="fas fa-map-marker-alt"></i>
+                              2.8 km away
+                          </span>
+                      </div>
+                      <div class="item-pricing">
+                          <span class="item-price">$40<span class="price-period">/day</span></span>
+                          <div class="item-rating">
+                              <i class="fas fa-star"></i>
+                              <i class="fas fa-star"></i>
+                              <i class="fas fa-star"></i>
+                              <i class="fas fa-star"></i>
+                              <i class="fas fa-star"></i>
+                              <span class="rating-count">(12)</span>
+                          </div>
+                      </div>
+                      <button class="rent-now-btn">
+                          <i class="fas fa-calendar-alt"></i>
+                          Rent Now
+                      </button>
+                  </div>
+              </div>
+          </div>
+
+          <!-- Load More Button -->
+          <div class="load-more-container">
+              <button class="load-more-btn" id="loadMoreBtn">
+                  <i class="fas fa-plus"></i>
+                  Load More Results
+              </button>
+          </div>
       </div>
-      {% endfor %}
-    </div>
-  </div>
+  </section>
+
+  <!-- No Results Section (Hidden by default) -->
+  <section class="no-results-section" id="noResultsSection" style="display: none;">
+      <div class="container">
+          <div class="no-results-content">
+              <div class="no-results-icon">
+                  <i class="fas fa-search"></i>
+              </div>
+              <h2 class="no-results-title">No results found</h2>
+              <p class="no-results-text">We couldn't find any items matching your search criteria. Try adjusting your filters or search terms.</p>
+              <button class="reset-search-btn" onclick="resetSearch()">
+                  <i class="fas fa-refresh"></i>
+                  Reset Search
+              </button>
+          </div>
+      </div>
+  </section>
 </div>
 
 {% endblock content %}
+
+
+{% block js %}
+<script>
+  // search_page.js - Complete JavaScript for Search Page
+document.addEventListener('DOMContentLoaded', function() {
+  console.log('🚀 Search page JavaScript loading...');
+  
+  // ===========================================
+  // 1. DOM ELEMENTS
+  // ===========================================
+  const searchForm = document.getElementById('searchForm');
+  const searchQuery = document.getElementById('searchQuery');
+  const locationInput = document.getElementById('locationInput');
+  const categoryFilter = document.getElementById('categoryFilter');
+  const priceFilter = document.getElementById('priceFilter');
+  const sortFilter = document.getElementById('sortFilter');
+  const clearFiltersBtn = document.getElementById('clearFilters');
+  const resultsGrid = document.getElementById('resultsGrid');
+  const resultsCount = document.getElementById('resultsCount');
+  const loadMoreBtn = document.getElementById('loadMoreBtn');
+  const noResultsSection = document.getElementById('noResultsSection');
+  
+  // ===========================================
+  // 2. GLOBAL VARIABLES
+  // ===========================================
+  let currentPage = 1;
+  let hasNextPage = true;
+  let isLoading = false;
+  let totalPages = 1;
+  let totalCount = 0;
+  let searchTimeout;
+  let currentSearchParams = {};
+  
+  // ===========================================
+  // 3. CSRF TOKEN SETUP
+  // ===========================================
+  function getCSRFToken() {
+      return document.querySelector('[name=csrfmiddlewaretoken]')?.value || 
+             document.querySelector('meta[name="csrf-token"]')?.getAttribute('content') || 
+             getCookie('csrftoken') || '';
+  }
+  
+  function getCookie(name) {
+      let cookieValue = null;
+      if (document.cookie && document.cookie !== '') {
+          const cookies = document.cookie.split(';');
+          for (let i = 0; i < cookies.length; i++) {
+              const cookie = cookies[i].trim();
+              if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                  cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                  break;
+              }
+          }
+      }
+      return cookieValue;
+  }
+  
+  // ===========================================
+  // 4. EVENT LISTENERS
+  // ===========================================
+  
+  // Search form submission
+  if (searchForm) {
+      searchForm.addEventListener('submit', function(e) {
+          e.preventDefault();
+          console.log('🔍 Search form submitted');
+          currentPage = 1;
+          performSearch(true);
+      });
+  }
+  
+  // Filter change events
+  if (categoryFilter) {
+      categoryFilter.addEventListener('change', function() {
+          console.log('📂 Category changed:', this.value);
+          currentPage = 1;
+          performSearch(true);
+      });
+  }
+  
+  if (priceFilter) {
+      priceFilter.addEventListener('change', function() {
+          console.log('💰 Price filter changed:', this.value);
+          currentPage = 1;
+          performSearch(true);
+      });
+  }
+  
+  if (sortFilter) {
+      sortFilter.addEventListener('change', function() {
+          console.log('🔄 Sort changed:', this.value);
+          currentPage = 1;
+          performSearch(true);
+      });
+  }
+  
+  // Clear filters
+  if (clearFiltersBtn) {
+      clearFiltersBtn.addEventListener('click', function() {
+          console.log('🧹 Clearing filters');
+          resetFilters();
+          currentPage = 1;
+          performSearch(true);
+      });
+  }
+  
+  // Load more results
+  if (loadMoreBtn) {
+      loadMoreBtn.addEventListener('click', function() {
+          console.log('📄 Loading more results');
+          if (hasNextPage && !isLoading) {
+              currentPage++;
+              performSearch(false);
+          }
+      });
+  }
+  
+  // ===========================================
+  // 5. MAIN SEARCH FUNCTION
+  // ===========================================
+  function performSearch(clearResults = true) {
+      if (isLoading) {
+          console.log('⏳ Search already in progress');
+          return;
+      }
+      
+      isLoading = true;
+      console.log('🔍 Starting search...', {
+          query: searchQuery ? searchQuery.value : '',
+          category: categoryFilter ? categoryFilter.value : '',
+          price: priceFilter ? priceFilter.value : '',
+          sort: sortFilter ? sortFilter.value : 'relevance',
+          page: currentPage,
+          clearResults: clearResults
+      });
+      
+      // Prepare search data
+      const searchData = {
+          q: searchQuery ? searchQuery.value.trim() : '',
+          location: locationInput ? locationInput.value.trim() : '',
+          category: categoryFilter ? categoryFilter.value : '',
+          sort: sortFilter ? sortFilter.value : 'relevance',
+          page: currentPage
+      };
+      
+      // Handle price filter
+      if (priceFilter) {
+          const priceRange = priceFilter.value;
+          if (priceRange) {
+              const [min, max] = priceRange.split('-');
+              searchData.price_min = min;
+              if (max && max !== '+') {
+                  searchData.price_max = max;
+              }
+          }
+      }
+      
+      // Store current search params
+      currentSearchParams = { ...searchData };
+      
+      // Show loading state
+      updateLoadingState(clearResults);
+      
+      // Build URL
+      const params = new URLSearchParams();
+      Object.keys(searchData).forEach(key => {
+          if (searchData[key] !== '') {
+              params.append(key, searchData[key]);
+          }
+      });
+      
+      const url = `/home/api/search/?${params.toString()}`;
+      
+      console.log('📡 Making API call:', url);
+      
+      // Make API request
+      fetch(url, {
+          method: 'GET',
+          headers: {
+              'Content-Type': 'application/json',
+              'X-CSRFToken': getCSRFToken(),
+              'X-Requested-With': 'XMLHttpRequest'
+          }
+      })
+      .then(response => {
+          console.log('📥 Response status:', response.status);
+          if (!response.ok) {
+              throw new Error(`HTTP error! status: ${response.status}`);
+          }
+          return response.json();
+      })
+      .then(data => {
+          console.log('✅ Search successful:', data);
+          handleSearchSuccess(data, clearResults);
+          
+          // Track search analytics
+          {% comment %} trackSearch(searchData.q, searchData.category, data.total_count); {% endcomment %}
+      })
+      .catch(error => {
+          console.error('❌ Search error:', error);
+          handleSearchError(error);
+      })
+      .finally(() => {
+          isLoading = false;
+          hideLoadingState();
+      });
+  }
+  
+  // ===========================================
+  // 6. SEARCH SUCCESS HANDLER
+  // ===========================================
+  function handleSearchSuccess(data, clearResults) {
+      // Update global state
+      totalCount = data.total_count || 0;
+      totalPages = data.total_pages || 1;
+      hasNextPage = data.has_next || false;
+      
+      // Clear previous results if needed
+      if (clearResults && resultsGrid) {
+          resultsGrid.innerHTML = '';
+      }
+      
+      // Display results
+      if (data.results && data.results.length > 0) {
+          displayResults(data.results);
+          if (noResultsSection) noResultsSection.style.display = 'none';
+          if (resultsGrid) resultsGrid.style.display = 'grid';
+      } else if (clearResults) {
+          // Only show no results on new search, not on load more
+          showNoResults();
+      }
+      
+      // Update UI
+      updateResultsCount();
+      updateLoadMoreButton();
+      
+      // Update URL without page reload
+      updateURL();
+  }
+  
+  // ===========================================
+  // 7. SEARCH ERROR HANDLER
+  // ===========================================
+  function handleSearchError(error) {
+      console.error('Search failed:', error);
+      
+      const errorHTML = `
+          <div class="error-message" style="
+              grid-column: 1 / -1;
+              text-align: center;
+              padding: 40px;
+              background: #f8f9fa;
+              border-radius: 15px;
+              border: 2px solid #e9ecef;
+              color: #6c757d;
+          ">
+              <i class="fas fa-exclamation-triangle" style="font-size: 3rem; color: #dc3545; margin-bottom: 20px;"></i>
+              <h3 style="color: #dc3545; margin-bottom: 15px;">Search Failed</h3>
+              <p style="margin-bottom: 20px;">We couldn't load the search results. Please try again.</p>
+              <button onclick="location.reload()" style="
+                  background: #007bff;
+                  color: white;
+                  border: none;
+                  padding: 10px 20px;
+                  border-radius: 5px;
+                  cursor: pointer;
+                  font-size: 14px;
+              ">
+                  <i class="fas fa-refresh"></i> Retry
+              </button>
+          </div>
+      `;
+      
+      if (resultsGrid) {
+          resultsGrid.innerHTML = errorHTML;
+      }
+      if (noResultsSection) {
+          noResultsSection.style.display = 'none';
+      }
+  }
+  
+  // ===========================================
+  // 8. DISPLAY RESULTS
+  // ===========================================
+  function displayResults(results) {
+      console.log('🖼️ Displaying', results.length, 'results');
+      
+      if (!resultsGrid) return;
+      
+      const fragment = document.createDocumentFragment();
+      
+      results.forEach((item, index) => {
+          const itemElement = createItemElement(item);
+          fragment.appendChild(itemElement);
+          
+          // Add staggered animation
+          setTimeout(() => {
+              itemElement.classList.add('fade-in-visible');
+          }, index * 50);
+      });
+      
+      resultsGrid.appendChild(fragment);
+  }
+  
+  // ===========================================
+  // 9. CREATE ITEM ELEMENT
+  // ===========================================
+  function createItemElement(item) {
+      const itemDiv = document.createElement('div');
+      itemDiv.className = 'result-item fade-in';
+      itemDiv.dataset.itemId = item.id;
+      itemDiv.dataset.category = item.category;
+      itemDiv.dataset.price = item.price;
+      
+      const stars = generateStars(item.rating || 0);
+      const categoryName = getCategoryName(item.category);
+      
+      itemDiv.innerHTML = `
+          <div class="item-image">
+              <img src="${item.image || '/static/image/nav/download.jpeg'}" 
+                   alt="${escapeHtml(item.title)}" 
+                   loading="lazy"
+                   onerror="this.src='/static/image/nav/download.jpeg'">
+              ${item.is_featured ? '<div class="item-badge">Featured</div>' : ''}
+          </div>
+          <div class="item-details">
+              <h3 class="item-title">${escapeHtml(item.title)}</h3>
+              <p class="item-description">${escapeHtml(item.description)}</p>
+              
+              <div class="item-meta">
+                  <span class="item-category">
+                      <i class="fas fa-tag"></i>
+                      ${categoryName}
+                  </span>
+                  <span class="item-location">
+                      <i class="fas fa-map-marker-alt"></i>
+                      ${item.distance || '2.5 km'} away
+                  </span>
+              </div>
+              
+              <div class="item-pricing">
+                  <span class="item-price">
+                      $${parseFloat(item.price).toFixed(2)}
+                      <span class="price-period">/day</span>
+                  </span>
+                  <div class="item-rating">
+                      ${stars}
+                      <span class="rating-count">(${item.review_count || 0})</span>
+                  </div>
+              </div>
+              
+              <button class="rent-now-btn" data-item-id="${item.id}">
+                  <i class="fas fa-calendar-alt"></i>
+                  Rent Now
+              </button>
+          </div>
+      `;
+      
+      return itemDiv;
+  }
+  
+  // ===========================================
+  // 10. UTILITY FUNCTIONS
+  // ===========================================
+  
+  // Generate star rating
+  function generateStars(rating) {
+      let stars = '';
+      const fullStars = Math.floor(rating);
+      const hasHalfStar = rating % 1 >= 0.5;
+      
+      for (let i = 0; i < fullStars; i++) {
+          stars += '<i class="fas fa-star"></i>';
+      }
+      
+      if (hasHalfStar) {
+          stars += '<i class="fas fa-star-half-alt"></i>';
+      }
+      
+      const emptyStars = 5 - fullStars - (hasHalfStar ? 1 : 0);
+      for (let i = 0; i < emptyStars; i++) {
+          stars += '<i class="far fa-star"></i>';
+      }
+      
+      return stars;
+  }
+  
+  // Get category display name
+  function getCategoryName(category) {
+      const categoryNames = {
+          'electronics': 'Electronics',
+          'tools': 'Tools & Equipment',
+          'sports': 'Sports & Outdoor',
+          'home': 'Home & Garden',
+          'automotive': 'Automotive',
+          'music': 'Music & Events',
+          'photography': 'Photography',
+          'fitness': 'Fitness',
+          'books': 'Books & Media',
+          'clothing': 'Clothing',
+          'toys': 'Toys & Games',
+          'furniture': 'Furniture'
+      };
+      return categoryNames[category] || category.charAt(0).toUpperCase() + category.slice(1);
+  }
+  
+  // Escape HTML to prevent XSS
+  function escapeHtml(text) {
+      if (!text) return '';
+      const div = document.createElement('div');
+      div.textContent = text;
+      return div.innerHTML;
+  }
+  
+  // Update results count
+  function updateResultsCount() {
+      if (!resultsCount || !resultsGrid) return;
+      
+      const currentCount = resultsGrid.children.length;
+      const loadingSpinner = resultsGrid.querySelector('.loading-spinner');
+      const errorMessage = resultsGrid.querySelector('.error-message');
+      
+      // Don't count loading spinner or error message
+      const actualCount = currentCount - (loadingSpinner ? 1 : 0) - (errorMessage ? 1 : 0);
+      
+      resultsCount.textContent = `Showing ${actualCount} of ${totalCount} results`;
+  }
+  
+  // Update load more button
+  function updateLoadMoreButton() {
+      if (!loadMoreBtn) return;
+      
+      if (hasNextPage && totalCount > 0) {
+          loadMoreBtn.style.display = 'block';
+          loadMoreBtn.innerHTML = '<i class="fas fa-plus"></i> Load More Results';
+          loadMoreBtn.disabled = false;
+      } else {
+          loadMoreBtn.style.display = 'none';
+      }
+  }
+  
+  // Show loading state
+  function updateLoadingState(clearResults) {
+      if (clearResults && resultsGrid) {
+          resultsGrid.innerHTML = `
+              <div class="loading-spinner" style="
+                  grid-column: 1 / -1;
+                  text-align: center;
+                  padding: 60px;
+                  font-size: 1.2rem;
+                  color: #005494;
+              ">
+                  <i class="fas fa-spinner fa-spin" style="font-size: 2rem; margin-bottom: 20px;"></i>
+                  <div>Searching for items...</div>
+              </div>
+          `;
+      }
+      
+      if (loadMoreBtn) {
+          loadMoreBtn.classList.add('loading');
+          loadMoreBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Loading...';
+          loadMoreBtn.disabled = true;
+      }
+  }
+  
+  // Hide loading state
+  function hideLoadingState() {
+      if (loadMoreBtn) {
+          loadMoreBtn.classList.remove('loading');
+          loadMoreBtn.disabled = false;
+      }
+      
+      if (resultsGrid) {
+          const spinner = resultsGrid.querySelector('.loading-spinner');
+          if (spinner) {
+              spinner.remove();
+          }
+      }
+  }
+  
+  // Show no results
+  function showNoResults() {
+      if (noResultsSection) {
+          noResultsSection.style.display = 'block';
+      }
+      if (resultsGrid) {
+          resultsGrid.style.display = 'none';
+      }
+      if (loadMoreBtn) {
+          loadMoreBtn.style.display = 'none';
+      }
+  }
+  
+  // Reset filters
+  function resetFilters() {
+      if (searchQuery) searchQuery.value = '';
+      if (locationInput) locationInput.value = '';
+      if (categoryFilter) categoryFilter.value = '';
+      if (priceFilter) priceFilter.value = '';
+      if (sortFilter) sortFilter.value = 'relevance';
+      hideSearchSuggestions();
+  }
+  
+  // Update URL without page reload
+  function updateURL() {
+      const params = new URLSearchParams();
+      
+      if (currentSearchParams.q) params.set('q', currentSearchParams.q);
+      if (currentSearchParams.category) params.set('category', currentSearchParams.category);
+      if (currentSearchParams.location) params.set('location', currentSearchParams.location);
+      if (currentSearchParams.price_min) params.set('price_min', currentSearchParams.price_min);
+      if (currentSearchParams.price_max) params.set('price_max', currentSearchParams.price_max);
+      if (currentSearchParams.sort && currentSearchParams.sort !== 'relevance') {
+          params.set('sort', currentSearchParams.sort);
+      }
+      
+      const newURL = params.toString() ? `${window.location.pathname}?${params.toString()}` : window.location.pathname;
+      window.history.replaceState({}, '', newURL);
+  }
+  
+  // ===========================================
+  // 11. RENT NOW BUTTON HANDLER
+  // ===========================================
+  document.addEventListener('click', function(e) {
+      if (e.target.matches('.rent-now-btn, .rent-now-btn *')) {
+          const button = e.target.closest('.rent-now-btn');
+          const itemId = button.dataset.itemId;
+          const itemTitle = button.closest('.result-item').querySelector('.item-title').textContent;
+          
+          console.log('🛒 Rent now clicked:', itemId, itemTitle);
+          
+          // Show loading state
+          const originalHTML = button.innerHTML;
+          button.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
+          button.disabled = true;
+          
+          // Simulate processing (remove in production)
+          setTimeout(() => {
+              // Redirect to item detail page
+              window.location.href = `/item/${itemId}/`;
+          }, 800);
+      }
+  });
+  
+  // ===========================================
+  // 12. SEARCH SUGGESTIONS
+  // ===========================================
+  
+  // Show suggestions as user types
+  if (searchQuery) {
+      searchQuery.addEventListener('input', function() {
+          clearTimeout(searchTimeout);
+          
+          searchTimeout = setTimeout(() => {
+              const query = this.value.trim();
+              
+              if (query.length > 2) {
+                  fetchSearchSuggestions(query);
+              } else {
+                  hideSearchSuggestions();
+              }
+          }, 300);
+      });
+  }
+  
+  // Fetch suggestions from API
+  function fetchSearchSuggestions(query) {
+      fetch(`/home/api/search/suggestions/?q=${encodeURIComponent(query)}`)
+          .then(response => response.json())
+          .then(data => {
+              if (data.suggestions && data.suggestions.length > 0) {
+                  showSearchSuggestions(data.suggestions);
+              } else {
+                  // Show fallback suggestions
+                  showFallbackSuggestions(query);
+              }
+          })
+          .catch(error => {
+              console.error('Suggestions error:', error);
+              showFallbackSuggestions(query);
+          });
+  }
+  
+  // Show fallback suggestions if API fails
+  function showFallbackSuggestions(query) {
+      const fallbackSuggestions = [
+          'Camera', 'DSLR', 'Canon', 'Nikon', 'Photography Equipment',
+          'Drill', 'Power Tools', 'DeWalt', 'Makita', 'Hammer',
+          'Laptop', 'MacBook', 'Dell', 'HP', 'Computer',
+          'Bike', 'Bicycle', 'Mountain Bike', 'Road Bike',
+          'Guitar', 'Piano', 'Keyboard', 'Microphone',
+          'Tent', 'Camping', 'Hiking', 'Backpack'
+      ];
+      
+      const filtered = fallbackSuggestions.filter(suggestion =>
+          suggestion.toLowerCase().includes(query.toLowerCase())
+      ).slice(0, 5);
+      
+      if (filtered.length > 0) {
+          showSearchSuggestions(filtered);
+      } else {
+          hideSearchSuggestions();
+      }
+  }
+  
+  // Display suggestions
+  function showSearchSuggestions(suggestions) {
+      hideSearchSuggestions();
+      
+      if (!searchQuery) return;
+      
+      const suggestionsList = document.createElement('div');
+      suggestionsList.className = 'search-suggestions';
+      suggestionsList.style.cssText = `
+          position: absolute;
+          top: 100%;
+          left: 0;
+          right: 0;
+          background: white;
+          border: 1px solid #ddd;
+          border-radius: 8px;
+          box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+          z-index: 1000;
+          max-height: 200px;
+          overflow-y: auto;
+      `;
+      
+      suggestions.forEach((suggestion, index) => {
+          const item = document.createElement('div');
+          item.className = 'suggestion-item';
+          item.textContent = suggestion;
+          item.dataset.index = index;
+          item.style.cssText = `
+              padding: 12px 16px;
+              cursor: pointer;
+              border-bottom: 1px solid #f0f0f0;
+              transition: background-color 0.2s;
+          `;
+          
+          if (index === suggestions.length - 1) {
+              item.style.borderBottom = 'none';
+          }
+          
+          item.addEventListener('click', function() {
+              searchQuery.value = suggestion;
+              hideSearchSuggestions();
+              currentPage = 1;
+              performSearch(true);
+          });
+          
+          item.addEventListener('mouseenter', function() {
+              this.style.backgroundColor = '#f8f9fa';
+              // Remove active class from other items
+              suggestionsList.querySelectorAll('.suggestion-item').forEach(el => {
+                  el.classList.remove('active');
+                  el.style.backgroundColor = el === this ? '#f8f9fa' : '';
+              });
+              this.classList.add('active');
+          });
+          
+          item.addEventListener('mouseleave', function() {
+              this.style.backgroundColor = '';
+              this.classList.remove('active');
+          });
+          
+          suggestionsList.appendChild(item);
+      });
+      
+      const searchWrapper = document.querySelector('.search-input-wrapper');
+      if (searchWrapper) {
+          searchWrapper.style.position = 'relative';
+          searchWrapper.appendChild(suggestionsList);
+      }
+  }
+  
+  // Hide suggestions
+  function hideSearchSuggestions() {
+      const suggestions = document.querySelector('.search-suggestions');
+      if (suggestions) {
+          suggestions.remove();
+      }
+  }
+  
+  // ===========================================
+  // 13. KEYBOARD NAVIGATION
+  // ===========================================
+  if (searchQuery) {
+      searchQuery.addEventListener('keydown', function(e) {
+          const suggestions = document.querySelector('.search-suggestions');
+          
+          if (suggestions) {
+              const items = suggestions.querySelectorAll('.suggestion-item');
+              let currentActive = suggestions.querySelector('.active');
+              let activeIndex = currentActive ? parseInt(currentActive.dataset.index) : -1;
+              
+              if (e.key === 'ArrowDown') {
+                  e.preventDefault();
+                  activeIndex = activeIndex < items.length - 1 ? activeIndex + 1 : 0;
+              } else if (e.key === 'ArrowUp') {
+                  e.preventDefault();
+                  activeIndex = activeIndex > 0 ? activeIndex - 1 : items.length - 1;
+              } else if (e.key === 'Enter' && currentActive) {
+                  e.preventDefault();
+                  currentActive.click();
+                  return;
+              } else if (e.key === 'Escape') {
+                  hideSearchSuggestions();
+                  return;
+              }
+              
+              // Update active item
+              items.forEach((item, index) => {
+                  item.classList.toggle('active', index === activeIndex);
+                  if (index === activeIndex) {
+                      item.style.backgroundColor = '#e9ecef';
+                  } else {
+                      item.style.backgroundColor = '';
+                  }
+              });
+          }
+      });
+  }
+  
+  // Hide suggestions when clicking outside
+  document.addEventListener('click', function(e) {
+      if (!e.target.closest('.search-input-wrapper')) {
+          hideSearchSuggestions();
+      }
+  });
+  
+  // ===========================================
+  // 14. RESET SEARCH FUNCTION
+  // ===========================================
+  window.resetSearch = function() {
+      console.log('🔄 Resetting search');
+      
+      resetFilters();
+      currentPage = 1;
+      hasNextPage = true;
+      
+      if (noResultsSection) noResultsSection.style.display = 'none';
+      if (resultsGrid) resultsGrid.style.display = 'grid';
+      
+      performSearch(true);
+  };
+  
+  // ===========================================
+  // 15. INFINITE SCROLL (OPTIONAL)
+  // ===========================================
+  function enableInfiniteScroll() {
+      let scrollTimeout;
+      
+      window.addEventListener('scroll', function() {
+          clearTimeout(scrollTimeout);
+          
+          scrollTimeout = setTimeout(() => {
+              const scrollPosition = window.innerHeight + window.scrollY;
+              const documentHeight = document.documentElement.scrollHeight;
+              
+              // Load more when 200px from bottom
+              if (scrollPosition >= documentHeight - 200) {
+                  if (hasNextPage && !isLoading) {
+                      currentPage++;
+                      performSearch(false);
+                  }
+              }
+          }, 100);
+      });
+  }
+  
+  // Uncomment to enable infinite scroll
+  // enableInfiniteScroll();
+  
+  // ===========================================
+  // 16. ANALYTICS AND TRACKING
+  // ===========================================
+  function trackSearch(query, category, resultsCount) {
+      // Track search analytics with Google Analytics
+      if (typeof gtag !== 'undefined') {
+          gtag('event', 'search', {
+              search_term: query,
+              category: category,
+              results_count: resultsCount
+          });
+      }
+      
+      // Track with custom analytics
+      if (typeof analytics !== 'undefined') {
+          analytics.track('Search Performed', {
+              query: query,
+              category: category,
+              results_count: resultsCount,
+              page: currentPage
+          });
+      }
+      
+      // Send to your analytics endpoint
+      fetch('/home/api/track-search/', {
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/json',
+              'X-CSRFToken': getCSRFToken()
+          },
+          body: JSON.stringify({
+              query: query,
+              category: category,
+              results_count: resultsCount,
+              timestamp: new Date().toISOString()
+          })
+      }).catch(error => console.log('Analytics error:', error));
+  }
+  
+  // ===========================================
+  // 17. PRICE RANGE SLIDER (OPTIONAL)
+  // ===========================================
+  function initializePriceSlider() {
+      // Fetch price ranges from API
+      fetch('/home/api/price-ranges/')
+          .then(response => response.json())
+          .then(data => {
+              const minPrice = data.min_price;
+              const maxPrice = data.max_price;
+              
+              console.log('Price range:', minPrice, 'to', maxPrice);
+              
+              // You can implement a price slider here using libraries like:
+              // - noUiSlider
+              // - Ion.RangeSlider
+              // - Custom HTML5 range inputs
+          })
+          .catch(error => console.error('Price range error:', error));
+  }
+  
+  // ===========================================
+  // 18. GEOLOCATION
+  // ===========================================
+  function requestLocation() {
+      if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(
+              function(position) {
+                  const lat = position.coords.latitude;
+                  const lng = position.coords.longitude;
+                  
+                  console.log('Location obtained:', lat, lng);
+                  
+                  // Reverse geocoding to get city name
+                  fetch(`/home/api/reverse-geocode/?lat=${lat}&lng=${lng}`)
+                      .then(response => response.json())
+                      .then(data => {
+                          if (data.city && locationInput) {
+                              locationInput.value = data.city;
+                              locationInput.placeholder = data.city;
+                              
+                              // Automatically search with location
+                              currentPage = 1;
+                              performSearch(true);
+                          }
+                      })
+                      .catch(error => console.error('Geocoding error:', error));
+              },
+              function(error) {
+                  console.log('Location access denied:', error.message);
+              },
+              {
+                  enableHighAccuracy: true,
+                  timeout: 10000,
+                  maximumAge: 300000 // 5 minutes
+              }
+          );
+      } else {
+          console.log('Geolocation not supported');
+      }
+  }
+  
+  // ===========================================
+  // 19. URL PARAMETER HANDLING
+  // ===========================================
+  function loadFromURL() {
+      const urlParams = new URLSearchParams(window.location.search);
+      
+      if (urlParams.get('q') && searchQuery) {
+          searchQuery.value = urlParams.get('q');
+      }
+      
+      if (urlParams.get('category') && categoryFilter) {
+          categoryFilter.value = urlParams.get('category');
+      }
+      
+      if (urlParams.get('location') && locationInput) {
+          locationInput.value = urlParams.get('location');
+      }
+      
+      if (urlParams.get('sort') && sortFilter) {
+          sortFilter.value = urlParams.get('sort');
+      }
+      
+      const priceMin = urlParams.get('price_min');
+      const priceMax = urlParams.get('price_max');
+      if (priceMin && priceMax && priceFilter) {
+          priceFilter.value = `${priceMin}-${priceMax}`;
+      } else if (priceMin && priceFilter) {
+          priceFilter.value = `${priceMin}+`;
+      }
+  }
+  
+  // ===========================================
+  // 20. INITIALIZATION
+  // ===========================================
+  function initializePage() {
+      console.log('🏁 Initializing search page');
+      
+      // Load parameters from URL
+      loadFromURL();
+      
+      // Load initial results
+      performSearch(true);
+      
+      // Initialize optional features
+      // initializePriceSlider();
+      // requestLocation();
+      
+      // Add CSS for animations
+      addCustomStyles();
+      
+      // Setup keyboard shortcuts
+      setupKeyboardShortcuts();
+      
+      console.log('✅ Search page initialized');
+  }
+  
+  // ===========================================
+  // 21. CUSTOM STYLES
+  // ===========================================
+  function addCustomStyles() {
+      const style = document.createElement('style');
+      style.textContent = `
+          .fade-in {
+              opacity: 0;
+              transform: translateY(20px);
+              transition: all 0.6s ease;
+          }
+          
+          .fade-in-visible {
+              opacity: 1;
+              transform: translateY(0);
+          }
+          
+          .result-item {
+              transition: all 0.3s ease;
+          }
+          
+          .result-item:hover {
+              transform: translateY(-5px);
+              box-shadow: 0 8px 25px rgba(0, 84, 148, 0.2);
+          }
+          
+          .suggestion-item.active {
+              background-color: #e9ecef !important;
+          }
+          
+          .loading-spinner {
+              animation: pulse 1.5s ease-in-out infinite;
+          }
+          
+          @keyframes pulse {
+              0% { opacity: 1; }
+              50% { opacity: 0.5; }
+              100% { opacity: 1; }
+          }
+          
+          .search-suggestions {
+              box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+              border: 1px solid #e0e0e0;
+              border-radius: 8px;
+              background: white;
+              overflow: hidden;
+          }
+          
+          .search-suggestions::-webkit-scrollbar {
+              width: 6px;
+          }
+          
+          .search-suggestions::-webkit-scrollbar-track {
+              background: #f1f1f1;
+          }
+          
+          .search-suggestions::-webkit-scrollbar-thumb {
+              background: #c1c1c1;
+              border-radius: 3px;
+          }
+          
+          .search-suggestions::-webkit-scrollbar-thumb:hover {
+              background: #a8a8a8;
+          }
+          
+          .rent-now-btn:disabled {
+              opacity: 0.6;
+              cursor: not-allowed;
+          }
+          
+          .error-message {
+              animation: slideIn 0.5s ease-out;
+          }
+          
+          @keyframes slideIn {
+              from {
+                  opacity: 0;
+                  transform: translateY(-20px);
+              }
+              to {
+                  opacity: 1;
+                  transform: translateY(0);
+              }
+          }
+          
+          .item-image img {
+              transition: transform 0.3s ease;
+          }
+          
+          .result-item:hover .item-image img {
+              transform: scale(1.05);
+          }
+          
+          .item-badge {
+              animation: badge-glow 2s ease-in-out infinite;
+          }
+          
+          @keyframes badge-glow {
+              0%, 100% { box-shadow: 0 0 5px rgba(255, 255, 255, 0.5); }
+              50% { box-shadow: 0 0 15px rgba(255, 255, 255, 0.8); }
+          }
+      `;
+      document.head.appendChild(style);
+  }
+  
+  // ===========================================
+  // 22. KEYBOARD SHORTCUTS
+  // ===========================================
+  function setupKeyboardShortcuts() {
+      document.addEventListener('keydown', function(e) {
+          // Focus search input with Ctrl+K or Cmd+K
+          if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+              e.preventDefault();
+              if (searchQuery) {
+                  searchQuery.focus();
+                  searchQuery.select();
+              }
+          }
+          
+          // Clear search with Escape
+          if (e.key === 'Escape') {
+              if (document.activeElement === searchQuery) {
+                  searchQuery.blur();
+              }
+              hideSearchSuggestions();
+          }
+          
+          // Search with Enter when not in input
+          if (e.key === 'Enter' && document.activeElement !== searchQuery) {
+              if (searchForm) {
+                  searchForm.dispatchEvent(new Event('submit'));
+              }
+          }
+      });
+  }
+  
+  // ===========================================
+  // 23. ADVANCED FILTERING
+  // ===========================================
+  function addAdvancedFilters() {
+      // Add date range filter
+      const dateFilter = document.createElement('div');
+      dateFilter.className = 'filter-group';
+      dateFilter.innerHTML = `
+          <label class="filter-label">Available Date</label>
+          <input type="date" class="filter-select" id="dateFilter" min="${new Date().toISOString().split('T')[0]}">
+      `;
+      
+      const filtersContainer = document.querySelector('.filters-container');
+      if (filtersContainer) {
+          filtersContainer.appendChild(dateFilter);
+          
+          document.getElementById('dateFilter').addEventListener('change', function() {
+              currentPage = 1;
+              performSearch(true);
+          });
+      }
+  }
+  
+  // ===========================================
+  // 24. LOCAL STORAGE
+  // ===========================================
+  function saveSearchHistory() {
+      const history = JSON.parse(localStorage.getItem('searchHistory') || '[]');
+      const newSearch = {
+          query: searchQuery ? searchQuery.value : '',
+          category: categoryFilter ? categoryFilter.value : '',
+          timestamp: new Date().toISOString()
+      };
+      
+      // Add to beginning of array
+      history.unshift(newSearch);
+      
+      // Keep only last 10 searches
+      const trimmedHistory = history.slice(0, 10);
+      
+      localStorage.setItem('searchHistory', JSON.stringify(trimmedHistory));
+  }
+  
+  function loadSearchHistory() {
+      const history = JSON.parse(localStorage.getItem('searchHistory') || '[]');
+      return history;
+  }
+  
+  // ===========================================
+  // 25. PERFORMANCE OPTIMIZATION
+  // ===========================================
+  function optimizePerformance() {
+      // Debounce resize events
+      let resizeTimeout;
+      window.addEventListener('resize', function() {
+          clearTimeout(resizeTimeout);
+          resizeTimeout = setTimeout(function() {
+              // Recalculate layout if needed
+              console.log('Window resized');
+          }, 250);
+      });
+      
+      // Lazy load images
+      const imageObserver = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+              if (entry.isIntersecting) {
+                  const img = entry.target;
+                  img.src = img.dataset.src;
+                  img.classList.remove('lazy');
+                  imageObserver.unobserve(img);
+              }
+          });
+      });
+      
+      // Observe all lazy images
+      document.querySelectorAll('img[data-src]').forEach(img => {
+          imageObserver.observe(img);
+      });
+  }
+  
+  // ===========================================
+  // 26. ERROR HANDLING
+  // ===========================================
+  window.addEventListener('error', function(e) {
+      console.error('JavaScript error:', e.error);
+      
+      // Show user-friendly error message
+      if (resultsGrid && resultsGrid.children.length === 0) {
+          resultsGrid.innerHTML = `
+              <div class="error-message">
+                  <i class="fas fa-exclamation-triangle"></i>
+                  <h3>Something went wrong</h3>
+                  <p>Please refresh the page and try again.</p>
+                  <button onclick="location.reload()">Refresh Page</button>
+              </div>
+          `;
+      }
+  });
+  
+  // Handle unhandled promise rejections
+  window.addEventListener('unhandledrejection', function(e) {
+      console.error('Unhandled promise rejection:', e.reason);
+      e.preventDefault();
+  });
+  
+  // ===========================================
+  // 27. MOBILE OPTIMIZATIONS
+  // ===========================================
+  function optimizeForMobile() {
+      // Detect mobile device
+      const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+      
+      if (isMobile) {
+          // Add mobile-specific styles
+          const mobileStyle = document.createElement('style');
+          mobileStyle.textContent = `
+              @media (max-width: 768px) {
+                  .search-suggestions {
+                      position: fixed;
+                      top: 0;
+                      left: 0;
+                      right: 0;
+                      bottom: 0;
+                      max-height: 100vh;
+                      border-radius: 0;
+                      z-index: 9999;
+                  }
+                  
+                  .result-item:hover {
+                      transform: none;
+                  }
+                  
+                  .rent-now-btn {
+                      font-size: 16px;
+                      padding: 12px 20px;
+                  }
+              }
+          `;
+          document.head.appendChild(mobileStyle);
+          
+          // Add touch event handlers
+          document.addEventListener('touchstart', function(e) {
+              // Handle touch events
+          });
+      }
+  }
+  
+  // ===========================================
+  // 28. ACCESSIBILITY IMPROVEMENTS
+  // ===========================================
+  function improveAccessibility() {
+      // Add ARIA labels
+      if (searchQuery) {
+          searchQuery.setAttribute('aria-label', 'Search for items');
+          searchQuery.setAttribute('aria-describedby', 'search-help');
+      }
+      
+      if (categoryFilter) {
+          categoryFilter.setAttribute('aria-label', 'Filter by category');
+      }
+      
+      if (resultsGrid) {
+          resultsGrid.setAttribute('aria-label', 'Search results');
+          resultsGrid.setAttribute('role', 'grid');
+      }
+      
+      // Add keyboard navigation for results
+      document.addEventListener('keydown', function(e) {
+          if (e.key === 'Tab' && resultsGrid) {
+              const focusableElements = resultsGrid.querySelectorAll('.rent-now-btn');
+              const currentIndex = Array.from(focusableElements).indexOf(document.activeElement);
+              
+              if (e.shiftKey && currentIndex === 0) {
+                  // Focus last element
+                  e.preventDefault();
+                  focusableElements[focusableElements.length - 1].focus();
+              } else if (!e.shiftKey && currentIndex === focusableElements.length - 1) {
+                  // Focus first element
+                  e.preventDefault();
+                  focusableElements[0].focus();
+              }
+          }
+      });
+      
+      // Announce search results to screen readers
+      const announceResults = (count) => {
+          const announcement = document.createElement('div');
+          announcement.setAttribute('aria-live', 'polite');
+          announcement.setAttribute('aria-atomic', 'true');
+          announcement.className = 'sr-only';
+          announcement.textContent = `${count} search results found`;
+          document.body.appendChild(announcement);
+          
+          setTimeout(() => {
+              document.body.removeChild(announcement);
+          }, 1000);
+      };
+      
+      // Use this in handleSearchSuccess
+      window.announceResults = announceResults;
+  }
+  
+  // ===========================================
+  // 29. PROGRESSIVE ENHANCEMENT
+  // ===========================================
+  function progressiveEnhancement() {
+      // Check for modern browser features
+      const hasIntersectionObserver = 'IntersectionObserver' in window;
+      const hasLocalStorage = 'localStorage' in window;
+      const hasGeolocation = 'geolocation' in navigator;
+      
+      console.log('Browser capabilities:', {
+          intersectionObserver: hasIntersectionObserver,
+          localStorage: hasLocalStorage,
+          geolocation: hasGeolocation
+      });
+      
+      // Enable features based on support
+      if (hasIntersectionObserver) {
+          optimizePerformance();
+      }
+      
+      if (hasLocalStorage) {
+          // Enable search history
+          window.addEventListener('beforeunload', saveSearchHistory);
+      }
+      
+      if (hasGeolocation) {
+          // Add location button
+          const locationBtn = document.createElement('button');
+          locationBtn.innerHTML = '<i class="fas fa-location-arrow"></i>';
+          locationBtn.className = 'location-btn';
+          locationBtn.title = 'Use current location';
+          locationBtn.addEventListener('click', requestLocation);
+          
+          const locationWrapper = document.querySelector('.location-input-wrapper');
+          if (locationWrapper) {
+              locationWrapper.appendChild(locationBtn);
+          }
+      }
+  }
+  
+  // ===========================================
+  // 30. FINAL INITIALIZATION
+  // ===========================================
+  
+  // Initialize all features
+  initializePage();
+  improveAccessibility();
+  optimizeForMobile();
+  progressiveEnhancement();
+  
+  // Add event listeners for form submission tracking
+  if (searchForm) {
+      searchForm.addEventListener('submit', function() {
+          saveSearchHistory();
+      });
+  }
+  
+  // Handle browser back/forward buttons
+  window.addEventListener('popstate', function(e) {
+      loadFromURL();
+      performSearch(true);
+  });
+  
+  // Handle visibility change (tab switching)
+  document.addEventListener('visibilitychange', function() {
+      if (document.hidden) {
+          // Page is hidden, pause non-essential operations
+          clearTimeout(searchTimeout);
+      } else {
+          // Page is visible, resume operations
+          console.log('Page became visible');
+      }
+  });
+  
+  // Page loaded successfully
+  console.log('✅ Search page JavaScript fully loaded and initialized');
+  
+  // Expose useful functions to global scope for debugging
+  window.searchDebug = {
+      performSearch,
+      currentPage,
+      totalCount,
+      hasNextPage,
+      isLoading,
+      resetSearch: window.resetSearch
+  };
+});
+  </script>
+{% endblock js %}

@@ -1,0 +1,79 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Voxelit</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'css/security.css' %}">
+</head>
+
+<body>
+    <div class="auth-container">
+        <div class="auth-card">
+            <h2 class="brand-title">Voxelit</h2>
+            {% if messages %}
+            <ul class="messages">
+            {% for message in messages %}
+                <li class="{{ message.tags }}">{{ message }}</li>
+            {% endfor %}
+            </ul>
+            {% endif %}
+            <form method='post' action="{% url 'security:verify-otp' %}">
+                {% csrf_token %}
+                <div class="otp-group">
+                    <input type="text" name="otp1" maxlength="1" class="otp-input" required>
+                    <input type="text" name="otp2" maxlength="1" class="otp-input" required>
+                    <input type="text" name="otp3" maxlength="1" class="otp-input" required>
+                    <input type="text" name="otp4" maxlength="1" class="otp-input" required>
+                    <input type="text" name="otp5" maxlength="1" class="otp-input" required>
+                    <input type="text" name="otp6" maxlength="1" class="otp-input" required>
+                    <input type="hidden" id="otp" name="otp" >
+
+                </div>
+                <a>
+                    <button class="main-btn" type="submit" onclick="combineOTP()">Verify</button>
+                </a>
+                <a href="{% url 'security:login' %}">
+                    <button class="main-btn backBtn" type="button">Back to login</button>
+                </a>
+            </form>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q"
+        crossorigin="anonymous"></script>
+    <script>
+        // Auto-tab input fields
+        const inputs = document.querySelectorAll('.otp-input');
+        inputs.forEach((input, index) => {
+            input.addEventListener('input', () => {
+                if (input.value.length === 1 && index < inputs.length - 1) {
+                    inputs[index + 1].focus();
+                }
+            });
+
+            input.addEventListener('keydown', (e) => {
+                if (e.key === 'Backspace' && input.value === '' && index > 0) {
+                    inputs[index - 1].focus();
+                }
+            });
+        });
+
+        function combineOTP() {
+            let otp = '';
+            console.log('otp funtion')
+            const inputs = document.querySelectorAll('.otp-input');
+            inputs.forEach(input => {
+                otp += input.value;
+            });
+            document.getElementById('otp').value = otp;
+        }
+    </script>
+</body>
+
+</html>

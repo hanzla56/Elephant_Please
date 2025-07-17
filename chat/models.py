@@ -8,6 +8,10 @@ class Mychats(models.Model):
     frnd = models.ForeignKey(to=User,on_delete=models.CASCADE,related_name='my_frnd')
     chats = models.JSONField(default=dict)
     
+    def __str__(self):
+        return f"{self.me} and {self.frnd.username}"
+    
+    
     
 class Notification(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
