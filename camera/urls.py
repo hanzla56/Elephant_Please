@@ -6,8 +6,8 @@ from camera.views import CreateCheckoutSessionView,stripe_webhook
 app_name = 'camera'
 
 urlpatterns = [
-    path('',views.Home,name='home_page'),
-    path('index/',views.index,name='index'),
+    path('home/',views.Home,name='home_page'),
+    path('',views.index,name='index'),
     path('category/',views.category_page,name='category'),
     path('search-items/', views.search_items, name='search-items'),
     path('detail/<int:p_id>',views.detail,name='detail'),

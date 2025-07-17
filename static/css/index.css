@@ -838,7 +838,7 @@
   
   /* Animation Classes */
   .fade-in {
-      opacity: 0;
+      /* opacity: 0; */
       transform: translateY(30px);
       transition: all 0.6s ease;
   }
@@ -849,7 +849,7 @@
   }
   
   .slide-in-left {
-      opacity: 0;
+      /* opacity: 0; */
       transform: translateX(-50px);
       transition: all 0.6s ease;
   }
@@ -860,7 +860,6 @@
   }
   
   .slide-in-right {
-      /* opacity: 0; */
       transform: translateX(50px);
       transition: all 0.6s ease;
   }
@@ -927,7 +926,7 @@
   @keyframes ripple {
       to {
           transform: scale(2);
-          opacity: 0;
+          /* opacity: 0; */
       }
   }
   
