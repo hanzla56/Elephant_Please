@@ -579,7 +579,7 @@
             <!-- Main Navigation Links -->
             <ul class="navbar-nav me-auto">
                 <li class="nav-item">
-                    <a class="nav-link active" href="{% url 'camera:home_page' %}">
+                    <a class="nav-link active" href="{% url 'camera:category' %}">
                         <i class="fas fa-home"></i>
                         <span>Rent</span>
                     </a>
@@ -594,6 +594,7 @@
 
             <!-- Right Side Navigation -->
             <ul class="navbar-nav ms-auto align-items-center">
+                {% if request.user.is_authenticated %}
                 <!-- Notifications -->
                 <li class="nav-item dropdown">
                     <a class="nav-link notification-bell" href="#" data-bs-toggle="dropdown" aria-expanded="false">
@@ -649,6 +650,18 @@
                         </a></li>
                     </ul>
                 </li>
+                {% else %}
+                <li class="nav-item">
+                    <a class="btn btn-outline-primary me-2" href="{% url 'security:signup' %}">
+                        <i class="fas fa-user-plus me-1"></i> Sign Up
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="btn btn-primary" href="{% url 'security:login' %}">
+                        <i class="fas fa-sign-in-alt me-1"></i> Login
+                    </a>
+                </li>
+                {% endif %}
             </ul>
         </div>
     </div>
