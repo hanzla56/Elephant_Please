@@ -7,6 +7,10 @@ from django.contrib.auth.models import User
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.urls import reverse
 
+      
+class Image(models.Model):
+      url = models.ImageField()
+      
 class Item(models.Model):
     """
     Model for rental Items
@@ -49,9 +53,12 @@ class Item(models.Model):
         null=True,
         blank=True
     )
+    MarketValue = models.CharField(max_length=20,blank=True, null=True)
+
     
     # Media
     image = models.ImageField(upload_to='Items/', blank=True, null=True)
+    images = models.ManyToManyField(Image)
     
     # Location
     location = models.CharField(max_length=100, db_index=True)
@@ -147,9 +154,7 @@ class category(models.Model):
 
       def __str__(self):
             return self.name
-      
-class Image(models.Model):
-      url = models.ImageField()
+
 
 # class Item(models.Model):
 #       title = models.CharField(max_length=40)

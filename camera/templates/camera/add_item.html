@@ -3,303 +3,901 @@
 
 {% block css %}
 <style>
-    .error {
-            color: red;
-            display: none;
-        }
-    .upload-icon {
-        cursor: pointer;
-        margin-bottom: 20px;
+    .page-header {
+        background: linear-gradient(135deg, var(--primary-blue) 0%, #2980B9 100%);
+        color: white;
+        padding: 2rem 0;
+        margin-bottom: 2rem;
+        border-radius: 0 0 20px 20px;
     }
 
-    .image-display {
+    .page-title {
+        font-size: 2rem;
+        font-weight: 600;
+        margin: 0;
+    }
+
+    .form-card {
+        background: white;
+        border-radius: 16px;
+        box-shadow: var(--shadow-card);
+        padding: 2rem;
+        margin-bottom: 2rem;
+        border: none;
+        transition: all 0.3s ease;
+    }
+
+    .form-card:hover {
+        box-shadow: var(--shadow-hover);
+    }
+
+    .image-upload-card {
+        background: white;
+        border-radius: 16px;
+        box-shadow: var(--shadow-card);
+        padding: 1.5rem;
+        position: sticky;
+        top: 20px;
+    }
+
+    .section-title {
+        color: var(--primary-blue);
+        font-size: 1.25rem;
+        font-weight: 600;
+        margin-bottom: 1.5rem;
+        padding-bottom: 0.5rem;
+        border-bottom: 2px solid var(--light-blue);
+    }
+
+    .form-label {
+        color: var(--text-dark);
+        font-weight: 500;
+        margin-bottom: 0.5rem;
+        font-size: 0.9rem;
+    }
+
+    .form-control {
+        border: 2px solid var(--border-light);
+        border-radius: 8px;
+        padding: 0.75rem 1rem;
+        font-size: 0.95rem;
+        transition: all 0.3s ease;
+        background-color: #FAFBFC;
+    }
+
+    .form-control:focus {
+        border-color: var(--primary-blue);
+        box-shadow: 0 0 0 3px rgba(27, 90, 150, 0.1);
+        background-color: white;
+    }
+
+    .form-control:hover {
+        border-color: var(--primary-blue);
+        background-color: white;
+    }
+
+    .btn-primary {
+        background: linear-gradient(135deg, var(--primary-blue) 0%, #2980B9 100%);
+        border: none;
+        border-radius: 8px;
+        padding: 0.75rem 2rem;
+        font-weight: 600;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 12px rgba(27, 90, 150, 0.3);
+    }
+
+    .btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(27, 90, 150, 0.4);
+        background: linear-gradient(135deg, #2980B9 0%, var(--primary-blue) 100%);
+    }
+
+    .error-message {
+        color: var(--error-red);
+        font-size: 0.8rem;
+        margin-top: 0.25rem;
+        display: none;
+        font-weight: 500;
+        animation: fadeInError 0.3s ease;
+    }
+
+    .field-error {
+        border-color: var(--error-red) !important;
+        background-color: #FFF5F5 !important;
+        box-shadow: 0 0 0 3px rgba(220, 53, 69, 0.1) !important;
+    }
+
+    .alert {
+        border: none;
+        border-radius: 8px;
+        font-weight: 500;
+        padding: 1rem;
+        margin-bottom: 1rem;
+        animation: fadeInError 0.3s ease;
+    }
+
+    .alert-danger {
+        background-color: #FFF5F5;
+        color: var(--error-red);
+        border-left: 4px solid var(--error-red);
+    }
+
+    @keyframes fadeInError {
+        from { opacity: 0; transform: translateY(-5px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    .btn:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+    }
+
+    .upload-zone {
+        border: 2px dashed var(--border-light);
+        border-radius: 12px;
+        background: #FAFBFC;
+        transition: all 0.3s ease;
+        cursor: pointer;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .upload-zone:hover {
+        border-color: var(--primary-blue);
+        background: var(--light-blue);
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-card);
+    }
+
+    .upload-zone.has-image {
+        border-color: var(--success-green);
+        border-style: solid;
+    }
+
+    .delete-image-btn {
+        position: absolute;
+        top: 8px;
+        right: 8px;
+        background: var(--error-red);
+        color: white;
+        border: none;
+        border-radius: 50%;
+        width: 30px;
+        height: 30px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        font-size: 16px;
+        z-index: 100;
+        transition: all 0.2s ease;
+        box-shadow: 0 2px 8px rgba(220, 53, 69, 0.5);
+        opacity: 0;
+    }
+
+    .upload-zone.has-image .delete-image-btn {
+        opacity: 1;
+        display: flex;
+    }
+
+    .delete-image-btn:hover {
+        background: #c82333;
+        transform: scale(1.2);
+        box-shadow: 0 4px 12px rgba(220, 53, 69, 0.6);
+    }
+
+    .main-upload {
+        height: 280px;
         display: flex;
         flex-direction: column;
         align-items: center;
-        width: 100%;
-    }
-
-    .large-image-container {
-        width: 100%;
-        height: 260px;
-        max-width: 300px;
-        border: 2px solid #ddd;
-        border-style: dashed;
-        margin-bottom: 20px;
-        display: flex;
         justify-content: center;
+        margin-bottom: 1rem;
+    }
+
+    .small-upload {
+        height: 100px;
+        width: 100px;
+        display: flex;
         align-items: center;
-        object-fit: cover;
-    }
-
-    .large-image-container img {
-        max-width: 100%;
-        max-height: 100%;
-    }
-
-    .small-images-container {
-        display: flex;
-        gap: 18px;
-    }
-
-    .small-image {
-        width: 70px;
-        height: 80px;
-        border: 2px solid #ddd;
-        border-style: dashed;
-        display: flex;
         justify-content: center;
-        align-items: center;
-        object-fit: cover;
     }
 
-    .small-image img {
-        max-width: 100%;
-        max-height: 100%;
+    .upload-content {
+        text-align: center;
+        color: var(--text-gray);
     }
-    .fc{
-        box-shadow: 0px 8px 24px 0px #0000000A;
+
+    .upload-icon {
+        width: 48px;
+        height: 48px;
+        margin-bottom: 1rem;
+        opacity: 0.7;
     }
-    .lab{
-        font-family: 'Poppins';
-        font-size: 16px;
+
+    .upload-text {
         font-weight: 500;
-        line-height: 38px;
-        text-align: left;
+        margin-bottom: 0.5rem;
     }
-    .heading{
-        font-family: "Montserrat" !important;
+
+    .upload-hint {
+        font-size: 0.8rem;
+        color: var(--text-gray);
+    }
+
+    .small-uploads {
+        display: flex;
+        gap: 1rem;
+        justify-content: center;
+    }
+
+    .upload-zone img {
+        max-width: 100%;
+        max-height: 100%;
+        border-radius: 8px;
+        object-fit: cover;
+    }
+
+    .price-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+        gap: 1rem;
+    }
+
+    .input-group-text {
+        background: var(--light-blue);
+        border: 2px solid var(--border-light);
+        color: var(--primary-blue);
+        font-weight: 600;
+        border-right: none;
+    }
+
+    .form-control.with-prefix {
+        border-left: none;
+    }
+
+    .required::after {
+        content: " *";
+        color: var(--error-red);
+    }
+
+    .form-row {
+        margin-bottom: 1.5rem;
+    }
+
+    .image-counter {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        background: var(--primary-blue);
+        color: white;
+        border-radius: 50%;
+        width: 24px;
+        height: 24px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.8rem;
+        font-weight: 600;
+    }
+
+    @media (max-width: 768px) {
+        .price-grid {
+            grid-template-columns: 1fr 1fr;
+        }
+        
+        .small-uploads {
+            flex-wrap: wrap;
+        }
+        
+        .small-upload {
+            width: 80px;
+            height: 80px;
+        }
     }
 </style>
 {% endblock css %}
 
-
 {% block content %}
-<div class="container px-2 mt-3">
-    <h3 class="heading">
-        List An Item
-    </h3>
-    <hr>
+<div class="page-header">
+    <div class="container">
+        <h1 class="page-title">List Your Item</h1>
+        <p class="mb-0">Share your items with the community and start earning</p>
+    </div>
 </div>
+
 <div class="container">
     <div class="row">
-        <div class="col-md-8 order-2 order-md-1 px-5 py-3 fc mb-5">
-            <!-- Left side: Form fields -->
-            <form id="myForm" method="post" action="{% url 'camera:submit' %}" enctype="multipart/form-data">
+        <div class="col-lg-8 mb-4">
+            <form id="listingForm" method="post" action="{% url 'camera:submit' %}" enctype="multipart/form-data">
                 {% csrf_token %}
-                <div class="row mb-3">
-                    <div class="col-md-6 mb-3">
-                        <label for="field1" class="p-2 lab">Title</label>
-                        <input type="text" id="Title" name="title" class="form-control">
+                
+                <!-- Basic Information -->
+                <div class="form-card">
+                    <h3 class="section-title">Basic Information</h3>
+                    <div class="row form-row">
+                        <div class="col-md-8 mb-3">
+                            <label class="form-label required">Item Title</label>
+                            <input type="text" name="title" class="form-control" placeholder="What are you renting out?">
+                            <div class="error-message" id="error_title">Please enter an item title</div>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label class="form-label required">Category</label>
+                            <select name="category" class="form-control">
+                                <option value="">Select Category</option>
+                                {% for category in categories %}
+                                <option value="{{ category.id }}">{{ category.name }}</option>
+                                {% endfor %}
+                            </select>
+                            <div class="error-message" id="error_category">Please select a category</div>
+                        </div>
                     </div>
-                    <div class="col-md-6 mb-3">
-                        <label for="field2" class="p-2 lab">Category</label>
-                        <select name="category" id="cars" class="form-control">
-                            {% for category in categories %}
-            <option value="{{ category.id }}">{{ category.name }}</option>
-                            {% endfor %}
-                        </select>
-                    </div>
-                </div>
-    
-                <!-- Hidden file inputs -->
-                <input type="file" id="imageUpload1" name="images" accept="image/*" required style="display:none;">
-                <input type="file" id="imageUpload2" name="images" accept="image/*" required style="display:none;">
-                <input type="file" id="imageUpload3" name="images" accept="image/*" required style="display:none;">
-                <input type="file" id="imageUpload4" name="images" accept="image/*" required style="display:none;">
-    
-                <div class="row mb-3">
-                    <div class="col-md-12">
-                        <h5>Rental Price (HKD)</h5>
-                    </div>
-                </div>
-                <div class="row mb-3">
-                    <div class="col-md-3 col-lg-2 col-sm-3 mb-3">
-                        <label for="field3_daily" class="p-2 lab">Daily</label>
-                        <input type="text" id="field3_daily" name="Daily" class="form-control">
-                        <span class="error" id="error_daily">Please enter a positive number</span>
-                    </div>
-                    <div class="col-md-3 col-lg-2 col-sm-3 mb-3">
-                        <label for="field3_weekly" class="p-2 lab">Weekly</label>
-                        <input type="text" id="field3_weekly" name="Weekly" class="form-control">
-                        <span class="error" id="error_weekly">Please enter a positive number</span>
-                    </div>
-                    <div class="col-md-3 col-lg-2 col-sm-3 mb-3">
-                        <label for="field3_monthly" class="p-2 lab">Monthly</label>
-                        <input type="text" id="field3_monthly" name="Monthly" class="form-control">
-                        <span class="error" id="error_monthly">Please enter a positive number</span>
-                    </div>
-                    <div class="col-md-4 col-lg-4 mb-3">
-                        <label for="field3_market_value" class="p-2 lab">Market Value (HKD)</label>
-                        <input type="text" id="field3_market_value" name="MarketValue" class="form-control">
-                        <span class="error" id="error_market_value">Please enter a positive number</span>
-                    </div>
-                    <div class="col-md-2 col-lg-2 mb-3">
-                        <label for="field3_quantity" class="p-2 lab">Quantity</label>
-                        <input type="text" id="field3_quantity" name="Quantity" class="form-control">
-                        <span class="error" id="error_quantity">Please enter a positive number</span>
+                    
+                    <div class="form-row">
+                        <div class="col-12">
+                            <label class="form-label required">Description</label>
+                            <textarea name="description" class="form-control" rows="4" 
+                                placeholder="Describe your item, its condition, what's included, and any special instructions..."></textarea>
+                            <div class="error-message" id="error_description">Please provide a description of your item</div>
+                        </div>
                     </div>
                 </div>
-                <div class="row mb-3">
-                    <div class="col-md-6 mb-3">
-                        <label for="field3_min_rental_period" class="p-2 lab">Minimum Rental Period (Days)</label>
-                        <input type="text" id="field3_min_rental_period" name="period" class="form-control">
-                        <span class="error" id="error_min_rental">Please enter a positive number</span>
+
+                <!-- Pricing -->
+                <div class="form-card">
+                    <h3 class="section-title">Pricing & Availability</h3>
+                    <div class="price-grid mb-4">
+                        <div>
+                            <label class="form-label">Daily Price</label>
+                            <div class="input-group">
+                                <span class="input-group-text">HKD</span>
+                                <input type="number" name="Daily" class="form-control with-prefix" placeholder="0"  step="0.01">
+                            </div>
+                            <div class="error-message" id="error_daily">Please enter a valid amount</div>
+                        </div>
+                        <!-- <div>
+                            <label class="form-label">Weekly Rate</label>
+                            <div class="input-group">
+                                <span class="input-group-text">HKD</span>
+                                <input type="number" name="Weekly" class="form-control with-prefix" placeholder="0" min="0" step="0.01">
+                            </div>
+                            <div class="error-message" id="error_weekly">Please enter a valid amount</div>
+                        </div>
+                        <div>
+                            <label class="form-label">Monthly Rate</label>
+                            <div class="input-group">
+                                <span class="input-group-text">HKD</span>
+                                <input type="number" name="Monthly" class="form-control with-prefix" placeholder="0" min="0" step="0.01">
+                            </div>
+                            <div class="error-message" id="error_monthly">Please enter a valid amount</div>
+                        </div> -->
+                        <div>
+                            <label class="form-label required">Market Value</label>
+                            <div class="input-group">
+                                <span class="input-group-text">HKD</span>
+                                <input type="number" name="MarketValue" class="form-control with-prefix" placeholder="0" min="0" step="0.01" required>
+                            </div>
+                            <div class="error-message" id="error_market_value">Please enter a valid amount</div>
+                        </div>
                     </div>
-                    <div class="col-md-6 mb-3">
-                        <label for="field3_location" class="p-2 lab">Location:</label>
-                        <input type="text" id="field3_location" name="Location" class="form-control">
+                    
+                    <div class="row">
+                        <div class="col-md-4 mb-3">
+                            <label class="form-label required">Quantity Available</label>
+                            <input type="number" name="Quantity" class="form-control" placeholder="1" min="1" required>
+                            <div class="error-message" id="error_quantity">Please enter a valid quantity</div>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label class="form-label">Min. Rental Period</label>
+                            <div class="input-group">
+                                <input type="number" name="period" class="form-control" placeholder="1" min="1">
+                                <span class="input-group-text">days</span>
+                            </div>
+                            <div class="error-message" id="error_min_rental">Please enter a valid period</div>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label class="form-label required">Location</label>
+                            <input type="text" name="Location" class="form-control" placeholder="Hong Kong" required>
+                            <div class="error-message" id="error_location">Please enter your location</div>
+                        </div>
                     </div>
                 </div>
-                <div class="row mb-3">
-                    <div class="col-md-12 mb-3">
-                        <label for="description" class="p-2 lab">Description:</label>
-                        <textarea id="description" name="description" class="form-control" rows="4"></textarea>
-                    </div>
+
+                <!-- Photo upload validation message -->
+                <div class="alert alert-danger" id="photoError" style="display: none; margin-bottom: 1rem;">
+                    <i class="fas fa-exclamation-triangle me-2"></i>
+                    <span id="photoErrorText">Please upload at least one photo of your item</span>
                 </div>
-                <button type="submit" class="btn btn-primary mt-3 heading">Submit</button>
+
+                <!-- Success message -->
+                <div class="alert alert-success" id="successMessage" style="display: none; margin-bottom: 1rem;">
+                    <i class="fas fa-check-circle me-2"></i>
+                    <span id="successText">Item listed successfully!</span>
+                </div>
+
+                <div class="text-center">
+                    <button type="submit" class="btn btn-primary btn-lg" id="submitBtn">
+                        <i class="fas fa-plus-circle me-2"></i>List My Item
+                    </button>
+                </div>
             </form>
         </div>
 
-        <div class="col-md-4 order-1 order-md-2">
-            <!-- Right side: Image container -->
-            <div class="image-display">
-                <div id="largeImageContainer" class="large-image-container"
-                    onclick="document.getElementById('imageUpload1').click();">
-                    <div class="upload-icon">
-                        <img src="{% static 'image/nav/upload-icon.png' %}" alt="Upload Icon" width="50">
-                        Upload Image
+        <div class="col-lg-4">
+            <div class="image-upload-card">
+                <h3 class="section-title">Photos</h3>
+                <p class="text-muted mb-3">Add up to 4 photos to showcase your item</p>
+                
+                <!-- Hidden file inputs -->
+                <input type="file" id="imageUpload1" name="images" accept="image/*" style="display:none;">
+                <input type="file" id="imageUpload2" name="images" accept="image/*" style="display:none;">
+                <input type="file" id="imageUpload3" name="images" accept="image/*" style="display:none;">
+                <input type="file" id="imageUpload4" name="images" accept="image/*" style="display:none;">
+
+                <!-- Main upload area -->
+                <div class="upload-zone main-upload" id="mainUpload" onclick="handleUploadClick('imageUpload1')">
+                    <div class="upload-content">
+                        <img src="{% static 'image/nav/upload-icon.png' %}" alt="Upload" class="upload-icon">
+                        <div class="upload-text">Click to upload main photo</div>
+                        <div class="upload-hint">JPG, PNG up to 10MB</div>
                     </div>
+                    <button type="button" class="delete-image-btn" onclick="deleteImage(event, 'mainUpload', 'imageUpload1')">
+                        <i class="fas fa-times"></i>
+                    </button>
                 </div>
-                <div class="small-images-container">
-                    <div id="smallImage1" class="small-image"
-                        onclick="document.getElementById('imageUpload2').click();">
-                        <img src="{% static "image/nav/camera.png" %}" height="25px" width="25px" alt="">
+
+                <!-- Small upload areas -->
+                <div class="small-uploads">
+                    <div class="upload-zone small-upload" id="smallUpload1" onclick="handleUploadClick('imageUpload2')">
+                        <img src="{% static 'image/nav/camera.png' %}" alt="Camera" width="24" height="24">
+                        <button type="button" class="delete-image-btn" onclick="deleteImage(event, 'smallUpload1', 'imageUpload2')">
+                            <i class="fas fa-times"></i>
+                        </button>
                     </div>
-                    <div id="smallImage2" class="small-image"
-                        onclick="document.getElementById('imageUpload3').click();">
-                        <img src="{% static "image/nav/camera.png" %}" height="25px" width="25px" alt="">
+                    <div class="upload-zone small-upload" id="smallUpload2" onclick="handleUploadClick('imageUpload3')">
+                        <img src="{% static 'image/nav/camera.png' %}" alt="Camera" width="24" height="24">
+                        <button type="button" class="delete-image-btn" onclick="deleteImage(event, 'smallUpload2', 'imageUpload3')">
+                            <i class="fas fa-times"></i>
+                        </button>
                     </div>
-                    <div id="smallImage3" class="small-image"
-                        onclick="document.getElementById('imageUpload4').click();">
-                        <img src="{% static "image/nav/camera.png" %}" height="25px" width="25px" alt="">
+                    <div class="upload-zone small-upload" id="smallUpload3" onclick="handleUploadClick('imageUpload4')">
+                        <img src="{% static 'image/nav/camera.png' %}" alt="Camera" width="24" height="24">
+                        <button type="button" class="delete-image-btn" onclick="deleteImage(event, 'smallUpload3', 'imageUpload4')">
+                            <i class="fas fa-times"></i>
+                        </button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-</div>
 {% endblock content %}
 
 {% block js %}
 <script>
-    document.getElementById('imageUpload1').addEventListener('change', function (event) {
-        handleImageChange(event, 'largeImageContainer');
-    });
-    document.getElementById('imageUpload2').addEventListener('change', function (event) {
-        handleImageChange(event, 'smallImage1');
-    });
-    document.getElementById('imageUpload3').addEventListener('change', function (event) {
-        handleImageChange(event, 'smallImage2');
-    });
-    document.getElementById('imageUpload4').addEventListener('change', function (event) {
-        handleImageChange(event, 'smallImage3');
-    });
+    let uploadedImagesCount = 0;
 
-
-    function handleImageChange(event, containerId) {
-        const files = event.target.files;
-        if (files.length === 0) return;
-
-        const imageUrl = URL.createObjectURL(files[0]);
-        const container = document.getElementById(containerId);
-
-        container.innerHTML = `<img src="${imageUrl}" alt="Image">`;
+    // Handle upload click (prevent triggering when delete button is clicked)
+    function handleUploadClick(inputId) {
+        document.getElementById(inputId).click();
     }
 
-    document.getElementById('myForm').addEventListener('submit', function (event) {
+    // Delete image function
+    function deleteImage(event, containerId, inputId) {
+        event.stopPropagation(); // Prevent triggering upload
+        
+        const container = document.getElementById(containerId);
+        const input = document.getElementById(inputId);
+        
+        // Clear the file input
+        input.value = '';
+        
+        // Reset container to original state
+        if (containerId === 'mainUpload') {
+            container.innerHTML = `
+                <div class="upload-content">
+                    <img src="{% static 'image/nav/upload-icon.png' %}" alt="Upload" class="upload-icon">
+                    <div class="upload-text">Click to upload main photo</div>
+                    <div class="upload-hint">JPG, PNG up to 10MB</div>
+                </div>
+                <button type="button" class="delete-image-btn" onclick="deleteImage(event, 'mainUpload', 'imageUpload1')">
+                    <i class="fas fa-times"></i>
+                </button>
+            `;
+        } else {
+            container.innerHTML = `
+                <img src="{% static 'image/nav/camera.png' %}" alt="Camera" width="24" height="24">
+                <button type="button" class="delete-image-btn" onclick="deleteImage(event, '${containerId}', '${inputId}')">
+                    <i class="fas fa-times"></i>
+                </button>
+            `;
+        }
+        
+        // Remove the has-image class
+        container.classList.remove('has-image');
+        
+        // Update image counter
+        updateImageCounter();
+        
+        // Hide photo error if it was showing
+        hideAllMessages();
+    }
+
+    // Image upload handlers
+    document.getElementById('imageUpload1').addEventListener('change', function(event) {
+        handleImageUpload(event, 'mainUpload', true);
+    });
+
+    document.getElementById('imageUpload2').addEventListener('change', function(event) {
+        handleImageUpload(event, 'smallUpload1', false);
+    });
+
+    document.getElementById('imageUpload3').addEventListener('change', function(event) {
+        handleImageUpload(event, 'smallUpload2', false);
+    });
+
+    document.getElementById('imageUpload4').addEventListener('change', function(event) {
+        handleImageUpload(event, 'smallUpload3', false);
+    });
+
+    function handleImageUpload(event, containerId, isMain) {
+        const file = event.target.files[0];
+        if (!file) return;
+
+        const container = document.getElementById(containerId);
+        const imageUrl = URL.createObjectURL(file);
+        
+        if (isMain) {
+            container.innerHTML = `
+                <img src="${imageUrl}" alt="Main image" style="width: 100%; height: 100%; object-fit: cover;">
+                <div class="image-counter">1</div>
+                <button type="button" class="delete-image-btn" onclick="deleteImage(event, 'mainUpload', 'imageUpload1')">
+                    <i class="fas fa-times"></i>
+                </button>
+            `;
+        } else {
+            const inputId = event.target.id;
+            container.innerHTML = `
+                <img src="${imageUrl}" alt="Additional image" style="width: 100%; height: 100%; object-fit: cover;">
+                <button type="button" class="delete-image-btn" onclick="deleteImage(event, '${containerId}', '${inputId}')">
+                    <i class="fas fa-times"></i>
+                </button>
+            `;
+        }
+        
+        container.classList.add('has-image');
+        updateImageCounter();
+    }
+
+    function updateImageCounter() {
+        uploadedImagesCount = 0;
+        const uploads = ['imageUpload1', 'imageUpload2', 'imageUpload3', 'imageUpload4'];
+        uploads.forEach(id => {
+            if (document.getElementById(id).files.length > 0) {
+                uploadedImagesCount++;
+            }
+        });
+    }
+
+    // Form validation with proper order and correct logic
+    document.getElementById('listingForm').addEventListener('submit', function(event) {
         event.preventDefault();
-        const form = event.target;
-        const formData = new FormData(form);
+        
+        // Clear all previous errors and messages
+        clearAllErrors();
+        hideAllMessages();
+        
+        // 1. Market Value (first priority) - REQUIRED and must be > 0
+        const marketValueInput = document.querySelector('[name="MarketValue"]');
+        const marketValue = marketValueInput.value.trim();
+        if (!marketValue || isNaN(marketValue) || parseFloat(marketValue) <= 0) {
+            showFieldError(marketValueInput, 'error_market_value', 'Please enter a valid market value greater than 0');
+            marketValueInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            marketValueInput.focus();
+            return;
+        }
+        
+        // 2. Title - REQUIRED and cannot be empty
+        const titleInput = document.querySelector('[name="title"]');
+        if (!titleInput.value.trim()) {
+            showFieldError(titleInput, 'error_title', 'Please enter an item title');
+            titleInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            titleInput.focus();
+            return;
+        }
+        
+        // 3. Category - REQUIRED
+        const categoryInput = document.querySelector('[name="category"]');
+        if (!categoryInput.value || categoryInput.value === '') {
+            showFieldError(categoryInput, 'error_category', 'Please select a category');
+            categoryInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            categoryInput.focus();
+            return;
+        }
+        
+        // 4. Description - REQUIRED and cannot be empty
+        const descriptionInput = document.querySelector('[name="description"]');
+        if (!descriptionInput.value.trim()) {
+            showFieldError(descriptionInput, 'error_description', 'Please provide a description of your item');
+            descriptionInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            descriptionInput.focus();
+            return;
+        }
+        
+        // 5. Quantity - REQUIRED and must be > 0
+        const quantityInput = document.querySelector('[name="Quantity"]');
+        const quantity = quantityInput.value.trim();
+        if (!quantity || isNaN(quantity) || parseInt(quantity) <= 0) {
+            showFieldError(quantityInput, 'error_quantity', 'Please enter a valid quantity greater than 0');
+            quantityInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            quantityInput.focus();
+            return;
+        }
+        
+        // 6. Location - REQUIRED and cannot be empty
+        const locationInput = document.querySelector('[name="Location"]');
+        if (!locationInput.value.trim()) {
+            showFieldError(locationInput, 'error_location', 'Please enter your location');
+            locationInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            locationInput.focus();
+            return;
+        }
+        
+        // 7. Daily Rate - OPTIONAL but if entered, must be > 0
+        const dailyInput = document.querySelector('[name="Daily"]');
+        const dailyValue = dailyInput.value.trim();
+        console.log('outside if')
+        if (dailyValue && (isNaN(dailyValue) || parseFloat(dailyValue) <= 0)) {
+            console.log('inside if ')
+            showFieldError(dailyInput, 'error_daily', 'Daily rate must be greater than 0');
+            dailyInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            dailyInput.focus();
+            return;
+        }
+        
+        // 8. Weekly Rate - OPTIONAL but if entered, must be > 0
+        // const weeklyInput = document.querySelector('[name="Weekly"]');
+        // const weeklyValue = weeklyInput.value.trim();
+        // if (weeklyValue && (isNaN(weeklyValue) || parseFloat(weeklyValue) <= 0)) {
+        //     showFieldError(weeklyInput, 'error_weekly', 'Weekly rate must be greater than 0');
+        //     weeklyInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        //     weeklyInput.focus();
+        //     return;
+        // }
+        
+        // // 9. Monthly Rate - OPTIONAL but if entered, must be > 0
+        // const monthlyInput = document.querySelector('[name="Monthly"]');
+        // const monthlyValue = monthlyInput.value.trim();
+        // if (monthlyValue && (isNaN(monthlyValue) || parseFloat(monthlyValue) <= 0)) {
+        //     showFieldError(monthlyInput, 'error_monthly', 'Monthly rate must be greater than 0');
+        //     monthlyInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        //     monthlyInput.focus();
+        //     return;
+        // }
+        
+        // 10. Rental Period - OPTIONAL but if entered, must be > 0
+        const periodInput = document.querySelector('[name="period"]');
+        const periodValue = periodInput.value.trim();
+        if (periodValue && (isNaN(periodValue) || parseInt(periodValue) <= 0)) {
+            showFieldError(periodInput, 'error_min_rental', 'Rental period must be greater than 0 days');
+            periodInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            periodInput.focus();
+            return;
+        }
+        
+        // 11. Photos - At least 1 required
+        updateImageCounter();
+        if (uploadedImagesCount === 0) {
+            showPhotoError('Please upload at least one photo of your item');
+            document.getElementById('photoError').scrollIntoView({ behavior: 'smooth', block: 'center' });
+            return;
+        }
+        
+        // All validation passed - submit form
+        const formData = new FormData(this);
+        
+        // Add images to form data
+        const imageInputs = ['imageUpload1', 'imageUpload2', 'imageUpload3', 'imageUpload4'];
+        imageInputs.forEach(inputId => {
+            const input = document.getElementById(inputId);
+            if (input.files[0]) {
+                formData.append('images', input.files[0]);
+            }
+        });
+        
+        // Submit form
+        submitForm(formData);
+    });
 
-        const imageUpload1 = document.getElementById('imageUpload1').files[0];
-        const imageUpload2 = document.getElementById('imageUpload2').files[0];
-        const imageUpload3 = document.getElementById('imageUpload3').files[0];
-
-        if (imageUpload1) formData.append('images', imageUpload1);
-        if (imageUpload2) formData.append('images', imageUpload2);
-        if (imageUpload3) formData.append('images', imageUpload3);
-
-        fetch(form.action, {
-            method: form.method,
+    function submitForm(formData) {
+        const submitBtn = document.getElementById('submitBtn');
+        const originalText = submitBtn.innerHTML;
+        
+        // Disable button and show loading
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Listing Your Item...';
+        
+        fetch(document.getElementById('listingForm').action, {
+            method: 'POST',
             body: formData,
             headers: {
-                'X-CSRFToken': form.querySelector('[name=csrfmiddlewaretoken]').value
+                'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
             }
-        }).then(response => {
+        })
+        .then(response => {
             if (response.ok) {
                 return response.text();
             } else {
-                throw new Error('Form submission failed');
+                throw new Error('Failed to list item. Please try again.');
             }
-        }).then(data => {
-            alert(data);
-            window.location.href = '/'; 
-        }).catch(error => {
-            alert(error.message);
+        })
+        .then(data => {
+            // Show success message
+            showSuccessMessage('Item listed successfully! Redirecting...');
+            
+            // Redirect after showing success
+            setTimeout(() => {
+                window.location.href = '/';
+            }, 2000);
+        })
+        .catch(error => {
+            // Show error message
+            showPhotoError(error.message);
+            
+            // Re-enable button
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = originalText;
+        });
+    }
+
+    function showFieldError(input, errorId, message) {
+        input.classList.add('field-error');
+        const errorElement = document.getElementById(errorId);
+        if (errorElement) {
+            errorElement.textContent = message;
+            errorElement.style.display = 'block';
+        }
+    }
+
+    function clearFieldError(input) {
+        input.classList.remove('field-error');
+        // Find associated error message
+        const inputName = input.getAttribute('name');
+        const errorElement = document.getElementById(`error_${inputName}`) || 
+                           input.parentNode.querySelector('.error-message');
+        if (errorElement) {
+            errorElement.style.display = 'none';
+        }
+    }
+
+    function clearAllErrors() {
+        // Remove all error classes
+        document.querySelectorAll('.field-error').forEach(el => {
+            el.classList.remove('field-error');
+        });
+        
+        // Hide all error messages
+        document.querySelectorAll('.error-message').forEach(el => {
+            el.style.display = 'none';
+        });
+    }
+
+    function showPhotoError(message) {
+        const photoError = document.getElementById('photoError');
+        const photoErrorText = document.getElementById('photoErrorText');
+        if (photoError && photoErrorText) {
+            photoErrorText.textContent = message;
+            photoError.style.display = 'block';
+        }
+    }
+
+    function showSuccessMessage(message) {
+        const successMessage = document.getElementById('successMessage');
+        const successText = document.getElementById('successText');
+        if (successMessage && successText) {
+            successText.textContent = message;
+            successMessage.style.display = 'block';
+            successMessage.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+    }
+
+    function hideAllMessages() {
+        document.getElementById('photoError').style.display = 'none';
+        document.getElementById('successMessage').style.display = 'none';
+    }
+
+    // Real-time validation with improved feedback
+    document.querySelectorAll('input, select, textarea').forEach(input => {
+        // Clear errors when user starts typing
+        input.addEventListener('input', function() {
+            if (this.classList.contains('field-error')) {
+                clearFieldError(this);
+            }
+            hideAllMessages();
+        });
+        
+        // Validate when user leaves field
+        input.addEventListener('blur', function() {
+            validateSingleField(this);
+        });
+        
+        // Special handling for required fields
+        input.addEventListener('change', function() {
+            if (this.classList.contains('field-error')) {
+                validateSingleField(this);
+            }
         });
     });
 
-
-    document.addEventListener('DOMContentLoaded', function() {
-            const fields = [
-                {id: 'field3_daily', errorId: 'error_daily'},
-                {id: 'field3_weekly', errorId: 'error_weekly'},
-                {id: 'field3_monthly', errorId: 'error_monthly'},
-                {id: 'field3_market_value', errorId: 'error_market_value'},
-                {id: 'field3_quantity', errorId: 'error_quantity'},
-                {id: 'field3_min_rental_period', errorId: 'error_min_rental'}
-            ];
-
-            fields.forEach(field => {
-                const input = document.getElementById(field.id);
-                const error = document.getElementById(field.errorId);
-
-                input.addEventListener('input', function() {
-                    validateInput(input, error);
-                });
-            });
-
-            document.getElementById('myForm').addEventListener('submit', function(event) {
-                let formIsValid = true;
-                console.log('form is selecting')
-                
-                fields.forEach(field => {
-                    const input = document.getElementById(field.id);
-                    const error = document.getElementById(field.errorId);
-                    
-                    if (!validateInput(input, error)) {
-                        formIsValid = false;
-                    }
-                });
-                
-                if (!formIsValid) {
-                    event.preventDefault();
-                    console.log('form is not submitting')
-                }
-            });
-
-            function validateInput(input, error) {
-                const value = parseFloat(input.value);
-                if (isNaN(value) || value <= 0) {
-                    error.style.display = 'block';
-                    return false;
-                } else {
-                    error.style.display = 'none';
-                    return true;
-                }
+    function validateSingleField(input) {
+        const name = input.getAttribute('name');
+        const value = input.value;
+        
+        // Clear previous error
+        clearFieldError(input);
+        
+        // Define validation for each field
+        const validations = {
+            'title': {
+                required: true,
+                validate: () => value.trim().length > 0,
+                message: 'Please enter an item title'
+            },
+            'category': {
+                required: true,
+                validate: () => value && value !== '',
+                message: 'Please select a category'
+            },
+            'description': {
+                required: true,
+                validate: () => value.trim().length > 0,
+                message: 'Please provide a description of your item'
+            },
+            'MarketValue': {
+                required: true,
+                validate: () => value && !isNaN(value) && parseFloat(value) > 0,
+                message: 'Please enter a valid market value'
+            },
+            'Quantity': {
+                required: true,
+                validate: () => value && !isNaN(value) && parseInt(value) > 0,
+                message: 'Please enter a valid quantity'
+            },
+            'Location': {
+                required: true,
+                validate: () => value.trim().length > 0,
+                message: 'Please enter your location'
+            },
+            'Daily': {
+                required: false,
+                validate: () => !value || (!isNaN(value) && parseFloat(value) > 0),
+                message: 'Please enter a valid daily rate'
+            },
+            // 'Weekly': {
+            //     required: false,
+            //     validate: () => !value || (!isNaN(value) && parseFloat(value) > 0),
+            //     message: 'Please enter a valid weekly rate'
+            // },
+            // 'Monthly': {
+            //     required: false,
+            //     validate: () => !value || (!isNaN(value) && parseFloat(value) > 0),
+            //     message: 'Please enter a valid monthly rate'
+            // },
+            'period': {
+                required: false,
+                validate: () => !value || (!isNaN(value) && parseInt(value) > 0),
+                message: 'Please enter a valid rental period in days'
             }
-        });
+        };
+        
+        const validation = validations[name];
+        if (validation) {
+            if (!validation.validate()) {
+                const errorId = name === 'period' ? 'error_min_rental' : `error_${name.toLowerCase()}`;
+                showFieldError(input, errorId, validation.message);
+            }
+        }
+    }
 </script>
 {% endblock js %}

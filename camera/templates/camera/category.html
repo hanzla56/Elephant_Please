@@ -539,7 +539,7 @@ document.addEventListener('DOMContentLoaded', function() {
           }
       });
       
-      const url = `/home/api/search/?${params.toString()}`;
+      const url = `/api/search/?${params.toString()}`;
       
       console.log('📡 Making API call:', url);
       
@@ -907,7 +907,7 @@ document.addEventListener('DOMContentLoaded', function() {
           // Simulate processing (remove in production)
           setTimeout(() => {
               // Redirect to item detail page
-              window.location.href = `/item/${itemId}/`;
+              window.location.href = `/detail/${itemId}/`;
           }, 800);
       }
   });
@@ -935,7 +935,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   // Fetch suggestions from API
   function fetchSearchSuggestions(query) {
-      fetch(`/home/api/search/suggestions/?q=${encodeURIComponent(query)}`)
+      fetch(`/api/search/suggestions/?q=${encodeURIComponent(query)}`)
           .then(response => response.json())
           .then(data => {
               if (data.suggestions && data.suggestions.length > 0) {
@@ -1165,7 +1165,7 @@ document.addEventListener('DOMContentLoaded', function() {
       }
       
       // Send to your analytics endpoint
-      fetch('/home/api/track-search/', {
+      fetch('/api/track-search/', {
           method: 'POST',
           headers: {
               'Content-Type': 'application/json',
@@ -1185,7 +1185,7 @@ document.addEventListener('DOMContentLoaded', function() {
   // ===========================================
   function initializePriceSlider() {
       // Fetch price ranges from API
-      fetch('/home/api/price-ranges/')
+      fetch('/api/price-ranges/')
           .then(response => response.json())
           .then(data => {
               const minPrice = data.min_price;
@@ -1214,7 +1214,7 @@ document.addEventListener('DOMContentLoaded', function() {
                   console.log('Location obtained:', lat, lng);
                   
                   // Reverse geocoding to get city name
-                  fetch(`/home/api/reverse-geocode/?lat=${lat}&lng=${lng}`)
+                  fetch(`/api/reverse-geocode/?lat=${lat}&lng=${lng}`)
                       .then(response => response.json())
                       .then(data => {
                           if (data.city && locationInput) {

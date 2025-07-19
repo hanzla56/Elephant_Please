@@ -30,6 +30,23 @@
     <!-- Date Range Picker -->
     <link href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" rel="stylesheet">
 
+
+    <!-- Swiper CSS (for image carousel) -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
+
+<!-- Moment.js and moment-range (for date handling) -->
+<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/moment-range/moment-range.min.js"></script>
+
+<!-- jQuery Raty (for star ratings) -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/raty/2.9.0/jquery.raty.min.js"></script>
+
+<!-- Date Range Picker JS -->
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+
+<!-- Swiper JS (place before closing body tag) -->
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
     <style>
         :root {
             --primary-blue: #005494;
@@ -295,14 +312,14 @@
         });
 
         // Add loading states to buttons
-        document.querySelectorAll('.btn').forEach(button => {
-            button.addEventListener('click', function() {
-                if (this.type === 'submit') {
-                    this.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Loading...';
-                    this.disabled = true;
-                }
-            });
-        });
+        // document.querySelectorAll('.btn').forEach(button => {
+        //     button.addEventListener('click', function() {
+        //         if (this.type === 'submit') {
+        //             this.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Loading...';
+        //             this.disabled = true;
+        //         }
+        //     });
+        // });
 
         // Intersection Observer for animations
         const observerOptions = {

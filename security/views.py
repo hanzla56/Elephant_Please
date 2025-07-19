@@ -168,7 +168,7 @@ def send_verification_email(request, user):
 
     subject = "Activate Your Account"
     message = f"""
-        Hi {user.first_name},
+        Hi {user.username},
 
         Thank you for registering. Please click the link below to confirm your email address:
 

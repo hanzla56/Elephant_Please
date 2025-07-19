@@ -13,7 +13,7 @@
 }
 
 body {
-  background: #FDFAF7;
+  background: white;
 }
 
 /* Container */
@@ -41,7 +41,7 @@ body {
   font-size: 30px;
   font-weight: 700;
   text-align: center;
-  color: #D7531B;
+  color: #005CAE;
   margin-bottom: 25px;
 }
 
@@ -75,7 +75,7 @@ body {
 }
 
 .form-input:focus {
-  border-color: #D7531B;
+  border-color: #005CAE;
   box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.05);
 }
 
@@ -84,7 +84,7 @@ body {
   padding: 10px;
   border: none;
   border-radius: 6px;
-  background: #D7531B;
+ background: #005CAE;
   font-size: 14px;
   font-weight: 500;
   line-height: 20px;
@@ -112,7 +112,7 @@ body {
 
 .forgot-link {
   text-decoration: none;
-  color: #D7531B;
+  color: #005CAE;
 }
 
 .forgot-link:hover {
@@ -147,7 +147,7 @@ body {
 }
 
 .otp-input:focus {
-  border-color: #D7531B;
+  border-color: #005CAE;
   box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.05);
 }
 

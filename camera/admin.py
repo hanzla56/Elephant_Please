@@ -28,7 +28,7 @@ class ItemAdmin(admin.ModelAdmin):
             'fields': ('price', 'min_rental_days', 'max_rental_days', 'is_available')
         }),
         ('Media', {
-            'fields': ('image',)
+            'fields': ('image','images')
         }),
         ('Location Info', {
             'fields': ('location', 'latitude', 'longitude')

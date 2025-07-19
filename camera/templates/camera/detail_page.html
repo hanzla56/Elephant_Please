@@ -9,7 +9,12 @@
 
   <!-- Link Swiper's CSS -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
-  <link rel="stylesheet" href="{% static "css/detail_page.css" %}">
+  
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  
+  <!-- Bootstrap Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
 
    <!-- font cdn -->
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
@@ -18,277 +23,319 @@
   <!-- Bootstrap cdn -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'css/detail_page.css' %}">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
     crossorigin="anonymous"></script>
 
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/moment-range/moment-range.min.js"></script>
+
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/raty/2.9.0/jquery.raty.min.js"></script>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
 
 
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/moment-range/moment-range.min.js"></script>
-
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/raty/2.9.0/jquery.raty.min.js"></script>
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
-
+   
 </head>
 
 <body>
-  {% include "header.html" %}
+  {% include "head.html" %}
 
-
-<!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title order-btn" id="exampleModalLabel">Add Review</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+  <!-- Enhanced Breadcrumb -->
+  <div class="container breadcrumb-container">
+    <div class="d-flex align-items-center flex-wrap">
+      <div class="breadcrumb-item">
+        <a href="#" class="home_link">
+          <i class="bi bi-house-door me-1"></i>
+          Home
+        </a>
+        <i class="bi bi-chevron-right ms-2 me-2" style="color: #ccc;"></i>
       </div>
-      <div class="modal-body">
-        <div class="container">
-          <h3 class="order-btn">Add Review for {{ product.title }}</h3>
-        <form method="post" action="{% url 'camera:add_review' product.id %}">
-            {% csrf_token %}
-            <div class="mb-3">
-                <label for="rating" class="form-label order-btn">Rating</label>
-                <div id="star-rating"></div>
-                <input type="hidden" id="id_rating" name="rating">
-            </div>
-            <div class="mb-3">
-                <label for="comment" class="form-label order-btn">Comment</label>
-                <textarea name="comment" class="form-control" rows="4"></textarea>
-            </div>
-            <button type="submit" class="btn btn-primary" id="popin">Submit</button>
-        </form>
+      <div class="breadcrumb-item">
+        <a href="#" class="home_link">Camera</a>
+        <i class="bi bi-chevron-right ms-2 me-2" style="color: #ccc;"></i>
       </div>
+      <div class="breadcrumb-item">
+        <span class="check_link">{{product.title}}</span>
       </div>
     </div>
   </div>
-</div>
 
-<!-- Modal -->
-<div class="modal fade" id="dateRangeModal" tabindex="-1" aria-labelledby="dateRangeModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title order-btn" id="dateRangeModalLabel">Select Dates</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <form id="dateRangeForm">
-          <div class="mb-3">
-            <input type="text" name="daterange" id="daterange" class="form-control" />
-            <input type="hidden" id="product_id" value='{{product.id}}'>
-          </div>
-        </form>
-      </div>
-      <div class="modal-footer">
-        <button type="button" id="popin" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" id="popin" class="btn btn-primary" onclick="submitDateRange()">Submit</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-
-<div class="container mt-5" style="display: flex;">
-  <div>
-      <p>
-          <a href="#" class="home_link">Home</a>
-          <i class="bi bi-chevron-right" style="color: rgba(109, 109, 109, 1);"></i> 
-      </p>
-  </div>
-
-  <div>  
-    <p>
-      <a href="#" class="home_link">Camera</a>
-      <i class="bi bi-chevron-right" style="color: rgba(109, 109, 109, 1);"></i> 
-      <span class="check_link">{{product.title}}</span>
-      </p>
-  </div>
-</div>
-
-
-  <!-- Swiper -->
-  <div class="container mt-3">
+  <!-- Main Content -->
+  <div class="container mt-4">
     <div class="row">
+      <!-- Product Images -->
       <div class="col-lg-7">
-        <div style="--swiper-navigation-color: #fff; --swiper-pagination-color: #fff" class="swiper mySwiper2">
-          <div class="swiper-wrapper">
-            {% for image in product.image.all %}
-            <div class="swiper-slide">
-              <img src="{{image.url.url}}" />
+        <div class="fade-in">
+          <div style="--swiper-navigation-color: #005494; --swiper-pagination-color: #005494" class="swiper mySwiper2">
+            <div class="swiper-wrapper">
+              {% for image in product.images.all %}
+              <div class="swiper-slide">
+                <img src="{{image.url.url}}" alt="{{product.title}}" />
+              </div>
+              {% endfor %}
             </div>
-            {% endfor %}
-
+            <div class="swiper-button-next"></div>
+            <div class="swiper-button-prev"></div>
           </div>
-        </div>
-        <div thumbsSlider="" class="swiper mySwiper">
-          <div class="swiper-wrapper">
-
-            {% for image in product.image.all %}
-            <div class="swiper-slide">
-              <img src="{{image.url.url}}" />
+          <div thumbsSlider="" class="swiper mySwiper">
+            <div class="swiper-wrapper">
+              {% for image in product.images.all %}
+              <div class="swiper-slide">
+                <img src="{{image.url.url}}" alt="{{product.title}}" />
+              </div>
+              {% endfor %}
             </div>
-            {% endfor %}
-
           </div>
-
         </div>
       </div>
 
-
-      <div class="col-lg-5 mt-sm-3 ">
-        <div class="card" style="max-width: 32rem; height: 32rem; border:3px solid E6E6E6">
-          <div class="card-body">
-            <h5 class="card-title title">{{product.title}}</h5>
-            <p class="map-img address">
-              <img src="{% static "image/nav/map-pin.png" %}" class="pe-1" alt="">{{product.location}}
-            </p>
-            <p class="name">
-              <img src="{% static "image/nav/Group1961.png" %}" class="pe-1" alt="">Ben in shek O <img src="{% static "image/nav/Side Nav icons.png" %}" alt="">
-            </p>
-            <p class="">
-              <img src="{% static "image/nav/star_rate.png" %}" class="pe-1" alt="">{{ average_rating }} <span class="">({{ reviews_count }} reviews)</span><span class="ms-2">
-                  <button type="button" class="btn btn-link" id='popin' data-bs-toggle="modal" data-bs-target="#exampleModal">
-                      Write a Review
-                  </button>
-              </span>
-              
-            </p>
-
-
-
-            <div class="d-flex gap-3">
-              <div id="daily-option" class="pricing-option p-3 active" data-option-type="daily" data-days="1" onclick="selectOption('daily')">
-                  <span class="review">Daily</span>
-                  <span class="price">${{product.Daily_price}} <span class="review">/day</span></span>
-              </div>
-              <div id="weekly-option" class="pricing-option" data-option-type="weekly" data-days="7" onclick="selectOption('weekly')">
-                  <span class="review">Weekly</span>
-                  <span class="price">${{product.Weekly_price}} <span class="review">/day</span></span>
-              </div>
-              <div id="monthly-option" class="pricing-option" data-option-type="monthly" data-days="30" onclick="selectOption('monthly')">
-                  <span class="review">Monthly</span>
-                  <span class="price">${{product.Monthly_price}} <span class="review">/day</span></span>
-              </div>
-
-              <!-- Hidden input to store the selected option -->
-<input type="hidden" id="selected-option" value="">
+      <!-- Product Info -->
+      <div class="col-lg-5">
+        <div class="product-info-card fade-in">
+          <h1 class="product-title">{{product.title}}</h1>
+          
+          <div class="product-location">
+            <i class="bi bi-geo-alt-fill"></i>
+            <span>{{product.location}}</span>
+          </div>
+          
+          <div class="product-owner">
+            <i class="bi bi-person-circle"></i>
+            <span>{{product.owner.username}}</span>
+            <i class="bi bi-patch-check-fill ms-2" style="color: #28a745;"></i>
+          </div>
+          
+          <div class="product-rating">
+            <div class="rating-stars">
+              <i class="fas fa-star" style="color: #ffc107;"></i>
+              <span class="rating-number">{{ average_rating }}</span>
+            </div>
+            <span class="rating-count">({{ reviews_count }} reviews)</span>
+            <button type="button" class="review-btn" data-bs-toggle="modal" data-bs-target="#exampleModal">
+              Write a Review
+            </button>
           </div>
 
+          <!-- Enhanced Pricing Options -->
+          <div class="pricing-container">
+            <div class="pricing-options">
+              <div id="daily-option" class="pricing-option active" data-option-type="daily" data-days="1" onclick="selectOption('daily')">
+                <div class="pricing-label">Daily</div>
+                <div class="pricing-value">
+                  ${{product.price}}
+                  <span class="pricing-unit">/day</span>
+                </div>
+              </div>
+              
+              <div id="weekly-option" class="pricing-option" data-option-type="weekly" data-days="7" onclick="selectOption('weekly')">
+                <div class="pricing-label">Weekly</div>
+                <div class="pricing-value">
+                  ${{product.price}}
+                  <span class="pricing-unit">/day</span>
+                </div>
+              </div>
+              
+              <div id="monthly-option" class="pricing-option" data-option-type="monthly" data-days="30" onclick="selectOption('monthly')">
+                <div class="pricing-label">Monthly</div>
+                <div class="pricing-value">
+                  ${{product.price}}
+                  <span class="pricing-unit">/day</span>
+                </div>
+              </div>
+            </div>
 
-
-            <br>
-            <button type="button" style="background-color:#005494; color: #FFFFFF; border: none;" class="btn-lg btn-block w-100 order-btn" data-bs-toggle="modal" data-bs-target="#dateRangeModal">
-              Check Price and Availability
+            <input type="hidden" id="selected-option" value="daily">
+            
+            <button type="button" class="cta-button mb-4" data-bs-toggle="modal" data-bs-target="#dateRangeModal">
+              <i class="bi bi-calendar-check me-2"></i>
+              Check Availability & Book
             </button>
+            <br>
+            <a href="{% url 'chat:index' %}?user={{ product.owner.username }}" class="cta-button">
+              <i class="bi bi-chat-check me-2"></i>
+              Chat
+            </a>
             
           </div>
         </div>
       </div>
-
     </div>
+
+    <!-- Enhanced Tabs Section -->
     <div class="mt-5">
-      <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+      <ul class="nav nav-pills mb-4" id="pills-tab" role="tablist">
         <li class="nav-item" role="presentation">
-          <button class="nav-link title active" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home"
-            type="button" role="tab" aria-controls="pills-home" aria-selected="true">Description</button>
+          <button class="nav-link active" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home"
+            type="button" role="tab" aria-controls="pills-home" aria-selected="true">
+            <i class="bi bi-card-text me-2"></i>Description
+          </button>
         </li>
         <li class="nav-item" role="presentation">
-          <button class="nav-link title" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile"
-            type="button" role="tab" aria-controls="pills-profile" aria-selected="false">Reviews</button>
+          <button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile"
+            type="button" role="tab" aria-controls="pills-profile" aria-selected="false">
+            <i class="bi bi-star me-2"></i>Reviews
+          </button>
         </li>
       </ul>
+      
       <div class="tab-content" id="pills-tabContent">
         <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
-          Description here</div>
+          <div class="card border-0 shadow-sm">
+            <div class="card-body p-4">
+              <h5 class="card-title order-btn mb-3">Product Description</h5>
+              <p class="card-text">Description here - This is where you can add detailed information about your camera equipment, its features, specifications, and any special instructions for renters.</p>
+            </div>
+          </div>
+        </div>
+        
         <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
-
-          <div class="container mt-4">
-            <h1>{{ product.name }}</h1>
-            <h2 class='order-btn'>Reviews</h2>
-            <div class="reviews-container">
-                <div class="row">
-                  {% if reviews %}
+          <div class="card border-0 shadow-sm">
+            <div class="card-body p-4">
+              <h5 class="card-title order-btn mb-4">Customer Reviews</h5>
+              <div class="reviews-container">
+                {% if reviews %}
                   {% for review in reviews %}
-                    <div class="col-md-12 col-lg-12">
-                      <div class="review-card d-flex align-items-start">
+                    <div class="review-card">
+                      <div class="d-flex align-items-start">
                         <img src="{{ review.user.profile.image.url }}" alt="{{ review.user.username }}'s profile picture" class="me-3">
-                        <div>
-                          <div class="username order-btn">{{ review.user.username }}</div>
-                          <div class="stars">
+                        <div class="flex-grow-1">
+                          <div class="username">{{ review.user.username }}</div>
+                          <div class="stars mb-2">
                             {% for star in star_range %}
                               {% if star <= review.rating %}
-                                <span class="fa fa-star checked"></span>
+                                <i class="fas fa-star checked"></i>
                               {% else %}
-                                <span class="fa fa-star"></span>
+                                <i class="fas fa-star"></i>
                               {% endif %}
                             {% endfor %}
                           </div>
-                          <p class="comment" id="popin">{{ review.comment }}</p>
+                          <p class="comment mb-0">{{ review.comment }}</p>
                         </div>
                       </div>
                     </div>
                   {% endfor %}
                 {% else %}
-                  <p class="no-reviews">There are no reviews available at this time.</p>
+                  <div class="text-center py-5">
+                    <i class="bi bi-chat-square-dots" style="font-size: 3rem; color: #ccc;"></i>
+                    <p class="mt-3 text-muted">No reviews available yet. Be the first to review!</p>
+                  </div>
                 {% endif %}
-                
-                </div>
+              </div>
             </div>
+          </div>
         </div>
- 
-        </div>
       </div>
     </div>
 
-
-
-    <div class="mt-4 mb-5 map_div">
-      <h3 class='title'>Address</h3>
-      <iframe
-        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d27221.428710350294!2d74.24158215522772!3d31.478026574563344!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39190233a83c0335%3A0xa646aee86216e404!2sCentre%20for%20Excellence%20in%20Molecular%20Biology!5e0!3m2!1sen!2s!4v1716821146210!5m2!1sen!2s"
-        style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-
-    </div>
-
-
-    {% comment %} <div class="d-flex">
-      <div class="">
-        Other Items From Ben
-      </div>
-      <div class="ms-auto">
-        <button type="button" class="btn btn-primary">Primary</button>
+    <!-- Enhanced Map Section -->
+    <div class="map-section">
+      <h3 class="map-title">
+        <i class="bi bi-geo-alt me-2"></i>
+        Location
+      </h3>
+      <div class="map-container">
+        <iframe
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d27221.428710350294!2d74.24158215522772!3d31.478026574563344!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39190233a83c0335%3A0xa646aee86216e404!2sCentre%20for%20Excellence%20in%20Molecular%20Biology!5e0!3m2!1sen!2s!4v1716821146210!5m2!1sen!2s"
+          allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+        </iframe>
       </div>
     </div>
-
-
-    <div class="other-items">
-
-    </div> {% endcomment %}
-
-
   </div>
 
+  <!-- Enhanced Review Modal -->
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title order-btn" id="exampleModalLabel">
+            <i class="bi bi-star me-2"></i>Add Your Review
+          </h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <h6 class="order-btn mb-3">Review for {{ product.title }}</h6>
+          <form method="post" action="{% url 'camera:add_review' product.id %}">
+            {% csrf_token %}
+            <div class="mb-3">
+              <label for="rating" class="form-label">Rating</label>
+              <div id="star-rating"></div>
+              <input type="hidden" id="id_rating" name="rating">
+            </div>
+            <div class="mb-3">
+              <label for="comment" class="form-label">Your Review</label>
+              <textarea name="comment" class="form-control" rows="4" placeholder="Share your experience with this camera..."></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary w-100">
+              <i class="bi bi-send me-2"></i>Submit Review
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
   </div>
+
+  <!-- Enhanced Date Range Modal -->
+  <div class="modal fade" id="dateRangeModal" tabindex="-1" aria-labelledby="dateRangeModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title order-btn" id="dateRangeModalLabel">
+            <i class="bi bi-calendar-range me-2"></i>Select Your Rental Dates
+          </h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form id="dateRangeForm">
+            <div class="mb-3">
+              <label for="daterange" class="form-label">Choose dates</label>
+              <input type="text" name="daterange" id="daterange" class="form-control" placeholder="Select your rental period" />
+              <input type="hidden" id="product_id" value='{{product.id}}'>
+            </div>
+            <div class="alert alert-info" role="alert">
+              <i class="bi bi-info-circle me-2"></i>
+              <small>Select your preferred rental period. Prices may vary based on duration.</small>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+            <i class="bi bi-x-circle me-2"></i>Cancel
+          </button>
+          <button type="button" class="btn btn-primary" onclick="submitDateRange()">
+            <i class="bi bi-check-circle me-2"></i>Continue to Booking
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   {% include "footer.html" %}
-
 
   <!-- Swiper JS -->
   <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 
   <!-- Initialize Swiper -->
   <script>
+    // Initialize Swiper
     var swiper = new Swiper(".mySwiper", {
       spaceBetween: 10,
       slidesPerView: 4,
       freeMode: true,
       watchSlidesProgress: true,
+      breakpoints: {
+        320: {
+          slidesPerView: 3,
+        },
+        640: {
+          slidesPerView: 4,
+        },
+      }
     });
+
     var swiper2 = new Swiper(".mySwiper2", {
       spaceBetween: 10,
       navigation: {
@@ -298,263 +345,263 @@
       thumbs: {
         swiper: swiper,
       },
+      autoplay: {
+        delay: 5000,
+        disableOnInteraction: false,
+      },
     });
 
+    // Date Range Picker Configuration
     $(function() {
-    // Initialize daterangepicker with initial settings
-    var daterangepickerOptions = {
+      var daterangepickerOptions = {
         opens: 'left',
-        minDate: moment().startOf('day'), // Restrict to start from today
-        autoApply: true, // Apply selection automatically when user selects a range
-        minSpan: { days: 1 }, // Ensure the minimum range is 1 day
+        minDate: moment().startOf('day'),
+        autoApply: true,
+        minSpan: { days: 1 },
         locale: {
-            format: 'DD MMM' // Change the date format to "DD MMM YYYY"
+          format: 'DD MMM'
         }
-    };
+      };
 
-    // Function to update the date range limit and default dates based on selected option (daily, weekly, monthly)
-    function updateDateLimit(numDays) {
-        // Calculate new end date based on the selected option
+      function updateDateLimit(numDays) {
         var newEndDate = moment().startOf('day').clone().add(numDays - 1, 'days');
-
-        // Update the daterangepicker options with the new date limit and default dates
         daterangepickerOptions.dateLimit = { days: numDays };
         daterangepickerOptions.startDate = moment().startOf('day');
         daterangepickerOptions.endDate = newEndDate;
 
-        // Destroy the existing daterangepicker instance
         $('input[name="daterange"]').data('daterangepicker').remove();
-
-        // Reinitialize the daterangepicker with the updated options
         $('input[name="daterange"]').daterangepicker(daterangepickerOptions);
-    }
+      }
 
-    // Initialize daterangepicker with default options
-    $('input[name="daterange"]').daterangepicker(daterangepickerOptions);
+      $('input[name="daterange"]').daterangepicker(daterangepickerOptions);
 
-    // Event listener for selecting different price options (divs)
-    $('.pricing-option').click(function() {
+      $('.pricing-option').click(function() {
         var optionType = $(this).attr('data-option-type');
         var numDays = parseInt($(this).attr('data-days'));
 
         if (isNaN(numDays)) {
-            console.log("Invalid number of days for option:", optionType);
-            return;
+          console.log("Invalid number of days for option:", optionType);
+          return;
         }
 
         updateDateLimit(numDays);
 
-        // Update active class for styling
         $('.pricing-option').removeClass('active');
         $(this).addClass('active');
-    });
+      });
 
-    // Event listener for when the user selects a date range
-    $('input[name="daterange"]').on('apply.daterangepicker', function(ev, picker) {
+      $('input[name="daterange"]').on('apply.daterangepicker', function(ev, picker) {
         var startDate = picker.startDate;
         var endDate = picker.endDate;
+        var numSelectedDays = endDate.diff(startDate, 'days') + 1;
 
-        // Calculate the number of days selected
-        var numSelectedDays = endDate.diff(startDate, 'days') + 1; // +1 because diff() gives the difference, not inclusive
-
-        // Validate the number of selected days against the current date limit
         if (numSelectedDays !== daterangepickerOptions.dateLimit.days) {
-            // Show an alert or handle the error as per your application's requirement
-            alert('Please select exactly ' + daterangepickerOptions.dateLimit.days + ' days.');
-            // Reset the date range selection
-            picker.setStartDate(startDate);
-            picker.setEndDate(startDate.clone().add(daterangepickerOptions.dateLimit.days - 1, 'days'));
+          alert('Please select exactly ' + daterangepickerOptions.dateLimit.days + ' days.');
+          picker.setStartDate(startDate);
+          picker.setEndDate(startDate.clone().add(daterangepickerOptions.dateLimit.days - 1, 'days'));
         } else {
-            console.log("Selected date range:", startDate.format('YYYY-MM-DD'), 'to', endDate.format('YYYY-MM-DD'));
-            // Perform other actions based on the selected date range
+          console.log("Selected date range:", startDate.format('YYYY-MM-DD'), 'to', endDate.format('YYYY-MM-DD'));
         }
+      });
     });
-});
 
+    // Pricing Option Selection
+    function selectOption(option) {
+      var input = document.getElementById('selected-option');
+      input.value = option;
+      console.log(`Selected option: ${input.value}`);
 
-
-
-
-
-
-// $(function() {
-//   moment.locale('en');
-//         $('input[name="daterange"]').daterangepicker({
-//             opens: 'left',
-//             minDate: moment().startOf('day')  // Restrict to start from today
-//         }, function(start, end, label) {
-//             console.log("A new date selection was made: " + start.format('DD-MM-YYYY') + ' to ' + end.format('DD-MM-YYYY'));
-//         });
-//     });
-
-
-
-
-// function submitDateRange() {
-//   console.log('selected option')
-//   var productId = document.getElementById('product_id').value;
-//   var pricingOption = document.querySelector('.pricing-option.active').id;
-//   var startDate;
-//   var endDate;
-
-//   // Get the selected start and end dates from the date range picker
-//   var selectedStartDate = $('#daterange').data('daterangepicker').startDate;
-//   var selectedEndDate = $('#daterange').data('daterangepicker').endDate;
-
-//   // Initialize moment-range
-//   var momentRange = moment.range;
-
-//   // Determine the new start and end dates based on the selected pricing option
-//   switch (pricingOption) {
-//       case 'daily-option':
-//           // For Daily option, ensure the duration is 1 day
-//           startDate = selectedStartDate.clone();
-//           endDate = startDate.clone().add(1, 'days');
-//           break;
-//       case 'weekly-option':
-//           // For Weekly option, ensure the duration is 7 days
-//           startDate = selectedStartDate.clone();
-//           endDate = startDate.clone().add(7, 'days');
-//           break;
-//       case 'monthly-option':
-//           // For Monthly option, ensure the duration is 30 days
-//           startDate = selectedStartDate.clone();
-//           endDate = startDate.clone().add(30, 'days');
-//           break;
-//       default:
-//           // Default to daily option if none selected
-//           startDate = selectedStartDate.clone();
-//           endDate = startDate.clone().add(1, 'days');
-//           break;
-//   }
-
-//   // Check if the selected dates are within the allowed duration
-//   var selectedRange = momentRange(startDate, endDate);
-//   var userSelectedRange = momentRange(selectedStartDate, selectedEndDate);
-
-//   if (!selectedRange.contains(userSelectedRange)) {
-//       // Show warning message if user's selection is outside the allowed duration
-//       alert('Please select dates within the specified duration (' + pricingOption.replace('-option', '') + ')');
-//       return;
-//   }
-
-//   // Construct the URL for redirection
-//   var url = '/camera/checkout/?start_date=' + encodeURIComponent(startDate.format('YYYY-MM-DD')) +
-//             '&end_date=' + encodeURIComponent(endDate.format('YYYY-MM-DD')) +
-//             '&product_id=' + encodeURIComponent(productId);
-
-//   // Redirect to the checkout page with the selected dates and product ID
-//   window.location.href = url;
-// }
-
-
-
-function selectOption(option) {
-    // Store the selected option in the hidden input
-    input = document.getElementById('selected-option')
-    input.value = option;
-    console.log(`this is the input value ${input.value}`)
-
-    // Optionally, update UI to reflect the selected option
-    document.querySelectorAll('.pricing-option').forEach(function(element) {
+      document.querySelectorAll('.pricing-option').forEach(function(element) {
         element.classList.remove('active');
-    });
-    document.getElementById(option + '-option').classList.add('active');
-}
+      });
+      document.getElementById(option + '-option').classList.add('active');
 
+      // Add animation effect
+      const selectedElement = document.getElementById(option + '-option');
+      selectedElement.style.transform = 'scale(1.05)';
+      setTimeout(() => {
+        selectedElement.style.transform = 'scale(1)';
+      }, 200);
+    }
 
-
-function submitDateRange() {
-    // Get the date range value from the input field
-    var daterange = document.getElementById('daterange').value;
-    
-    // Get the selected option from the hidden input field
-    var selectedOption = document.getElementById('selected-option').value;
-    if (!selectedOption) {
-      document.getElementById('selected-option').value = 'Daily';
-      selectedOption = 'daily';
-  }
-  
-  console.log(`This is the selected option: ${selectedOption}`);
-    
-    // Get the product ID from the input field
-    var productId = document.getElementById('product_id').value;
-    
-    // Build the URL with daterange, selected option, and product ID
-    var url = '/checkout/?option=' + encodeURIComponent(selectedOption) + 
-              '&daterange=' + encodeURIComponent(daterange) + 
-              '&product_id=' + encodeURIComponent(productId);
-    
-    // Redirect to the checkout page with the constructed URL
-    window.location.href = url;
-}
-
-
-// function submitDateRange() {
-//     var daterange = document.getElementById('daterange').value;
-//     var productId = document.getElementById('product_id').value;// Assuming you have an input field with id 'product_id'
-//     var url = '/checkout/?daterange=' + encodeURIComponent(daterange) + '&product_id=' + encodeURIComponent(productId);
-//     window.location.href = url;
-// }
-
-
-// function selectOption(option) {
-//         // Remove active class from all options
-//         const pricingOptions = document.querySelectorAll('.pricing-option');
-//         pricingOptions.forEach(option => {
-//             option.classList.remove('active');
-//         });
-
-//         // Add active class to the clicked option
-//         const selectedOption = document.getElementById(`${option}-option`);
-//         selectedOption.classList.add('active');
-
-//         // Here you can optionally perform additional actions based on the selected option
-//         // For example, update a hidden input field with the selected option value
-//         //document.getElementById('selected-option').value = option;
-//     }
-
-// function submitDateRange() {
-//     var startDate = new Date(document.getElementById('start_date').value);
-//     var endDate = new Date(document.getElementById('end_date').value);
-    
-//     // Calculate the difference in days
-//     var differenceInTime = endDate.getTime() - startDate.getTime();
-//     var differenceInDays = Math.ceil(differenceInTime / (1000 * 3600 * 24));
-    
-//     // Format the start and end dates
-//     var startDay = startDate.getDate();
-//     var startMonth = startDate.toLocaleString('default', { month: 'short' });
-    
-//     var endDay = endDate.getDate();
-//     var endMonth = endDate.toLocaleString('default', { month: 'short' });
-    
-//     // Construct the formatted date range string
-//     var formattedDateRange = differenceInDays + ' days ' + startDay + ' ' + startMonth + ' - ' + endDay + ' ' + endMonth;
-    
-//     var productId = document.getElementById('product_id').value;
-//     var url = '/camera/checkout/?daterange=' + encodeURIComponent(formattedDateRange) + '&product_id=' + encodeURIComponent(productId);
-//     window.location.href = url;
-// }
-
-
-
-
-$(document).ready(function(){
-  $('#star-rating').raty({
-      scoreName: 'rating',
-      number: 5,
-      half: false,
-      starType: 'i',
-      starOn: 'fa fa-star checked',
-      starOff: 'fa fa-star',
-      starHalf: 'fa fa-star-half-alt',
-      click: function(score, evt) {
-          $('#id_rating').val(score);
+    // Submit Date Range
+    function submitDateRange() {
+      var daterange = document.getElementById('daterange').value;
+      var selectedOption = document.getElementById('selected-option').value;
+      
+      if (!selectedOption) {
+        document.getElementById('selected-option').value = 'daily';
+        selectedOption = 'daily';
       }
-  });
-});
+      
+      if (!daterange) {
+        alert('Please select your rental dates first.');
+        return;
+      }
+
+      console.log(`Selected option: ${selectedOption}`);
+      
+      var productId = document.getElementById('product_id').value;
+      var url = '/checkout/?option=' + encodeURIComponent(selectedOption) + 
+                '&daterange=' + encodeURIComponent(daterange) + 
+                '&product_id=' + encodeURIComponent(productId);
+      
+      // Add loading state
+      const button = event.target;
+      const originalText = button.innerHTML;
+      button.innerHTML = '<i class="bi bi-hourglass-split me-2"></i>Processing...';
+      button.disabled = true;
+      
+      // Simulate processing delay
+      setTimeout(() => {
+        window.location.href = url;
+      }, 1000);
+    }
+
+    // Star Rating System
+    $(document).ready(function(){
+      $('#star-rating').raty({
+        scoreName: 'rating',
+        number: 5,
+        half: false,
+        starType: 'i',
+        starOn: 'fas fa-star',
+        starOff: 'far fa-star',
+        starHalf: 'fas fa-star-half-alt',
+        hints: ['Poor', 'Fair', 'Good', 'Very Good', 'Excellent'],
+        click: function(score, evt) {
+          $('#id_rating').val(score);
+        }
+      });
+
+      // Add smooth scrolling for anchor links
+      $('a[href^="#"]').on('click', function(event) {
+        var target = $(this.getAttribute('href'));
+        if( target.length ) {
+          event.preventDefault();
+          $('html, body').stop().animate({
+            scrollTop: target.offset().top - 100
+          }, 1000);
+        }
+      });
+
+      // Add fade-in animation on scroll
+      const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+      };
+
+      const observer = new IntersectionObserver(function(entries) {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('fade-in');
+          }
+        });
+      }, observerOptions);
+
+      document.querySelectorAll('.review-card, .map-section').forEach(el => {
+        observer.observe(el);
+      });
+
+      // Enhanced form validation
+      $('form').on('submit', function(e) {
+        const form = this;
+        const submitButton = form.querySelector('button[type="submit"]');
+        
+        if (submitButton) {
+          const originalText = submitButton.innerHTML;
+          submitButton.innerHTML = '<i class="bi bi-hourglass-split me-2"></i>Submitting...';
+          submitButton.disabled = true;
+          
+          // Re-enable after 3 seconds if form doesn't submit
+          setTimeout(() => {
+            submitButton.innerHTML = originalText;
+            submitButton.disabled = false;
+          }, 3000);
+        }
+      });
+
+      // Add hover effects to pricing options
+      $('.pricing-option').hover(
+        function() {
+          if (!$(this).hasClass('active')) {
+            $(this).css('transform', 'translateY(-3px)');
+          }
+        },
+        function() {
+          if (!$(this).hasClass('active')) {
+            $(this).css('transform', 'translateY(0)');
+          }
+        }
+      );
+
+      // Enhanced modal animations
+      $('.modal').on('show.bs.modal', function () {
+        $(this).find('.modal-dialog').css({
+          'transform': 'scale(0.8)',
+          'opacity': '0'
+        }).animate({
+          'transform': 'scale(1)',
+          'opacity': '1'
+        }, 300);
+      });
+
+      // Add loading state to CTA button
+      $('.cta-button').on('click', function() {
+        const button = $(this);
+        const originalText = button.html();
+        
+        button.html('<i class="bi bi-hourglass-split me-2"></i>Loading...');
+        button.addClass('loading');
+        
+        setTimeout(() => {
+          button.html(originalText);
+          button.removeClass('loading');
+        }, 2000);
+      });
+
+      // Add success state after review submission
+      if (window.location.search.includes('review_added=true')) {
+        $('<div class="alert alert-success alert-dismissible fade show" role="alert">' +
+          '<i class="bi bi-check-circle me-2"></i>' +
+          'Thank you! Your review has been submitted successfully.' +
+          '<button type="button" class="btn-close" data-bs-dismiss="alert"></button>' +
+          '</div>').prependTo('.container').hide().slideDown();
+      }
+    });
+
+    // Add scroll-to-top functionality
+    $(window).scroll(function() {
+      if ($(this).scrollTop() > 500) {
+        if (!$('#scroll-top').length) {
+          $('body').append('<button id="scroll-top" class="btn btn-primary rounded-circle position-fixed" style="bottom: 20px; right: 20px; z-index: 1000; width: 50px; height: 50px;"><i class="bi bi-arrow-up"></i></button>');
+        }
+        $('#scroll-top').fadeIn();
+      } else {
+        $('#scroll-top').fadeOut();
+      }
+    });
+
+    $(document).on('click', '#scroll-top', function() {
+      $('html, body').animate({scrollTop: 0}, 800);
+    });
+
+    // Add keyboard navigation for pricing options
+    $(document).keydown(function(e) {
+      if (e.which === 49) { // Key '1'
+        selectOption('daily');
+      } else if (e.which === 50) { // Key '2'
+        selectOption('weekly');
+      } else if (e.which === 51) { // Key '3'
+        selectOption('monthly');
+      }
+    });
+
+    // Initialize tooltips for better UX
+    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+    var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+      return new bootstrap.Tooltip(tooltipTriggerEl);
+    });
   </script>
 </body>
-
 </html>

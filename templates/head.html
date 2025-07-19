@@ -565,7 +565,7 @@
         <!-- Brand Logo -->
         <a class="navbar-brand" href="{% url 'camera:home_page' %}">
             <img src="{% static 'image/nav/Elephant Please.png' %}" alt="Elephant Please">
-            <img src="{% static 'image/nav/elephant.png' %}" alt="Elephant">
+            {% comment %} <img src="{% static 'image/nav/elephant.png' %}" alt="Elephant"> {% endcomment %}
         </a>
 
         <!-- Mobile Toggle Button -->
@@ -632,7 +632,7 @@
                             <i class="fas fa-user-circle"></i>
                             <span>My Profile</span>
                         </a></li>
-                        <li><a class="dropdown-item dropdown-item-custom" href="#">
+                        <li><a class="dropdown-item dropdown-item-custom" href="{% url 'chat:index' %}">
                             <i class="fas fa-cog"></i>
                             <span>Settings</span>
                         </a></li>

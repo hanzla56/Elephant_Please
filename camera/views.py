@@ -25,7 +25,7 @@ stripe.api_key = settings.STRIPE_SECRET_KEY
 
 
 def success_view(request,p_id):
-    product = item.objects.get(id = p_id)
+    product = Item.objects.get(id = p_id)
     username = product.owner.username
     return render(request, 'camera/success.html',{'username':username})
 
@@ -44,11 +44,12 @@ class CreateCheckoutSessionView(View):
         daterange = request.POST.get('daterange')
         print(daterange)
         price = request.POST.get('price')
-        price = int(price)
+        # price = int(price)
+        price = 45
         user = request.user
         try:
             print(p_id)
-            product = item.objects.get(id = p_id)
+            product = Item.objects.get(id = p_id)
          
 
             checkout_session = stripe.checkout.Session.create(
@@ -130,7 +131,7 @@ def stripe_webhook(request):
 
             fulfill_order(user_id, product_id,total_price=price,time=daterange)
 
-            product = item.objects.get(id=product_id)
+            product = Item.objects.get(id=product_id)
             payment_successful_signal.send(sender=__name__, user_id=user_id, product=product)
             print('signal is sent')
             send_mail(
@@ -157,7 +158,7 @@ def stripe_webhook(request):
 def fulfill_order(user_id, p_id,*args,**kwargs):
     print('fulfill function runs')
     try:
-        product = item.objects.get(id=p_id)
+        product = Item.objects.get(id=p_id)
         us = User_Data.objects.get(id=user_id)
         price = kwargs.get('total_price')
         span = kwargs.get('time')
@@ -190,7 +191,7 @@ def fulfill_order(user_id, p_id,*args,**kwargs):
 
 def Home(request):
     current_user = request.user
-    item_list = item.objects.exclude(owner=current_user)
+    item_list = Item.objects.exclude(owner=current_user)
     count = item_list.count()
     print(current_user)
     print(item_list)
@@ -207,7 +208,7 @@ def Home(request):
     return render(request, 'camera/home.html', {'items': items,'count':count})
     
 # def Home(request):
-#     item_list = item.objects.all()
+#     item_list = Item.objects.all()
 #     paginator = Paginator(item_list, 3)  # Adjust the number of items per page as needed
 
 #     page = request.GET.get('page')
@@ -225,7 +226,7 @@ def search_items(request):
     if request.method == 'GET':
         query = request.GET.get('q', '')
         if query:
-            items = item.objects.filter(title__icontains=query)
+            items = Item.objects.filter(title__icontains=query)
             print('the product is fetched')
             print(items)
             items_list = []
@@ -244,7 +245,7 @@ def search_items(request):
 
 
 def detail(request,p_id):
-    product = item.objects.get(id=p_id)
+    product = Item.objects.get(id=p_id)
     reviews = product.reviews.all()
     reviews_count = reviews.count()
     average_rating = reviews.aggregate(Avg('rating'))['rating__avg'] or 0
@@ -261,7 +262,7 @@ def detail(request,p_id):
 @login_required
 def add_review(request, product_id):
     print('Entering add_review view')
-    product = get_object_or_404(item, id=product_id)
+    product = get_object_or_404(Item, id=product_id)
     if request.method == 'POST':
         print('Handling POST request')
         form = ReviewForm(request.POST)
@@ -348,7 +349,7 @@ def edit_item(request, product_id):
 #     print(date_range)
 #     product_id = request.GET.get('product_id')
 #     print(f' product id is{product_id}')
-#     product = item.objects.get(id=product_id)
+#     product = Item.objects.get(id=product_id)
 #     print('enter in the checkout view')
 
 #     if request.method == 'POST':
@@ -373,7 +374,7 @@ def edit_item(request, product_id):
         
         
 #         if date_range and product_id:
-#             product = item.objects.get(id=product_id)
+#             product = Item.objects.get(id=product_id)
 #             return render(request, 'camera/checkout.html', {'date_range': date_range, 'product': product})
 #         else:
 #             pass
@@ -386,9 +387,9 @@ def checkout(request):
         print(f'this is date range {date_range}')
         product_id = request.GET.get('product_id')
         print(f'product id is {product_id}')
-        pd = item.objects.get(id=product_id)
+        pd = Item.objects.get(id=product_id)
         if date_range and product_id:
-            product = item.objects.get(id=product_id)
+            product = Item.objects.get(id=product_id)
         # Do something with the date range and product ID
             return render(request, 'camera/checkout.html', {'date_range': date_range, 'product': product,'pd':pd})
         else:
@@ -421,7 +422,7 @@ def checkout(request):
 #             category_obj = category.objects.get(pk=category_id)
 
 #             # Save Item object
-#             item_obj = item.objects.create(
+#             item_obj = Item.objects.create(
 #                 title=title,
 #                 category=category_obj,
 #                 Daily_price=daily_price,
@@ -458,8 +459,6 @@ def submission(request):
         title = request.POST.get('title')
         category_id = request.POST.get('category')
         daily_price = request.POST.get('Daily')
-        weekly_price = request.POST.get('Weekly')
-        monthly_price = request.POST.get('Monthly')
         market_value = request.POST.get('MarketValue')
         quantity = request.POST.get('Quantity')
         period = request.POST.get('period')
@@ -467,11 +466,11 @@ def submission(request):
         description = request.POST.get('description')
         uploaded_images = request.FILES.getlist('images')
         owner_data = request.user
-        print(request)
+        print(request.POST)
         print(f'this is owner name {owner_data}' )
 
         # Check for empty fields
-        if not (title and category_id and daily_price and weekly_price and monthly_price and market_value and quantity and period and location and description):
+        if not (title and category_id and daily_price  and market_value and quantity and period and location and description):
             print('field checkup')
             return HttpResponse('One or more fields are empty!', status=400)
 
@@ -487,8 +486,6 @@ def submission(request):
                 item_obj.title = title
                 item_obj.category = category_obj
                 item_obj.Daily_price = daily_price
-                item_obj.Weekly_price = weekly_price
-                item_obj.Monthly_price = monthly_price
                 item_obj.MarketValue = market_value
                 item_obj.quantity = quantity
                 item_obj.period = period
@@ -507,12 +504,10 @@ def submission(request):
                 return HttpResponse('Product updated successfully!', status=200)
             else:
                 # Create new product
-                item_obj = item.objects.create(
+                item_obj = Item.objects.create(
                     title=title,
                     category=category_obj,
                     Daily_price=daily_price,
-                    Weekly_price=weekly_price,
-                    Monthly_price=monthly_price,
                     MarketValue=market_value,
                     quantity=quantity,
                     period=period,
