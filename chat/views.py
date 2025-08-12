@@ -85,6 +85,9 @@ def index(request):
         'last_messages': last_messages,
         'default_user': frnd_name
     })
+    
+    
+
 
 # def index(request):
 #     frnd_name = request.GET.get('user', None)

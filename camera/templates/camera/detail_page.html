@@ -72,7 +72,7 @@
         <div class="fade-in">
           <div style="--swiper-navigation-color: #005494; --swiper-pagination-color: #005494" class="swiper mySwiper2">
             <div class="swiper-wrapper">
-              {% for image in product.images.all %}
+              {% for image in images %}
               <div class="swiper-slide">
                 <img src="{{image.url.url}}" alt="{{product.title}}" />
               </div>
@@ -83,7 +83,7 @@
           </div>
           <div thumbsSlider="" class="swiper mySwiper">
             <div class="swiper-wrapper">
-              {% for image in product.images.all %}
+              {% for image in images %}
               <div class="swiper-slide">
                 <img src="{{image.url.url}}" alt="{{product.title}}" />
               </div>
@@ -131,7 +131,7 @@
                 </div>
               </div>
               
-              <div id="weekly-option" class="pricing-option" data-option-type="weekly" data-days="7" onclick="selectOption('weekly')">
+              <!-- <div id="weekly-option" class="pricing-option" data-option-type="weekly" data-days="7" onclick="selectOption('weekly')">
                 <div class="pricing-label">Weekly</div>
                 <div class="pricing-value">
                   ${{product.price}}
@@ -145,20 +145,22 @@
                   ${{product.price}}
                   <span class="pricing-unit">/day</span>
                 </div>
-              </div>
+              </div> -->
             </div>
 
             <input type="hidden" id="selected-option" value="daily">
-            
+<!--             
             <button type="button" class="cta-button mb-4" data-bs-toggle="modal" data-bs-target="#dateRangeModal">
               <i class="bi bi-calendar-check me-2"></i>
               Check Availability & Book
-            </button>
+            </button> -->
             <br>
+            <button type="button" class="cta-button mb-4">
             <a href="{% url 'chat:index' %}?user={{ product.owner.username }}" class="cta-button">
               <i class="bi bi-chat-check me-2"></i>
-              Chat
+              Chat With the Owner
             </a>
+            </button>
             
           </div>
         </div>

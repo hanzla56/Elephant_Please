@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'chat',
     'accounts',
     'security',
+    "django_extensions",
     'allauth',   
     'allauth.account',  
     'allauth.socialaccount',
@@ -118,7 +119,13 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
+# AUTHENTICATION_BACKENDS = [
+#     'django.contrib.auth.backends.ModelBackend',
+#     'allauth.account.auth_backends.AuthenticationBackend',
+# ]
+
 AUTHENTICATION_BACKENDS = [
+    # 'security.backends.EmailBackend',  # 👈 this must be first
     'django.contrib.auth.backends.ModelBackend',
     'allauth.account.auth_backends.AuthenticationBackend',
 ]

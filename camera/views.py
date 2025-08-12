@@ -10,7 +10,7 @@ from django.contrib.auth import get_user_model
 from django.core.mail import send_mail
 from django.core.paginator import Paginator,PageNotAnInteger,EmptyPage
 from django.views.generic import View,TemplateView
-from .models import category,Image,Order,Review
+from .models import *
 from .forms import *
 from security.models import MyUser
 from django.dispatch import Signal
@@ -248,9 +248,12 @@ def detail(request,p_id):
     product = Item.objects.get(id=p_id)
     reviews = product.reviews.all()
     reviews_count = reviews.count()
+    images = product.images.all()  # thanks to related_name="images"
     average_rating = reviews.aggregate(Avg('rating'))['rating__avg'] or 0
     star_range = range(1, 6) 
+    
     return render(request,'camera/detail_page.html',{
+        'images':images,
         'product': product,
         'reviews': reviews,
         'star_range': star_range,
@@ -294,6 +297,7 @@ def profile(request):
 def edit_profile(request):
     user_ID = request.user.id
     user_profile = MyUser.objects.get(id=user_ID)
+    print(request.POST)
     print('outside if')
 
     if request.method == 'POST':
@@ -310,6 +314,7 @@ def edit_profile(request):
             user_profile.profile_img = request.FILES['profile_img']
 
         user_profile.save()
+        print('save')
 
         return redirect('camera:profile')
     
@@ -335,11 +340,14 @@ def add_item(request):
     categories = category.objects.all()
     return render(request, 'camera/add_item.html', {'categories': categories})
 
-def edit_item(request, product_id):
-    pd = get_object_or_404(item, id=product_id)
-    categories = category.objects.all()  # Fetch all categories
-    return render(request, 'camera/edit_item.html', {'pd': pd, 'categories': categories})
+# def edit_item(request, product_id):
+#     pd = get_object_or_404(item, id=product_id)
+#     categories = category.objects.all()  # Fetch all categories
+#     return render(request, 'camera/edit_item.html', {'pd': pd, 'categories': categories})
 
+
+def edit_item(request):
+    return render(request, 'camera/edit_item.html')
 
 # from django.shortcuts import render, redirect
 # from .models import Order  # Assuming you have an Order model
@@ -485,10 +493,10 @@ def submission(request):
                 item_obj = get_object_or_404(item, pk=product_id)
                 item_obj.title = title
                 item_obj.category = category_obj
-                item_obj.Daily_price = daily_price
+                item_obj.price = daily_price
                 item_obj.MarketValue = market_value
                 item_obj.quantity = quantity
-                item_obj.period = period
+                item_obj.min_rental_days = period
                 item_obj.location = location
                 item_obj.description = description
                 item_obj.owner = request.user
@@ -507,10 +515,10 @@ def submission(request):
                 item_obj = Item.objects.create(
                     title=title,
                     category=category_obj,
-                    Daily_price=daily_price,
+                    price=daily_price,
                     MarketValue=market_value,
                     quantity=quantity,
-                    period=period,
+                    min_rental_days=period,
                     location=location,
                     description=description,
                     owner = owner_data
@@ -518,8 +526,9 @@ def submission(request):
 
                 # Save Image objects and associate with the item
                 for image in uploaded_images:
-                    img = Image.objects.create(url=image)
-                    item_obj.image.add(img)  # Associate image with item
+                    Image.objects.create(item=item_obj, url=image)
+                    # img = Image.objects.create(url=image)
+                    # item_obj.image.add(img)  # Associate image with item
 
                 return HttpResponse('Product created successfully!', status=200)
 
@@ -535,6 +544,14 @@ def index(request):
     return render(request,'camera/index.html')
 
 
+
+def my_items(request):
+    items = Item.objects.filter(owner=request.user)  # Only items for this user
+    
+    context = {
+        'user_items': items
+    }
+    return render(request, 'camera/my_items.html',context )
 
 
 
@@ -648,8 +665,16 @@ def search_api(request):
             # Calculate distance (simplified - you'd use actual geolocation)
             distance = f"{round(2.5 + (item.id % 10) * 0.5, 1)} km"
             
+            first_image = item.images.first()
+            image_url = first_image.url.url if first_image else None
+            
             # Get image URL
-            image_url = item.image.url if item.image else None
+            # Get image URL
+            # if item.image:  # Single main image
+            #     image_url = item.image.url
+            # else:  # Fallback to first related image
+           
+
             
             results.append({
                 'id': item.id,
@@ -808,3 +833,5 @@ def get_price_ranges(request):
             'avg_price': 50,
             'error': str(e)
         })
+        
+

@@ -164,7 +164,7 @@ def send_verification_email(request, user):
     uid = urlsafe_base64_encode(force_bytes(user.pk))
     domain = request.get_host()
     
-    link = f"http://{domain}/account/verify/{uid}/{token}/"
+    link = f"http://{domain}/checking/verify/{uid}/{token}/"
 
     subject = "Activate Your Account"
     message = f"""
@@ -358,7 +358,7 @@ def login_view(request):
                 #     print("No plan found for this user.")
                 #     messages.warning(request, "No active plan found.")
                 #     return redirect('websiteDesign:pricing')
-                return redirect('Quote:home')
+                return redirect('camera:index')
                 
             else:
                 messages.error(request, "Please verify your email before logging in.")

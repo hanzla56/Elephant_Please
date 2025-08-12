@@ -22,6 +22,21 @@
         padding-top: 80px; /* Account for fixed navbar */
     }
 
+    .navbar-brand {
+            font-size: 1.8rem;               /* Bigger font size */
+            font-weight: 700;               /* Make it bold */
+            color: #005494;                  /* Brand color (blueish) */
+            text-decoration: none;           /* Remove underline */
+            letter-spacing: 1px;             /* Spacing between letters */
+            transition: color 0.3s ease;     /* Smooth hover effect */
+        }
+
+        .navbar-brand:hover {
+            color: #003366;                  /* Darker blue on hover */
+            text-decoration: none;  /* no underline */
+  /* Underline on hover */
+        }
+
     /* Navbar Styles */
     .navbar-custom {
         background: rgba(255, 255, 255, 0.95);
@@ -562,11 +577,14 @@
 
 <nav class="navbar navbar-expand-lg navbar-custom">
     <div class="container">
+        <a class="navbar-brand" href="{% url 'camera:index' %}">
+            RentEasy
+</a>
         <!-- Brand Logo -->
-        <a class="navbar-brand" href="{% url 'camera:home_page' %}">
+        <!-- <a class="navbar-brand" href="{% url 'camera:index' %}">
             <img src="{% static 'image/nav/Elephant Please.png' %}" alt="Elephant Please">
             {% comment %} <img src="{% static 'image/nav/elephant.png' %}" alt="Elephant"> {% endcomment %}
-        </a>
+        </a> -->
 
         <!-- Mobile Toggle Button -->
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
@@ -634,17 +652,17 @@
                         </a></li>
                         <li><a class="dropdown-item dropdown-item-custom" href="{% url 'chat:index' %}">
                             <i class="fas fa-cog"></i>
-                            <span>Settings</span>
+                            <span>My Chats</span>
                         </a></li>
-                        <li><a class="dropdown-item dropdown-item-custom" href="#">
+                        <!-- <li><a class="dropdown-item dropdown-item-custom" href="#">
                             <i class="fas fa-heart"></i>
                             <span>Favorites</span>
-                        </a></li>
-                        <li><a class="dropdown-item dropdown-item-custom" href="#">
+                        </a></li> -->
+                        <!-- <li><a class="dropdown-item dropdown-item-custom" href="#">
                             <i class="fas fa-history"></i>
                             <span>Order History</span>
-                        </a></li>
-                        <li><a class="dropdown-item dropdown-item-custom logout-item" href="">
+                        </a></li> -->
+                        <li><a class="dropdown-item dropdown-item-custom logout-item" href="{% url 'security:logout' %}">
                             <i class="fas fa-sign-out-alt"></i>
                             <span>Logout</span>
                         </a></li>

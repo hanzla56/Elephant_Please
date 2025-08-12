@@ -50,8 +50,10 @@ class ItemAdmin(admin.ModelAdmin):
         self.message_user(request, f"Successfully duplicated {queryset.count()} item(s).")
     duplicate_items.short_description = "Duplicate selected items"
 
-admin.site.register(category)
+# admin.site.register(category)
 admin.site.register(Image)
 admin.site.register(Item,ItemAdmin)
 admin.site.register(Order)
 admin.site.register(Review)
+admin.site.register(category)
+# admin.site.register(test)
